@@ -20,22 +20,33 @@ function LoginForm() {
 
   const handleChange = event => {
     setValue({ ...value, [event.target.name]: event.target.value })
+    console.log(value)
   }
 
-  const handleGithubLogin = () => {
-    console.log('sdafads')
-  }
+  const handleGithubLogin = () => {}
 
   return (
     <Wrapper>
       <TextHeader>이슈 트래커</TextHeader>
       <LoginWrapper>
         <LabelLogin>아이디</LabelLogin>
-        <IdInputContainer></IdInputContainer>
+        <IdInputContainer
+          type="text"
+          name="nickname"
+          value={value.nickname}
+          onChange={handleChange}
+          required
+        />
         <LabelLogin>비밀번호</LabelLogin>
-        <PasswordInputContainer></PasswordInputContainer>
+        <PasswordInputContainer
+          type="password"
+          name="password"
+          value={value.password}
+          onChange={handleChange}
+          required
+        />
         <SubmitContainer>
-          <LoginButton>로그인</LoginButton>
+          <LoginButton onClick={handleSubmit}>로그인</LoginButton>
           <SignInButton>회원가입</SignInButton>
         </SubmitContainer>
         <BtnGithub>
@@ -54,6 +65,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 500px;
+  border-radius: 0.3rem !important;
 `
 const TextHeader = styled.h1`
   font-size: 2rem;
@@ -68,6 +80,7 @@ const LoginWrapper = styled.form`
   justify-content: space-between;
   padding: 30px;
   border: 1px solid #d3d3d3;
+  border-radius: 0.3rem !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `
 
@@ -75,21 +88,38 @@ const LabelLogin = styled.label`
   margin-bottom: -10px;
   font-weight: bold;
 `
-const IdInputContainer = styled.input``
-const PasswordInputContainer = styled.input``
+const IdInputContainer = styled.input`
+  height: 30px;
+  border-radius: 0.3rem !important;
+  border: 0px solid;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.34);
+`
+const PasswordInputContainer = styled.input`
+  height: 30px;
+  border-radius: 0.3rem !important;
+  border: 0px solid;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.34);
+`
+
 const SubmitContainer = styled.div`
   display: flex;
   justify-content: space-around;
 `
-const LoginButton = styled.a``
-const SignInButton = styled.a``
+const LoginButton = styled.a`
+  cursor: pointer;
+`
+const SignInButton = styled.a`
+  cursor: pointer;
+`
 const BtnGithub = styled.div`
+  cursor: pointer;
   text-align: center;
   color: #fff;
   background-color: #a9a9a9;
   height: 20px;
   padding: 5px;
   font-weight: bold;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `
 const Button = styled.div``
 
