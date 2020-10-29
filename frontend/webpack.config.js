@@ -22,6 +22,7 @@ module.exports = {
     alias: {
       '@Component': path.resolve(__dirname, 'src/component'),
       '@Page': path.resolve(__dirname, 'src/page'),
+      '@Public': path.resolve(__dirname, 'public'),
     },
   },
   module: {
@@ -34,10 +35,10 @@ module.exports = {
       {
         test: /\.(png|jpg|jpeg|svg)$/,
         loader: 'file-loader',
-        options: {
-          publicPath: './public/',
-          name: '[name].[ext]?[hash]',
-        },
+        // options: {
+        // publicPath: '/public/',
+        // name: '[name].[ext]?[hash]',
+        // },
       },
     ],
   },
