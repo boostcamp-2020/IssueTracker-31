@@ -3,7 +3,7 @@ import path from 'path'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 
-import indexRouter from './controller.js/index'
+import Controller from './controller'
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', indexRouter)
+app.use('/', Controller)
 
 app.listen(port, err => {
   if (err) throw err

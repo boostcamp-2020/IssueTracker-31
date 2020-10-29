@@ -1,7 +1,10 @@
 import React from 'react'
 import ReactDom from 'react-dom'
+import IssueListPage from '@Page/IssueList'
+
 const root = document.getElementById('root')
 const App = () => {
-  return <h1>helsdflo222!!!</h1>
+  return <IssueListPage />
 }
-ReactDom.render(<App />, root)
+
+ReactDom.render(<IssueListPage />, root)

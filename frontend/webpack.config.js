@@ -20,7 +20,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      '@Example': path.resolve(__dirname, 'src/example'),
+      '@Component': path.resolve(__dirname, 'src/component'),
+      '@Page': path.resolve(__dirname, 'src/page'),
     },
   },
   module: {
