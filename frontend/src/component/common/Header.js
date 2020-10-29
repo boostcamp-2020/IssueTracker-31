@@ -9,7 +9,6 @@ const Header = props => {
     text-align: center;
     box-sizing: border-box;
   `
-
   const StyledImg = styled.img`
     width: 14px;
     height: 14px;
@@ -23,7 +22,6 @@ const Header = props => {
     font-size: 14px;
     font-weight: 600;
   `
-
   return (
     <StyledHeader className="header">
       <StyledSpan>
