@@ -1,6 +1,6 @@
 import React from 'react'
 
-const btnStyle = {
+const defaultStyle = {
   color: '#FFFFFF',
   textDecoration: 'none',
   background: '#2EA44F',
@@ -11,13 +11,12 @@ const btnStyle = {
   fontSize: '14px',
   fontWeight: '500',
   lineHeight: '20px',
-  whiteSpace: 'nowrap',
 }
 
-const Button = props => {
+const Button = ({ buttonName, targetLocation, buttonStyle = defaultStyle }) => {
   return (
-    <a href={props.target} style={btnStyle}>
-      <span> {props.buttonName} </span>
+    <a href={targetLocation} style={buttonStyle}>
+      <span> {buttonName} </span>
     </a>
   )
 }
