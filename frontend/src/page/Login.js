@@ -26,7 +26,7 @@ function LoginForm() {
 
   const handleGithubLogin = () => {
     axios
-      .get('http://localhost:3000/github')
+      .get('http://localhost:3000/users/github')
       .then(function (res) {
         window.location.href = res.data
       })
