@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const defaultStyle = {
   color: '#FFFFFF',
@@ -15,9 +16,9 @@ const defaultStyle = {
 
 const Button = ({ buttonName, targetLocation, buttonStyle = defaultStyle }) => {
   return (
-    <a href={targetLocation} style={buttonStyle}>
+    <Link to={targetLocation} style={buttonStyle}>
       <span> {buttonName} </span>
-    </a>
+    </Link>
   )
 }
 
