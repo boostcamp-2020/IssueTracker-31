@@ -1,3 +1,7 @@
 import db from '../model/user'
 
-export default {}
+const githubLogin = () => {}
+
+export default {
+  githubLogin,
+}
