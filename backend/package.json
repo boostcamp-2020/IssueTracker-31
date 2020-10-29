@@ -17,7 +17,9 @@
     "express": "~4.16.1",
     "morgan": "~1.9.1",
     "mysql2": "^2.2.5",
-    "passport": "^0.4.1"
+    "passport": "^0.4.1",
+    "qs": "^6.9.4",
+    "randomstring": "^1.1.5"
   },
   "devDependencies": {
     "cors": "^2.8.5",
