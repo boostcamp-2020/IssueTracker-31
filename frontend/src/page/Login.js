@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 
 function LoginForm() {
   const [value, setValue] = React.useState({
@@ -23,7 +24,16 @@ function LoginForm() {
     console.log(value)
   }
 
-  const handleGithubLogin = () => {}
+  const handleGithubLogin = () => {
+    axios
+      .get('http://localhost:3000/github')
+      .then(function (res) {
+        window.location.href = res.data
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+  }
 
   return (
     <Wrapper>
