@@ -8,20 +8,10 @@ function LoginForm() {
     password: '',
   })
 
-  const handleSubmit = () => {
-    for (const key in value) {
-      if (value.hasOwnProperty(key)) {
-        if (value[key] === '') {
-          alert('아이디와 패스워드를 모두 입력해주세요!')
-          break
-        }
-      }
-    }
-  }
+  const handleSubmit = () => {}
 
   const handleChange = event => {
     setValue({ ...value, [event.target.name]: event.target.value })
-    console.log(value)
   }
 
   const handleGithubLogin = () => {
