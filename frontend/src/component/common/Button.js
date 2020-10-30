@@ -1,25 +1,33 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
-const defaultStyle = {
-  color: '#FFFFFF',
-  textDecoration: 'none',
-  background: '#2EA44F',
-  padding: '5px 16px',
-  border: '1px solid',
-  borderRadius: '6px',
-  cursor: 'pointer',
-  fontSize: '14px',
-  fontWeight: '500',
-  lineHeight: '20px',
-}
-
-const Button = ({ buttonName, targetLocation, buttonStyle = defaultStyle }) => {
+const Button = ({ buttonName, targetLocation, backgroundColor, color }) => {
   return (
-    <Link to={targetLocation} style={buttonStyle}>
-      <span> {buttonName} </span>
-    </Link>
+    <StyledLink
+      to={targetLocation}
+      backgroundColor={backgroundColor}
+      color={color}
+    >
+      <span>{buttonName}</span>
+    </StyledLink>
   )
 }
+
+const StyledLink = styled(Link)`
+  ${({ backgroundColor = '#2ea44f', color = '#ffffff' }) =>
+    `
+    color: ${color};
+    background: ${backgroundColor};
+    text-decoration : none;
+    cursor: pointer;
+    padding: 5px 16px;
+    border: 1px solid rgba(27,31,35,0.15);
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+`}
+`
 
 export default Button
