@@ -1,10 +1,16 @@
 
-<div align="center" style="margin-top : 10px 
+<div align="center" style="margin-top : 10px"> 
 
-![Node.js](https://img.shields.io/badge/Node.js-v12.18.2-green?logo=Node.js) ![npm](https://img.shields.io/badge/npm-v6.14.5-red?logo=npm) ![express](https://img.shields.io/badge/express-4.16.1-skyblue?logo=Node.js)
-![React](https://img.shields.io/badge/react-17.0.1-blue?logo=react) ![Babel](https://img.shields.io/badge/@babel/core-7.12.3-yellow?logo=babel) ![Webpack](https://img.shields.io/badge/Webpack-4.32.2-blue?logo=Webpack) ![mysql](https://img.shields.io/badge/mysql-8.0.21-skyblue?logo=mysql)
+![Node.js](https://img.shields.io/badge/Node.js-v12.18.2-green?logo=Node.js) 
+![npm](https://img.shields.io/badge/npm-v6.14.5-red?logo=npm) 
+![express](https://img.shields.io/badge/express-4.16.1-skyblue?logo=Node.js)
+![React](https://img.shields.io/badge/react-17.0.1-blue?logo=react) 
+![Babel](https://img.shields.io/badge/@babel/core-7.12.3-yellow?logo=babel) 
+![Webpack](https://img.shields.io/badge/Webpack-4.32.2-blue?logo=Webpack) 
+![mysql](https://img.shields.io/badge/mysql-8.0.21-skyblue?logo=mysql)
 
 </div>
+
 
 ## Issue Tracker
 
