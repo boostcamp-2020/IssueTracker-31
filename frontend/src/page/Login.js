@@ -59,7 +59,7 @@ function LoginForm() {
 
 const Wrapper = styled.div`
   margin: 0 auto;
-  background-color: #f8f8ff;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,7 +75,7 @@ const LoginWrapper = styled.form`
   height: 200px;
   width: 400px;
   display: flex;
-  background-color: #fff;
+  background-color: #f8f8ff;
   flex-direction: column;
   justify-content: space-between;
   padding: 30px;
