@@ -1,5 +1,6 @@
 import express from 'express'
 import issueController from './issue'
+import userController from './user'
 const router = express.Router()
 
 /* GET home page. */
@@ -8,5 +9,6 @@ router.get('/', function (req, res, next) {
 })
 
 router.use('/issues', issueController)
+router.use('/users', userController)
 
 module.exports = router
