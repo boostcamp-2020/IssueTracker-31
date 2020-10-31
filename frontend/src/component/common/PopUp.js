@@ -1,33 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const PopUp = ({ kind, title, data, multiSelect = false }) => {
   console.log(kind, title, data, multiSelect)
-  const items = data.reduce((result, item) => {
-    const newItem = makeNewItem(kind, item)
-    return [...result, newItem]
-  }, [])
+  const [state, setState] = useState([...data])
+  console.log(state)
 
   return (
     <StyledContainer>
       <StyledHeader>{title}</StyledHeader>
-      {items}
+      {data.map(item => (
+        <PopUpItem key={item.id} kind={kind} data={item} />
+      ))}
     </StyledContainer>
   )
 }
 
-const makeNewItem = (kind, data) => {
+const PopUpItem = ({ kind, data }) => {
+  const [visible, setVisible] = useState(false)
+  const onClick = event => {
+    setVisible(visible => !visible)
+  }
+
   switch (kind) {
     case 'user':
       return (
-        <StyledItemContainer key={data.id}>
+        <StyledItemContainer onClick={onClick}>
+          <StyledCheckSpan visible={visible}>✓</StyledCheckSpan>
           <StyledImg src={data.profileUrl} alt="user profile"></StyledImg>
           <StyledBoldTextSpan>{data.nickname}</StyledBoldTextSpan>
         </StyledItemContainer>
       )
     case 'label':
       return (
-        <StyledItemContainer key={data.id}>
+        <StyledItemContainer onClick={onClick}>
+          <StyledCheckSpan visible={visible}>✓</StyledCheckSpan>
           <StyledColorSpan color={data.color}></StyledColorSpan>
           <StyledTextSpan>{data.name}</StyledTextSpan>
           <StyledTextDiv>{data.description}</StyledTextDiv>
@@ -35,7 +42,8 @@ const makeNewItem = (kind, data) => {
       )
     case 'milestone':
       return (
-        <StyledItemContainer key={data.id}>
+        <StyledItemContainer onClick={onClick}>
+          <StyledCheckSpan visible={visible}>✓</StyledCheckSpan>
           <StyledBoldTextSpan>{data.title}</StyledBoldTextSpan>
           {data.dueDate !== undefined && (
             <StyledTextDiv>{data.dueDate}</StyledTextDiv>
@@ -45,7 +53,8 @@ const makeNewItem = (kind, data) => {
 
     default:
       return (
-        <StyledItemContainer key={data.id}>
+        <StyledItemContainer onClick={onClick}>
+          <StyledCheckSpan visible={visible}>✓</StyledCheckSpan>
           <StyledBigTextSpan>{data.text}</StyledBigTextSpan>
         </StyledItemContainer>
       )
@@ -136,6 +145,16 @@ const StyledImg = styled.img`
   line-height: 1;
   vertical-align: middle;
   margin-right: 4px;
+`
+
+const StyledCheckSpan = styled.span`
+  float: left;
+  margin-top: 2px;
+  margin-left: -20px;
+  visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
+  vertical-align: middle;
+  overflow: hidden;
+  font-size: 16px;
 `
 
 export default PopUp
