@@ -36,9 +36,9 @@ const makeNewItem = (kind, data) => {
     case 'milestone':
       return (
         <StyledItemContainer key={data.id}>
-          <StyledBigText>{data.title}</StyledBigText>
+          <StyledBoldTextSpan>{data.title}</StyledBoldTextSpan>
           {data.dueDate !== undefined && (
-            <StyledSubText>{data.dueDate}</StyledSubText>
+            <StyledTextDiv>{data.dueDate}</StyledTextDiv>
           )}
         </StyledItemContainer>
       )
@@ -53,13 +53,14 @@ const makeNewItem = (kind, data) => {
 }
 
 const StyledContainer = styled.div`
-  width: auto;
+  width: 300px;
   display: inline-block;
   margin-top: 4px;
   margin-bottom: 20px;
   border: 1px solid #e8eaef;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px 0px;
+  overflow: hidden;
 `
 const StyledHeader = styled.header`
   padding: 8px 10px;
@@ -117,7 +118,6 @@ const StyledTextDiv = styled.div`
   overflow: hidden;
   cursor: pointer;
 `
-
 const StyledColorSpan = styled.span`
   display: inline-block;
   vertical-align: middle;
