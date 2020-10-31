@@ -10,7 +10,7 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
 
   return (
     <StyledContainer>
-      <StyledHeader>{props.title}</StyledHeader>
+      <StyledHeader>{title}</StyledHeader>
       {items}
     </StyledContainer>
   )
