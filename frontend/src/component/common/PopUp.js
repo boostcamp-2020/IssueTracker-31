@@ -1,16 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-/**
- * @param {string} props.title
- * @param {[<Component />]} props.items
- */
-const PopUp = props => {
-  const items = props.items.reduce((result, item) => {
-    return [
-      ...result,
-      <StyledItemContainer key={item.key}>{item}</StyledItemContainer>,
-    ]
+const PopUp = ({ kind, title, data, multiSelect = false }) => {
+  console.log(kind, title, data, multiSelect)
+  const items = data.reduce((result, item) => {
+    const newItem = makeNewItem(kind, item)
+    return [...result, newItem]
   }, [])
 
   return (
@@ -19,6 +14,25 @@ const PopUp = props => {
       {items}
     </StyledContainer>
   )
+}
+
+const makeNewItem = (kind, data) => {
+  switch (kind) {
+    case 'user':
+    case 'label':
+    case 'milestone':
+      return (
+        <StyledItemContainer key={data.id}>
+          <StyledBigText>{data.title}</StyledBigText>
+          {data.dueDate !== undefined && (
+            <StyledSubText>{data.dueDate}</StyledSubText>
+          )}
+        </StyledItemContainer>
+      )
+
+    default:
+      return <StyledItemContainer key={data.id}></StyledItemContainer>
+  }
 }
 
 const StyledContainer = styled.div`
@@ -48,5 +62,34 @@ const StyledItemContainer = styled.div`
   overflow: hidden;
   text-align: left;
 `
+
+const StyledText = styled.div`
+  color: #586069;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  overflow: hidden;
+  cursor: pointer;
+`
+
+const StyledBigText = styled.div`
+  color: #586069;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  overflow: hidden;
+  cursor: pointer;
+`
+
+const StyledSubText = styled.div`
+  color: #586069;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: left;
+  overflow: hidden;
+  cursor: pointer;
+`
+
+const StyledItem = styled.div``
 
 export default PopUp
