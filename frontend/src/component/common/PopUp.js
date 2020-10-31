@@ -44,7 +44,11 @@ const makeNewItem = (kind, data) => {
       )
 
     default:
-      return <StyledItemContainer key={data.id}></StyledItemContainer>
+      return (
+        <StyledItemContainer key={data.id}>
+          <StyledBigTextSpan>{data.text}</StyledBigTextSpan>
+        </StyledItemContainer>
+      )
   }
 }
 
@@ -84,6 +88,13 @@ const StyledBoldTextSpan = styled.span`
   overflow: hidden;
   cursor: pointer;
 `
+
+const StyledBigTextSpan = styled.span`
+  color: #586069;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: left;
+  line-height: 18px;
   overflow: hidden;
   cursor: pointer;
 `
