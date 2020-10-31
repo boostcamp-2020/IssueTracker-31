@@ -1,10 +1,16 @@
 import issueService from '../../service/issue'
+import errorResponse from '../../util/error-response'
 
-const read = async (req, res) => {
-  const issues = await issueService.getIssue()
-  return res.json({ issues })
+const getIssues = async (req, res) => {
+  const filterValues = req.body
+  try {
+    const issues = await issueService.getIssues(filterValues)
+    return res.json({ issues })
+  } catch (err) {
+    errorResponse(err, res)
+  }
 }
 
 export default {
-  read,
+  getIssues,
 }
