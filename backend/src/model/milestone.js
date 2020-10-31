@@ -6,6 +6,13 @@ const getMilestone = async () => {
   return rows
 }
 
+const getMilestoneDetail = async () => {
+  const sql = 'SELECT id, title, dueDate, description, isOpen from milestone'
+  const [rows] = await db.query(sql)
+  return rows
+}
+
 export default {
   getMilestone,
+  getMilestoneDetail,
 }
