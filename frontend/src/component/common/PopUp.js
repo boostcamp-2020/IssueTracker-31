@@ -20,6 +20,13 @@ const makeNewItem = (kind, data) => {
   switch (kind) {
     case 'user':
     case 'label':
+      return (
+        <StyledItemContainer key={data.id}>
+          <StyledColorSpan color={data.color}></StyledColorSpan>
+          <StyledTextSpan>{data.name}</StyledTextSpan>
+          <StyledTextDiv>{data.description}</StyledTextDiv>
+        </StyledItemContainer>
+      )
     case 'milestone':
       return (
         <StyledItemContainer key={data.id}>
@@ -63,33 +70,42 @@ const StyledItemContainer = styled.div`
   text-align: left;
 `
 
-const StyledText = styled.div`
+const StyledBoldTextDiv = styled.div`
   color: #586069;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   text-align: left;
   overflow: hidden;
   cursor: pointer;
 `
 
-const StyledBigText = styled.div`
-  color: #586069;
-  font-size: 12px;
-  font-weight: 600;
-  text-align: left;
-  overflow: hidden;
-  cursor: pointer;
-`
-
-const StyledSubText = styled.div`
+const StyledTextSpan = styled.span`
   color: #586069;
   font-size: 12px;
   font-weight: 400;
+  line-height: 18px;
+  text-align: left;
+  overflow: hidden;
+  cursor: pointer;
+`
+const StyledTextDiv = styled.div`
+  color: #586069;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
   text-align: left;
   overflow: hidden;
   cursor: pointer;
 `
 
-const StyledItem = styled.div``
+const StyledColorSpan = styled.span`
+  display: inline-block;
+  vertical-align: middle;
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+  background-color: ${({ color }) => color};
+  border-radius: 50%;
+`
 
 export default PopUp
