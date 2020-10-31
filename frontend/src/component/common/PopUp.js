@@ -19,6 +19,12 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
 const makeNewItem = (kind, data) => {
   switch (kind) {
     case 'user':
+      return (
+        <StyledItemContainer key={data.id}>
+          <StyledImg src={data.profileUrl} alt="user profile"></StyledImg>
+          <StyledBoldTextSpan>{data.nickname}</StyledBoldTextSpan>
+        </StyledItemContainer>
+      )
     case 'label':
       return (
         <StyledItemContainer key={data.id}>
@@ -69,12 +75,15 @@ const StyledItemContainer = styled.div`
   overflow: hidden;
   text-align: left;
 `
-
-const StyledBoldTextDiv = styled.div`
+const StyledBoldTextSpan = styled.span`
   color: #586069;
   font-size: 14px;
   font-weight: 600;
   text-align: left;
+  line-height: 18px;
+  overflow: hidden;
+  cursor: pointer;
+`
   overflow: hidden;
   cursor: pointer;
 `
@@ -106,6 +115,16 @@ const StyledColorSpan = styled.span`
   margin-right: 8px;
   background-color: ${({ color }) => color};
   border-radius: 50%;
+`
+const StyledImg = styled.img`
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  line-height: 1;
+  vertical-align: middle;
+  margin-right: 4px;
 `
 
 export default PopUp
