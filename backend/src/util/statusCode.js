@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   OK: 200,
   CREATED: 201,
   NOT_MODIFIED: 304,
