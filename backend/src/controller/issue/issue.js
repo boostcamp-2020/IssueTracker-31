@@ -9,9 +9,6 @@ const getIssues = async (req, res) => {
     assignee: req.query.assignee,
     label: req.query.label,
   }
-  console.log(123123)
-  console.log(filterValues)
-
   try {
     const issues = await issueService.getIssues(filterValues)
     return res.json({ issues })
