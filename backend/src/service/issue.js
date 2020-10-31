@@ -2,14 +2,18 @@ import db from '../model/issue'
 
 const structurizeIssueList = issues => {
   return issues.map(row => {
-    row.label = row.label.split(',').map(label => {
-      const [name, color] = label.split(':')
-      return { name, color }
-    })
-    row.assignee = row.assignee.split(',').map(assignee => {
-      const [id, profileUrl] = assignee.split(':')
-      return { id, profileUrl }
-    })
+    if (row.label !== null) {
+      row.label = row.label.split(',').map(label => {
+        const [name, color] = label.split(':')
+        return { name, color }
+      })
+    }
+    if (row.assignee !== null) {
+      row.assignee = row.assignee.split(',').map(assignee => {
+        const [id, profileUrl] = assignee.split(':')
+        return { id, profileUrl }
+      })
+    }
     return row
   })
 }
@@ -19,8 +23,13 @@ const filterValuesCheck = filterValues => {
   if (milestone !== undefined && isNaN(milestone)) return false
   if (author !== undefined && isNaN(author)) return false
   if (assignee !== undefined && isNaN(assignee)) return false
-  if (isOpen !== undefined && isOpen !== true && isOpen !== false) return false
-  if (label !== undefined && !Array.isArray(label)) return false
+  if (isOpen !== undefined && isOpen !== '1' && isOpen !== '0') return false
+  if (label !== undefined) {
+    filterValues.label = label.split('_')
+    for (const labeId of filterValues.label) {
+      if (isNaN(labeId) || labeId === '') return false
+    }
+  }
   return true
 }
 

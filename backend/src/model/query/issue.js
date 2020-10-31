@@ -27,9 +27,9 @@ const getIssuesFilterCondition = filterValues => {
 
   const conditions = []
   if (filterValues.label !== undefined && filterValues.label.length > 0)
-    conditions.push('(IL.labelID IN (' + filterValues.label.join(',') + ')')
+    conditions.push('(IL.labelID IN(' + filterValues.label.join(',') + '))')
   if (filterKeys.length === 1 && conditions.length !== 0)
-    return `WHERE ${conditions[0]} + ORDER BY I.id DESC`
+    return `WHERE ${conditions[0]} ORDER BY I.id DESC`
 
   if (filterValues.isOpen !== undefined)
     conditions.push(`I.isOpen=${filterValues.isOpen}`)
@@ -40,14 +40,14 @@ const getIssuesFilterCondition = filterValues => {
   if (filterValues.assignee !== undefined)
     conditions.push(`IA.userId=${filterValues.assignee}`)
 
-  const conditionString = conditions
-    .join(' AND ')
-    .concat(
-      filterValues.label !== undefined && filterValues.label.length > 0
-        ? ` HAVING (COUNT(IL.lavelId)=${filterValues.label.length}`
-        : '',
-    )
-  return `WHERE ${conditionString} + ' ORDER BY I.id DESC'`
+  const conditionString = conditions.join(' AND ').concat(
+    filterValues.label !== undefined && filterValues.label.length > 0
+      ? `
+      GROUP BY IL.issueId
+      HAVING (COUNT(IL.labelId) = ${filterValues.label.length})`
+      : '',
+  )
+  return `WHERE ${conditionString} ORDER BY I.id DESC`
 }
 
 export default {
