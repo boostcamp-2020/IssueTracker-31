@@ -11,7 +11,7 @@ const getIssues = async (req, res) => {
   }
   try {
     const issues = await issueService.getIssues(filterValues)
-    return res.json({ issues })
+    return res.json({ success: true, data: issues })
   } catch (err) {
     errorResponse(err, res)
   }
