@@ -6,7 +6,7 @@ const GET = async (path, params = null) => {
       params,
       withCredentials: true,
     })
-    return response.data
+    return response
   } catch (err) {
     console.error(err)
   }
@@ -20,7 +20,7 @@ const POST = async (path, data, contentType = 'application/json') => {
       },
       withCredentials: true,
     })
-    return response.data
+    return response
   } catch (err) {
     console.error(err)
   }
@@ -32,7 +32,7 @@ const DELETE = async (path, params = null) => {
       params,
       withCredentials: true,
     })
-    return response.data
+    return response
   } catch (err) {
     console.error(err)
   }
@@ -46,7 +46,7 @@ const PATCH = async (path, data, contentType = 'application/json') => {
       },
       withCredentials: true,
     })
-    return response.data
+    return response
   } catch (err) {
     console.error(err)
   }
@@ -60,7 +60,7 @@ const PUT = async (path, data, contentType = 'application/json') => {
       },
       withCredentials: true,
     })
-    return response.data
+    return response
   } catch (err) {
     console.error(err)
   }
