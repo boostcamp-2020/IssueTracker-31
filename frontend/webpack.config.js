@@ -24,6 +24,7 @@ module.exports = {
       '@Page': path.resolve(__dirname, 'src/page'),
       '@Public': path.resolve(__dirname, 'public'),
       '@Util': path.resolve(__dirname, 'src/util'),
+      '@Api': path.resolve(__dirname, 'src/api'),
     },
   },
   module: {

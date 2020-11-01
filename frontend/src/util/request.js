@@ -54,7 +54,7 @@ const PATCH = async (path, data, contentType = 'application/json') => {
 
 const PUT = async (path, data, contentType = 'application/json') => {
   try {
-    const response = await axios.put(API_URL + path, data, {
+    const response = await axios.put(path, data, {
       headers: {
         'Content-Type': contentType,
       },
