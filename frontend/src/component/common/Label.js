@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 const Label = ({ name, backgroundColor }) => (
-  <LabelWrapper backgroundColor={backgroundColor}>{name}</LabelWrapper>
+  <StyledLabel backgroundColor={backgroundColor}>{name}</StyledLabel>
 )
 
 const getContrast = hexColor => {
@@ -22,7 +22,7 @@ const hexToRGB = hexColor => [
   parseInt(hexColor.slice(4, 6), 16),
 ]
 
-const LabelWrapper = styled.div`
+const StyledLabel = styled.div`
   ${({ backgroundColor }) =>
     `
     background-color: ${backgroundColor};
