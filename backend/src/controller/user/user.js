@@ -1,4 +1,5 @@
 import userService from '../../service/user'
+import errorResponse from '../../util/error-response'
 import qs from 'querystring'
 import rs from 'randomstring'
 import dotenv from 'dotenv'
@@ -18,6 +19,17 @@ const githubLogin = (req, res) => {
   res.send(githubAuthUrl)
 }
 
+const getUsers = async (req, res) => {
+  try {
+    const users = await userService.getUsers()
+    return res.json({ success: true, data: users })
+  } catch (err) {
+    console.log(err)
+    errorResponse(err, res)
+  }
+}
+
 export default {
   githubLogin,
+  getUsers,
 }
