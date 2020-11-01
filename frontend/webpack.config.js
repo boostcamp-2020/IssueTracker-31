@@ -23,6 +23,7 @@ module.exports = {
       '@Component': path.resolve(__dirname, 'src/component'),
       '@Page': path.resolve(__dirname, 'src/page'),
       '@Public': path.resolve(__dirname, 'public'),
+      '@Util': path.resolve(__dirname, 'src/util'),
     },
   },
   module: {
@@ -51,7 +52,6 @@ module.exports = {
           ? {
               removeComments: true,
               collapseWhitespace: true,
-              removeComments: true,
               removeRedundantAttributes: true,
               useShortDoctype: true,
               removeEmptyAttributes: true,
