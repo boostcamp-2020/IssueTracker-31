@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-const Label = ({ name, backgroundColor }) => (
-  <StyledLabel backgroundColor={backgroundColor}>{name}</StyledLabel>
+const Label = ({ name, color }) => (
+  <StyledLabel backgroundColor={color}>{name}</StyledLabel>
 )
 
 const getContrast = hexColor => {
