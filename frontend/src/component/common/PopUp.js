@@ -1,32 +1,56 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 
 const PopUp = ({ kind, title, data, multiSelect = false }) => {
-  console.log(kind, title, data, multiSelect)
-  const [state, setState] = useState([...data])
-  console.log(state)
+  const [state, setState] = useState({
+    data: [...data],
+    selectedId: [],
+  })
+
+  const updateSelectedId = id => {
+    if (!multiSelect) {
+      setState({
+        ...state,
+        selectedId: [id],
+      })
+    } else {
+      let newSelectedId = undefined
+      if (state.selectedId.includes(id))
+        newSelectedId = state.selectedId.filter(value => value !== id)
+      else newSelectedId = [...state.selectedId, id]
+      setState({
+        ...state,
+        selectedId: newSelectedId,
+      })
+    }
+  }
 
   return (
     <StyledContainer>
       <StyledHeader>{title}</StyledHeader>
       {data.map(item => (
-        <PopUpItem key={item.id} kind={kind} data={item} />
+        <PopUpItem
+          key={item.id}
+          kind={kind}
+          data={item}
+          updateSelectedId={updateSelectedId}
+          selectedId={state.selectedId}
+        />
       ))}
     </StyledContainer>
   )
 }
 
-const PopUpItem = ({ kind, data }) => {
-  const [visible, setVisible] = useState(false)
-  const onClick = event => {
-    setVisible(visible => !visible)
-  }
+const PopUpItem = ({ kind, data, updateSelectedId, selectedId }) => {
+  const onClick = event => updateSelectedId(data.id)
 
   switch (kind) {
     case 'user':
       return (
         <StyledItemContainer onClick={onClick}>
-          <StyledCheckSpan visible={visible}>✓</StyledCheckSpan>
+          <StyledCheckSpan visible={selectedId.includes(data.id)}>
+            ✓
+          </StyledCheckSpan>
           <StyledImg src={data.profileUrl} alt="user profile"></StyledImg>
           <StyledBoldTextSpan>{data.nickname}</StyledBoldTextSpan>
         </StyledItemContainer>
@@ -34,7 +58,9 @@ const PopUpItem = ({ kind, data }) => {
     case 'label':
       return (
         <StyledItemContainer onClick={onClick}>
-          <StyledCheckSpan visible={visible}>✓</StyledCheckSpan>
+          <StyledCheckSpan visible={selectedId.includes(data.id)}>
+            ✓
+          </StyledCheckSpan>
           <StyledColorSpan color={data.color}></StyledColorSpan>
           <StyledTextSpan>{data.name}</StyledTextSpan>
           <StyledTextDiv>{data.description}</StyledTextDiv>
@@ -43,7 +69,9 @@ const PopUpItem = ({ kind, data }) => {
     case 'milestone':
       return (
         <StyledItemContainer onClick={onClick}>
-          <StyledCheckSpan visible={visible}>✓</StyledCheckSpan>
+          <StyledCheckSpan visible={selectedId.includes(data.id)}>
+            ✓
+          </StyledCheckSpan>
           <StyledBoldTextSpan>{data.title}</StyledBoldTextSpan>
           {data.dueDate !== undefined && (
             <StyledTextDiv>{data.dueDate}</StyledTextDiv>
@@ -54,7 +82,9 @@ const PopUpItem = ({ kind, data }) => {
     default:
       return (
         <StyledItemContainer onClick={onClick}>
-          <StyledCheckSpan visible={visible}>✓</StyledCheckSpan>
+          <StyledCheckSpan visible={selectedId.includes(data.id)}>
+            ✓
+          </StyledCheckSpan>
           <StyledBigTextSpan>{data.text}</StyledBigTextSpan>
         </StyledItemContainer>
       )
