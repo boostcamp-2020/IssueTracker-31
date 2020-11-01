@@ -2,18 +2,29 @@ import React from 'react'
 import Label from '../common/Label'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-const Issue = ({ id, title, label = [], milestone, assignee = [] }) => {
+import { getTimePassedFromNow } from '../../util/util'
+const Issue = ({
+  id,
+  title,
+  createdAt,
+  label = [],
+  milestone,
+  assignee = [],
+}) => {
   return (
     <StyledRow>
       <input type="checkbox" />
       <StyledArticle>
-        <Link to={`/issues/${id}`}>{title}</Link>
+        <StyledLink to={`/issues/${id}`}>{title}</StyledLink>
         <StyledLabels>
           {label.map((item, i) => (
             <Label key={item.name + i} {...item} />
           ))}
         </StyledLabels>
-        <StyledIssueInfo>{milestone}</StyledIssueInfo>
+        <StyledIssueInfo>
+          {`#${id} opened ${getTimePassedFromNow(createdAt)} `}
+          {milestone}
+        </StyledIssueInfo>
       </StyledArticle>
       <StyledAssignees>
         {assignee.map(user => (
@@ -38,6 +49,12 @@ const StyledLabels = styled.div`
 `
 const StyledAssignees = styled.div`
   width: 25%;
+`
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 600;
 `
 
 export default Issue
