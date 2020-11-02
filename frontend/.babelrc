@@ -1,4 +1,13 @@
 {
-  "presets": ["@babel/preset-env", "@babel/preset-react"],
-  "plugins": ["@babel/plugin-transform-runtime"]
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "shippedProposals": true,
+        "corejs": 3
+      }
+    ],
+    "@babel/preset-react"
+  ]
 }
