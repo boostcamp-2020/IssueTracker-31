@@ -22,6 +22,9 @@ module.exports = {
     alias: {
       '@Component': path.resolve(__dirname, 'src/component'),
       '@Page': path.resolve(__dirname, 'src/page'),
+      '@Public': path.resolve(__dirname, 'public'),
+      '@Util': path.resolve(__dirname, 'src/util'),
+      '@Api': path.resolve(__dirname, 'src/api'),
     },
   },
   module: {
@@ -34,10 +37,10 @@ module.exports = {
       {
         test: /\.(png|jpg|jpeg|svg)$/,
         loader: 'file-loader',
-        options: {
-          publicPath: './public/',
-          name: '[name].[ext]?[hash]',
-        },
+        // options: {
+        // publicPath: '/public/',
+        // name: '[name].[ext]?[hash]',
+        // },
       },
     ],
   },
@@ -50,7 +53,6 @@ module.exports = {
           ? {
               removeComments: true,
               collapseWhitespace: true,
-              removeComments: true,
               removeRedundantAttributes: true,
               useShortDoctype: true,
               removeEmptyAttributes: true,
