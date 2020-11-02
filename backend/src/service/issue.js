@@ -4,13 +4,13 @@ const structurizeIssueList = issues => {
   return issues.map(row => {
     if (row.label !== null) {
       row.label = row.label.split(',').map(label => {
-        const [name, color] = label.split(':')
+        const [name, color] = label.split(';')
         return { name, color }
       })
     }
     if (row.assignee !== null) {
       row.assignee = row.assignee.split(',').map(assignee => {
-        const [id, profileUrl] = assignee.split(':')
+        const [id, profileUrl] = assignee.split(';')
         return { id, profileUrl }
       })
     }
@@ -25,8 +25,8 @@ const filterValuesCheck = filterValues => {
   if (assignee !== undefined && isNaN(assignee)) return false
   if (isOpen !== undefined && isOpen !== '1' && isOpen !== '0') return false
   if (label !== undefined) {
-    filterValues.label = label.split('_')
-    for (const labeId of filterValues.label) {
+    if (!Array.isArray(label)) return false
+    for (const labeId of label) {
       if (isNaN(labeId) || labeId === '') return false
     }
   }
