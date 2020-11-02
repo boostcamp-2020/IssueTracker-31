@@ -3,6 +3,6 @@ import issueController from './issue'
 
 const router = express.Router()
 
-router.get('/', issueController.read)
+router.get('/', issueController.getIssues)
 
 module.exports = router
