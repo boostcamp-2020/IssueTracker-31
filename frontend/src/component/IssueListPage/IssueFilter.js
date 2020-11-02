@@ -6,12 +6,14 @@ const IssueFilter = props => {
   return (
     <StyledIssueFilterContainer>
       <StyledCheckBox type="checkbox"></StyledCheckBox>
-      <FilterSelector type="author" />
-      <FilterSelector type="label" />
-      <FilterSelector type="project" />
-      <FilterSelector type="milestone" />
-      <FilterSelector type="assignee" />
-      <FilterSelector type="sort" />
+      <StyledFilterSelectorContainer>
+        <FilterSelector type="Author" />
+        <FilterSelector type="Label" />
+        <FilterSelector type="Projects" />
+        <FilterSelector type="Milestones" />
+        <FilterSelector type="Assignee" />
+        <FilterSelector type="Sort" />
+      </StyledFilterSelectorContainer>
     </StyledIssueFilterContainer>
   )
 }
@@ -28,6 +30,7 @@ const StyledIssueFilterContainer = styled.div`
   border-right-width: 1px;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
+  box-sizing: border-box;
 `
 
 const StyledCheckBox = styled.input`
@@ -35,6 +38,15 @@ const StyledCheckBox = styled.input`
   padding: 0;
   background-color: initial;
   cursor: default;
+  line-height: 1.5;
+`
+
+const StyledFilterSelectorContainer = styled.div`
+  display: flex;
+  white-space: nowrap;
+  justify-content: flex-end;
+  flex: auto;
+  font-size: 14px;
   line-height: 1.5;
 `
 
