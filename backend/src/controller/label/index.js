@@ -3,4 +3,6 @@ import labelController from './label'
 
 const router = express.Router()
 
+router.get('/', labelController.read)
+
 module.exports = router
