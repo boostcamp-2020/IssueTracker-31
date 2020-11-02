@@ -31,53 +31,39 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
 }
 
 const PopUpItem = ({ kind, data, updateSelectedId, selectedId }) => {
-  const onClick = event => updateSelectedId(data.id)
+  const onClickItem = () => updateSelectedId(data.id)
 
-  switch (kind) {
-    case 'user':
-      return (
-        <StyledItemContainer onClick={onClick}>
-          <StyledCheckSpan visible={selectedId.includes(data.id)}>
-            ✓
-          </StyledCheckSpan>
+  return (
+    <StyledItemContainer onClick={onClickItem}>
+      <StyledCheckSpan visible={selectedId.includes(data.id)}>
+        ✓
+      </StyledCheckSpan>
+      {kind === 'user' && (
+        <>
           <StyledImg src={data.profileUrl} alt="user profile"></StyledImg>
           <StyledBoldTextSpan>{data.nickname}</StyledBoldTextSpan>
-        </StyledItemContainer>
-      )
-    case 'label':
-      return (
-        <StyledItemContainer onClick={onClick}>
-          <StyledCheckSpan visible={selectedId.includes(data.id)}>
-            ✓
-          </StyledCheckSpan>
+        </>
+      )}
+      {kind === 'label' && (
+        <>
           <StyledColorSpan color={data.color}></StyledColorSpan>
           <StyledTextSpan>{data.name}</StyledTextSpan>
           <StyledTextDiv>{data.description}</StyledTextDiv>
-        </StyledItemContainer>
-      )
-    case 'milestone':
-      return (
-        <StyledItemContainer onClick={onClick}>
-          <StyledCheckSpan visible={selectedId.includes(data.id)}>
-            ✓
-          </StyledCheckSpan>
+        </>
+      )}
+      {kind === 'milestone' && (
+        <>
           <StyledBoldTextSpan>{data.title}</StyledBoldTextSpan>
           {data.dueDate !== undefined && (
             <StyledTextDiv>{data.dueDate}</StyledTextDiv>
           )}
-        </StyledItemContainer>
-      )
-
-    default:
-      return (
-        <StyledItemContainer onClick={onClick}>
-          <StyledCheckSpan visible={selectedId.includes(data.id)}>
-            ✓
-          </StyledCheckSpan>
-          <StyledBigTextSpan>{data.text}</StyledBigTextSpan>
-        </StyledItemContainer>
-      )
-  }
+        </>
+      )}
+      {(kind === 'text' || kind === false) && (
+        <StyledBigTextSpan>{data.text}</StyledBigTextSpan>
+      )}
+    </StyledItemContainer>
+  )
 }
 
 const StyledContainer = styled.div`
