@@ -2,26 +2,15 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const PopUp = ({ kind, title, data, multiSelect = false }) => {
-  const [state, setState] = useState({
-    data: [...data],
-    selectedId: [],
-  })
+  const [selectedId, setSelectedId] = useState([])
 
   const updateSelectedId = id => {
     if (!multiSelect) {
-      setState({
-        ...state,
-        selectedId: [id],
-      })
+      setSelectedId([id])
     } else {
-      let newSelectedId = undefined
-      if (state.selectedId.includes(id))
-        newSelectedId = state.selectedId.filter(value => value !== id)
-      else newSelectedId = [...state.selectedId, id]
-      setState({
-        ...state,
-        selectedId: newSelectedId,
-      })
+      if (selectedId.includes(id))
+        setSelectedId(selectedId.filter(value => value !== id))
+      else setSelectedId([...selectedId, id])
     }
   }
 
@@ -34,7 +23,7 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
           kind={kind}
           data={item}
           updateSelectedId={updateSelectedId}
-          selectedId={state.selectedId}
+          selectedId={selectedId}
         />
       ))}
     </StyledContainer>
