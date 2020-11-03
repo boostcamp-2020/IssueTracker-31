@@ -23,20 +23,22 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: pre setting
-        env:
-          SERVER_ID: ${{secrets.SERVER_ID}}
-          SERVER_PW: ${{secrets.SERVER_PW}}
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SERVER_PW" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
+      # - name: pre setting
+      #   env:
+      #     SERVER_ID: ${{secrets.SERVER_ID}}
+      #     SERVER_PW: ${{secrets.SERVER_PW}}
+      #   run: |
+      #     mkdir -p ~/.ssh/
+      #     echo "$SERVER_PW" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     ssh-keyscan github.com >> ~/.ssh/known_hosts
       
       - name: ssh
+        env:
+          SERVER_PW: ${{secrets.SERVER_PW}}
         run: |
-          ssh-keygen -R 115.85.181.174
-          ssh boostcamp@115.85.181.174
+          sudo apt-get install sshpass
+          sshpass -p "$SERVER_PW" boostcamp@115.85.181.174
       
       - name: test
         run: ls
