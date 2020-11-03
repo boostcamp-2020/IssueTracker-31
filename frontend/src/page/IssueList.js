@@ -1,11 +1,12 @@
 import React from 'react'
-import Header from '@Component/common/Header'
 import SearchBar from '@Component/IssueListPage/SearchBar'
+import IssueFilter from '@Component/IssueListPage/IssueFilter'
 
 const IssueListPage = props => {
   return (
     <>
       <SearchBar />
+      <IssueFilter />
     </>
   )
 }
