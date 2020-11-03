@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import PopUp from '@Component/common/PopUp'
+import { issueListContext } from '@Page/IssueList'
 
 const FilterSelector = ({ type }) => {
   const popupProps = getPopUpProps(type)
@@ -16,7 +17,7 @@ const FilterSelector = ({ type }) => {
         <PopUp
           title={popupProps.title}
           kind={popupProps.kind}
-          data={[]}
+          data={popupProps.data ? popupProps.data : []}
         ></PopUp>
       </StyledDetailsMenu>
     </StyledDetail>
@@ -24,15 +25,25 @@ const FilterSelector = ({ type }) => {
 }
 
 const getPopUpProps = type => {
+  const data = useContext(issueListContext)
+
   switch (type) {
     case 'Author':
-      return { title: 'Filter by author', kind: 'user' }
+      return { title: 'Filter by author', kind: 'user', data: data.users }
     case 'Label':
-      return { title: 'Filter by label', kind: 'label' }
+      return { title: 'Filter by label', kind: 'label', data: data.labels }
     case 'Milestones':
-      return { title: 'Filter by milestone', kind: 'milestone' }
+      return {
+        title: 'Filter by milestone',
+        kind: 'milestone',
+        data: data.milestones,
+      }
     case 'Assignee':
-      return { title: "Filter by who' assigned", kind: 'user' }
+      return {
+        title: "Filter by who' assigned",
+        kind: 'user',
+        data: data.users,
+      }
     case 'Projects':
       return { title: 'Filter by project' }
     case 'Sort':
