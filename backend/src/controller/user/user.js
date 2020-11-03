@@ -88,9 +88,19 @@ const verifyToken = (req, res) => {
   }
 }
 
+const verifyMiddelware = (req, res, next) => {
+  try {
+    jwt.verify(req.cookies.user, process.env.JWT_KEY)
+    next()
+  } catch (err) {
+    res.redirect(`${process.env.FRONTEND_HOST}/login`)
+  }
+}
+
 export default {
   githubLogin,
   handleGithubCallback,
   getUsers,
   verifyToken,
+  verifyMiddelware,
 }
