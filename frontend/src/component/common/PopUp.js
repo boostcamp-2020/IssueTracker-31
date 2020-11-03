@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
+import { issueListContext } from '@Page/IssueList'
 
 const PopUp = ({ kind, title, data, multiSelect = false }) => {
-  const [selectedId, setSelectedId] = useState([])
+  const { conditions, setConditions } = useContext(issueListContext)
 
   const updateSelectedId = id => {
-    if (!multiSelect) {
-      setSelectedId([id])
-    } else {
-      if (selectedId.includes(id))
-        setSelectedId(selectedId.filter(value => value !== id))
-      else setSelectedId([...selectedId, id])
+    const newConditions = { ...conditions }
+    if (!multiSelect) newConditions[kind] = [id]
+    else {
+      if (conditions[kind].includes(id))
+        newConditions[kind] = newConditions[kind].filter(value => value != id)
+      else newConditions[kind] = [...newConditions[kind], id]
     }
+    setConditions(newConditions)
   }
 
   return (
@@ -23,7 +25,7 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
           kind={kind}
           data={item}
           updateSelectedId={updateSelectedId}
-          selectedId={selectedId}
+          selectedId={conditions[kind]}
         />
       ))}
     </StyledContainer>
