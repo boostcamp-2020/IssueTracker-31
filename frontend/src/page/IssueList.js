@@ -6,6 +6,13 @@ import { getMilestones } from '@Api/milestone'
 
 export const issueListContext = createContext()
 
+const useFetch = (requestFn, setFn) => {
+  useEffect(async () => {
+    const response = await requestFn()
+    setFn(response)
+  }, [])
+}
+
 const IssueListPage = props => {
   const [users, setUsers] = useState([])
   const [labels, setLabels] = useState([])
