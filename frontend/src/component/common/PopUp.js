@@ -7,11 +7,20 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
 
   const updateSelectedId = id => {
     const newConditions = { ...conditions }
-    if (!multiSelect) newConditions[kind] = [id]
+    if (id === 0) newConditions[kind] = [id]
     else {
-      if (conditions[kind].includes(id))
-        newConditions[kind] = newConditions[kind].filter(value => value != id)
-      else newConditions[kind] = [...newConditions[kind], id]
+      if (!multiSelect) {
+        if (newConditions[kind].includes(id)) newConditions[kind] = []
+        else newConditions[kind] = [id]
+      } else {
+        if (conditions[kind].includes(0))
+          newConditions[kind] = newConditions[kind].filter(value => value !== 0)
+        if (conditions[kind].includes(id)) {
+          newConditions[kind] = newConditions[kind].filter(
+            value => value !== id,
+          )
+        } else newConditions[kind] = [...newConditions[kind], id]
+      }
     }
     setConditions(newConditions)
   }

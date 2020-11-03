@@ -26,24 +26,31 @@ const FilterSelector = ({ type, multiSelect = false }) => {
 }
 
 const getPopUpProps = type => {
-  const data = useContext(issueListContext)
+  const context = useContext(issueListContext)
 
   switch (type) {
     case 'Author':
-      return { title: 'Filter by author', kind: 'user', data: data.users }
+      return { title: 'Filter by author', kind: 'user', data: context.users }
     case 'Label':
-      return { title: 'Filter by label', kind: 'label', data: data.labels }
+      return {
+        title: 'Filter by label',
+        kind: 'label',
+        data: [{ id: 0, name: 'Unlabeled' }, ...context.labels],
+      }
     case 'Milestones':
       return {
         title: 'Filter by milestone',
         kind: 'milestone',
-        data: data.milestones,
+        data: [
+          { id: 0, title: 'Issues with no milestone' },
+          ...context.milestones,
+        ],
       }
     case 'Assignee':
       return {
         title: "Filter by who' assigned",
         kind: 'user',
-        data: data.users,
+        data: context.users, // [{ id: 0, nickname: 'Assigned to nobody' }, ...context.users], // error no user data
       }
     case 'Projects':
       return { title: 'Filter by project' }
