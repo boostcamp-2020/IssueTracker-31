@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npx webpack",
     "dev": "cross-env NODE_ENV=development npx webpack-dev-server  --progress",
     "test": "jest",
     "watch": "jest --watchAll"

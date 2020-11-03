@@ -10,6 +10,8 @@ import Controller from './controller'
 
 const app = express()
 const port = process.env.PORT || 3000
+const publicPath = path.join(__dirname, '../../frontend/build')
+
 app.set('port', port)
 
 app.use(cors({ origin: true, credentials: true }))
@@ -17,9 +19,12 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(publicPath))
 
 app.use('/', Controller)
+app.get('*', (req, res) => {
+  res.sendFile(publicPath + '/index.html');
+})
 
 app.listen(port, err => {
   if (err) throw err
