@@ -2,11 +2,9 @@ import userService from '../../service/user'
 import errorResponse from '../../util/error-response'
 import qs from 'querystring'
 import rs from 'randomstring'
-import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
 import axios from 'axios'
-
-dotenv.config()
+import statusCode from '../../util/resMessage'
 
 const githubLogin = (req, res) => {
   const state = rs.generate()
@@ -45,18 +43,18 @@ const handleGithubCallback = (req, res) => {
       }
       axios
         .get('https://api.github.com/user', config)
-        .then(githubData => {
+        .then(({ data }) => {
           const jwtToken = jwt.sign(
             {
-              nickname: githubData.login,
-              email: githubData.email,
+              nickname: data.login,
+              email: data.email,
             },
             process.env.JWT_KEY,
             {
               expiresIn: '1h',
             },
           )
-          res.cookie('user', jwtToken, { maxAge: 3000 * 1000 })
+          res.cookie('user', jwtToken)
           res.redirect(
             process.env.NODE_ENV === 'devlopment'
               ? process.env.FRONTEND_HOST
@@ -78,8 +76,21 @@ const getUsers = async (req, res) => {
   }
 }
 
+const verifyToken = (req, res) => {
+  try {
+    jwt.verify(req.cookies.user, process.env.JWT_KEY)
+    return res.status(statusCode.OK).json({
+      success: true,
+    })
+  } catch (err) {
+    console.log(err)
+    errorResponse(err, res)
+  }
+}
+
 export default {
   githubLogin,
   handleGithubCallback,
   getUsers,
+  verifyToken,
 }
