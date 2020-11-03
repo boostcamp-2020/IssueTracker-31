@@ -37,7 +37,6 @@ jobs:
         env:
           SERVER_PW: ${{secrets.SERVER_PW}}
         run: |
-          sudo apt-get install sshpass
           sshpass -p "$SERVER_PW" boostcamp@115.85.181.174
       
       - name: test
