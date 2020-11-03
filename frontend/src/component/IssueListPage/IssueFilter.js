@@ -2,13 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import FilterSelector from './FilterSelector'
 
-const IssueFilter = props => {
+const IssueFilter = () => {
   return (
     <StyledIssueFilterContainer>
       <StyledCheckBox type="checkbox"></StyledCheckBox>
       <StyledFilterSelectorContainer>
         <FilterSelector type="Author" />
-        <FilterSelector type="Label" />
+        <FilterSelector type="Label" multiSelect />
         <FilterSelector type="Projects" />
         <FilterSelector type="Milestones" />
         <FilterSelector type="Assignee" />

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PopUp from '@Component/common/PopUp'
 import { issueListContext } from '@Page/IssueList'
 
-const FilterSelector = ({ type }) => {
+const FilterSelector = ({ type, multiSelect = false }) => {
   const popupProps = getPopUpProps(type)
   if (!popupProps) return false
 
@@ -18,6 +18,7 @@ const FilterSelector = ({ type }) => {
           title={popupProps.title}
           kind={popupProps.kind}
           data={popupProps.data ? popupProps.data : []}
+          multiSelect={multiSelect}
         ></PopUp>
       </StyledDetailsMenu>
     </StyledDetail>
