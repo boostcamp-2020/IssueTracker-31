@@ -38,6 +38,11 @@ jobs:
         with:
           command: |
             ls -a
+            cd IssueTracker-31
+            git pull origin dev
+            cd frontend
+            npm i
+            npm run dev
           host: ${{secrets.SERVER_HOST}}
           user: ${{secrets.SERVER_ID}}
           pass: ${{secrets.SERVER_PW}}
