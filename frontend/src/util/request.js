@@ -6,7 +6,7 @@ const GET = async (path, params = null) => {
       params,
       withCredentials: true,
     })
-    return response
+    return response.data
   } catch (err) {
     console.error(err)
   }
@@ -20,7 +20,7 @@ const POST = async (path, data, contentType = 'application/json') => {
       },
       withCredentials: true,
     })
-    return response
+    return response.data
   } catch (err) {
     console.error(err)
   }
@@ -32,7 +32,7 @@ const DELETE = async (path, params = null) => {
       params,
       withCredentials: true,
     })
-    return response
+    return response.data
   } catch (err) {
     console.error(err)
   }
@@ -46,7 +46,7 @@ const PATCH = async (path, data, contentType = 'application/json') => {
       },
       withCredentials: true,
     })
-    return response
+    return response.data
   } catch (err) {
     console.error(err)
   }
@@ -60,13 +60,13 @@ const PUT = async (path, data, contentType = 'application/json') => {
       },
       withCredentials: true,
     })
-    return response
+    return response.data
   } catch (err) {
     console.error(err)
   }
 }
 
-const requset = {
+const request = {
   GET,
   POST,
   DELETE,
@@ -74,4 +74,4 @@ const requset = {
   PUT,
 }
 
-export default requset
+export default request
