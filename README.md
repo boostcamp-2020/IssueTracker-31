@@ -14,7 +14,7 @@
 
 ## Issue Tracker
 
-GitHub의 Issue 탭을 구현합니다.
+GitHub의 Issue 탭을 구현합니다!
 
 ## Teammate 👨‍👩‍👦‍👦
 
