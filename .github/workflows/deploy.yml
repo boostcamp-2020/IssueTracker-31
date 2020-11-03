@@ -38,9 +38,9 @@ jobs:
         with:
           command: |
             ls -a
-        host: ${{secrets.SERVER_HOST}}
-        user: ${{secrets.SERVER_ID}}
-        pass: ${{secrets.SERVER_PW}}
+          host: ${{secrets.SERVER_HOST}}
+          user: ${{secrets.SERVER_ID}}
+          pass: ${{secrets.SERVER_PW}}
         
 
 
