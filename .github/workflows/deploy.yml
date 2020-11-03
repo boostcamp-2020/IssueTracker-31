@@ -37,7 +37,7 @@ jobs:
         env:
           SERVER_PW: ${{secrets.SERVER_PW}}
         run: |
-          sshpass -p "$SERVER_PW" ssh boostcamp@115.85.181.174
+          sshpass -p "$SERVER_PW" ssh -T boostcamp@115.85.181.174
       
       - name: test
         run: ls
