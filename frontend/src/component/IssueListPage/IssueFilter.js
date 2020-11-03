@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import FilterSelector from './FilterSelector'
+import { issueListContext } from '@Page/IssueList'
 
 const IssueFilter = () => {
+  const { issues, conditions } = useContext(issueListContext)
   return (
     <StyledIssueFilterContainer>
       <StyledCheckBox type="checkbox"></StyledCheckBox>
+      <StyledSpan isOpen={conditions.isOpen}>
+        {' '}
+        {issues.filter(value => value.isOpen).length} Open
+      </StyledSpan>
+      <StyledSpan isOpen={!conditions.isOpen}>
+        {' '}
+        {issues.filter(value => !value.isOpen).length} Closed
+      </StyledSpan>
       <StyledFilterSelectorContainer>
         <FilterSelector type="Author" />
         <FilterSelector type="Label" multiSelect />
@@ -48,6 +58,21 @@ const StyledFilterSelectorContainer = styled.div`
   flex: auto;
   font-size: 14px;
   line-height: 1.5;
+`
+const StyledSpan = styled.span`
+  display: inline-block;
+  margin-right: 10px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  background-color: initial;
+  border: 0;
+  appearance: none;
+  color: ${({ isOpen }) => (isOpen ? '#000000' : '#586069')};
+  line-height: 21px;
 `
 
 export default IssueFilter

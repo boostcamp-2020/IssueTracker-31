@@ -74,7 +74,7 @@ const StyledSummary = styled.summary`
   padding: 0;
   color: #586069;
   list-style: none;
-  font-size: inherit;
+  font-size: 14px;
   text-decoration: none;
   cursor: pointer;
   user-select: none;
