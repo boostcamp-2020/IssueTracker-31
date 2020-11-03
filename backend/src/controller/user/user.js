@@ -4,7 +4,7 @@ import qs from 'querystring'
 import rs from 'randomstring'
 import jwt from 'jsonwebtoken'
 import axios from 'axios'
-import statusCode from '../../util/resMessage'
+import statusCode from '../../util/statusCode'
 
 const githubLogin = (req, res) => {
   const state = rs.generate()
@@ -78,9 +78,10 @@ const getUsers = async (req, res) => {
 
 const verifyToken = (req, res) => {
   try {
-    jwt.verify(req.cookies.user, process.env.JWT_KEY)
+    const decoded = jwt.verify(req.cookies.user, process.env.JWT_KEY)
     return res.status(statusCode.OK).json({
       success: true,
+      decoded,
     })
   } catch (err) {
     console.log(err)
