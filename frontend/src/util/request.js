@@ -1,12 +1,22 @@
 import axios from 'axios'
 
+const baseURL =
+  process.env.NODE_ENV === 'production'
+    ? 'http://127.0.0.1:3000'
+    : 'http://127.0.0.1:3000'
+
+const options = {
+  withCredentials: true,
+  baseURL,
+}
+
 const GET = async (path, params = null) => {
   try {
     const response = await axios.get(path, {
       params,
-      withCredentials: true,
+      ...options,
     })
-    return response
+    return response.data
   } catch (err) {
     console.error(err)
   }
@@ -18,9 +28,9 @@ const POST = async (path, data, contentType = 'application/json') => {
       headers: {
         'Content-Type': contentType,
       },
-      withCredentials: true,
+      ...options,
     })
-    return response
+    return response.data
   } catch (err) {
     console.error(err)
   }
@@ -30,9 +40,9 @@ const DELETE = async (path, params = null) => {
   try {
     const response = await axios.delete(path, {
       params,
-      withCredentials: true,
+      ...options,
     })
-    return response
+    return response.data
   } catch (err) {
     console.error(err)
   }
@@ -44,9 +54,9 @@ const PATCH = async (path, data, contentType = 'application/json') => {
       headers: {
         'Content-Type': contentType,
       },
-      withCredentials: true,
+      ...options,
     })
-    return response
+    return response.data
   } catch (err) {
     console.error(err)
   }
@@ -58,15 +68,15 @@ const PUT = async (path, data, contentType = 'application/json') => {
       headers: {
         'Content-Type': contentType,
       },
-      withCredentials: true,
+      ...options,
     })
-    return response
+    return response.data
   } catch (err) {
     console.error(err)
   }
 }
 
-const requset = {
+const request = {
   GET,
   POST,
   DELETE,
@@ -74,4 +84,4 @@ const requset = {
   PUT,
 }
 
-export default requset
+export default request
