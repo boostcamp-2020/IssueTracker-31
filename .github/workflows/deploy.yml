@@ -33,14 +33,14 @@ jobs:
       #     chmod 600 ~/.ssh/id_rsa
       #     ssh-keyscan github.com >> ~/.ssh/known_hosts
       
-      - name: ssh
-        env:
-          SERVER_PW: ${{secrets.SERVER_PW}}
-        run: |
-          sshpass -p "$SERVER_PW" ssh -tt boostcamp@115.85.181.174
-      
-      - name: test
-        run: ls
+      - name: ls -a via ssh
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            ls -a
+        host: ${{secrets.SERVER_HOST}}
+        user: ${{secrets.SERVER_ID}}
+        pass: ${{secrets.SERVER_PW}}
         
 
 
