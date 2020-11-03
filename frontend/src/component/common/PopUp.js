@@ -71,10 +71,12 @@ const StyledContainer = styled.div`
   display: inline-block;
   margin-top: 4px;
   margin-bottom: 20px;
+  background-color: #ffffff;
   border: 1px solid #e8eaef;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px 0px;
   overflow: hidden;
+  z-index: 10;
 `
 const StyledHeader = styled.header`
   padding: 8px 10px;
@@ -160,6 +162,7 @@ const StyledCheckSpan = styled.span`
   vertical-align: middle;
   overflow: hidden;
   font-size: 16px;
+  line-height: 1;
 `
 
 export default PopUp
