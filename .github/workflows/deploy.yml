@@ -21,17 +21,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      # - name: pre setting
-      #   env:
-      #     SERVER_ID: ${{secrets.SERVER_ID}}
-      #     SERVER_PW: ${{secrets.SERVER_PW}}
-      #   run: |
-      #     mkdir -p ~/.ssh/
-      #     echo "$SERVER_PW" > ~/.ssh/id_rsa
-      #     chmod 600 ~/.ssh/id_rsa
-      #     ssh-keyscan github.com >> ~/.ssh/known_hosts
       
       - name: ls -a via ssh
         uses: fifsky/ssh-action@master
