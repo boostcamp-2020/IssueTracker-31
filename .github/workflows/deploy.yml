@@ -35,6 +35,7 @@ jobs:
       
       - name: ssh
         run: |
+          ssh-keygen -R 115.85.181.174
           ssh boostcamp@115.85.181.174
       
       - name: test
