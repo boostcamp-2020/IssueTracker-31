@@ -56,6 +56,15 @@ const getPopUpProps = type => {
       return { title: 'Filter by project' }
     case 'Sort':
       return { title: 'Sort by' }
+    case 'Mark as':
+      return {
+        title: 'Action',
+        kind: 'markAs',
+        data: [
+          { id: 1, text: 'Open' },
+          { id: 2, text: 'Closed' },
+        ],
+      }
     default:
       return false
   }
