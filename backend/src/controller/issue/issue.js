@@ -10,7 +10,17 @@ const getIssues = async (req, res) => {
     errorResponse(err, res)
   }
 }
+const postIssue = async (req, res) => {
+  const newIssueData = req.body
+  try {
+    await issueService.postIssue(newIssueData)
+    return res.json({ success: true })
+  } catch (err) {
+    errorResponse(err, res)
+  }
+}
 
 export default {
   getIssues,
+  postIssue,
 }
