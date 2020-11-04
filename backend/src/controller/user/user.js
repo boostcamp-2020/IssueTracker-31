@@ -5,7 +5,6 @@ import rs from 'randomstring'
 import jwt from 'jsonwebtoken'
 import axios from 'axios'
 import statusCode from '../../util/statusCode'
-import db from '../../model/index'
 
 const githubLogin = (req, res) => {
   const state = rs.generate()
