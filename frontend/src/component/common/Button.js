@@ -1,13 +1,14 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { IssueListContext } from '@Page/IssueList'
+import { issueListContext } from '@Page/IssueList'
 
 const Button = ({ name, selected }) => {
-  const context = useContext(IssueListContext)
+  const context = useContext(issueListContext)
+
   const { style, to, count, symbol } = getButtonProps(name, context, selected)
   return (
-    <StyledLink to={to} styleProp={style}>
+    <StyledLink to={to} styles={style}>
       {symbol ? <Symbol svg={symbol} /> : ''}
       <span>{name}</span>
       {count !== undefined ? <StyledSpan>{count}</StyledSpan> : ''}
@@ -22,13 +23,13 @@ const Symbol = ({ svg }) => (
 )
 
 const StyledLink = styled(Link)`
-  ${({ styleProp }) => `
-    color: ${styleProp.color};
-    background: ${styleProp.backgroundColor};
+  ${({ styles }) => `
+    color: ${styles.color};
+    background: ${styles.backgroundColor};
     text-decoration : none;
     cursor: pointer;
     border: 1px solid #e1e4e8;
-    border-radius: ${styleProp.borderRadius};
+    border-radius: ${styles.borderRadius};
     position: relative;
     float: left;
     padding: 5px 16px;
@@ -37,9 +38,9 @@ const StyledLink = styled(Link)`
     box-sizing: border-box;
     white-space: nowrap!important;
     ${
-      !styleProp.selected
+      !styles.selected
         ? `&:hover {
-      background-color: ${styleProp.hoverColor};`
+      background-color: ${styles.hoverColor};`
         : ''
     }
     `}
