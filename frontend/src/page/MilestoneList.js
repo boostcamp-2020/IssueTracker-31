@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Milestone = ({ name, selected }) => {
+const MilestoneListPage = () => {
   return <h1>Milestone Page</h1>
 }
 
-export default Milestone
+export default MilestoneListPage
