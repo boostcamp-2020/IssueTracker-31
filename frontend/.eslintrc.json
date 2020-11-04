@@ -11,6 +11,6 @@
   "rules": {
     "semi": ["error", "never"],
     "quotes": ["error", "single"]
-  },
-  "endOfLine": "auto"
+  }
+
 }
