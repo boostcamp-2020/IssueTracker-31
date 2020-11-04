@@ -30,7 +30,7 @@ const LabelPage = () => {
       ))}
       <StyledContainer>
         <StyledButtonContainer>
-          <TabButton></TabButton>
+          <TabButton clicked="label"></TabButton>
           <NewLabelButton></NewLabelButton>
         </StyledButtonContainer>
         <LabelList></LabelList>

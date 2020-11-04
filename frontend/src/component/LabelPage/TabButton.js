@@ -2,20 +2,20 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import Button from '@Component/common/Button'
 
-const TabButton = () => {
+const TabButton = ({ clicked }) => {
   return (
     <StyledTabButtonContainer>
       <Button
         buttonName="Labels"
         targetLocation="/labels"
-        backgroundColor="#0366d6"
-        color="#ffffff"
+        backgroundColor={clicked === 'label' ? '#0366d6' : '#ffffff'}
+        color={clicked === 'label' ? '#ffffff' : '#000000'}
       />
       <Button
         buttonName="Milestones"
         targetLocation="/milestones"
-        backgroundColor="#ffffff"
-        color="#000000"
+        backgroundColor={clicked === 'milestone' ? '#0366d6' : '#ffffff'}
+        color={clicked === 'milestone' ? '#ffffff' : '#000000'}
       />
     </StyledTabButtonContainer>
   )
