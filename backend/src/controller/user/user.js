@@ -5,6 +5,7 @@ import rs from 'randomstring'
 import jwt from 'jsonwebtoken'
 import axios from 'axios'
 import statusCode from '../../util/statusCode'
+import db from '../../model/index'
 
 const githubLogin = (req, res) => {
   const state = rs.generate()
@@ -19,7 +20,7 @@ const githubLogin = (req, res) => {
   res.send(githubAuthUrl)
 }
 
-const handleGithubCallback = (req, res) => {
+const handleGithubCallback = async (req, res) => {
   const code = req.query.code
   const returnedState = req.query.state
   const githubUrl = 'https://github.com/login/oauth/access_token?'
@@ -32,38 +33,61 @@ const handleGithubCallback = (req, res) => {
   })
   const authUrl = githubUrl + query
 
-  axios
-    .post(authUrl)
-    .then(result => {
-      const config = {
-        headers: {
-          Authorization: 'token ' + qs.parse(result.data).access_token,
-          'User-Agent': 'Login-App',
-        },
+  try {
+    const loginData = await axios.post(authUrl)
+    const config = {
+      headers: {
+        Authorization: 'token ' + qs.parse(loginData.data).access_token,
+        'User-Agent': 'Login-App',
+      },
+    }
+    const { data } = await axios.get('https://api.github.com/user', config)
+    try {
+      const nickname = data.login
+      const user = await userService.findUser(nickname)
+      if (user.length === 1) {
+        const jwtToken = jwt.sign(
+          {
+            id: user[0].id,
+            nickname: data.login,
+            email: data.email,
+          },
+          process.env.JWT_KEY,
+          {
+            expiresIn: '1h',
+          },
+        )
+        res.cookie('user', jwtToken)
+        res.cookie('nickname', data.login)
+      } else if (user.length === 0) {
+        const userId = await userService.storeUser(data)
+        const jwtToken = jwt.sign(
+          {
+            id: userId,
+            nickname: data.login,
+            email: data.email,
+          },
+          process.env.JWT_KEY,
+          {
+            expiresIn: '1h',
+          },
+        )
+        res.cookie('user', jwtToken)
+        res.cookie('nickname', data.login)
       }
-      axios
-        .get('https://api.github.com/user', config)
-        .then(({ data }) => {
-          const jwtToken = jwt.sign(
-            {
-              nickname: data.login,
-              email: data.email,
-            },
-            process.env.JWT_KEY,
-            {
-              expiresIn: '1h',
-            },
-          )
-          res.cookie('user', jwtToken)
-          res.redirect(
-            process.env.NODE_ENV === 'devlopment'
-              ? process.env.FRONTEND_HOST
-              : process.env.FRONTEND_HOST,
-          )
-        })
-        .catch(error => console.log(error))
-    })
-    .catch(error => console.log(error))
+      res.redirect(
+        process.env.NODE_ENV === 'development'
+          ? process.env.FRONTEND_HOST
+          : process.env.PRODUCTION_HOST,
+      )
+    } catch (err) {
+      console.log(err)
+      errorResponse(err, res)
+    }
+  } catch (err) {
+    console.log(err)
+    errorResponse(err, res)
+  }
 }
 
 const getUsers = async (req, res) => {
@@ -91,7 +115,8 @@ const verifyToken = (req, res) => {
 
 const verifyMiddelware = (req, res, next) => {
   try {
-    jwt.verify(req.cookies.user, process.env.JWT_KEY)
+    const decoded = jwt.verify(req.cookies.user, process.env.JWT_KEY)
+    req.userData = decoded
     next()
   } catch (err) {
     res.redirect(`${process.env.FRONTEND_HOST}/login`)
