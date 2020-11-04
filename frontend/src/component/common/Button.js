@@ -5,19 +5,18 @@ import { issueListContext } from '@Page/IssueList'
 
 const Button = ({ name, selected }) => {
   const context = useContext(issueListContext)
-
   const { style, to, count, symbol } = getButtonProps(name, context, selected)
   return (
     <StyledLink to={to} styles={style}>
-      {symbol ? <Symbol svg={symbol} /> : ''}
+      {symbol ? <Symbol svg={symbol} selected={selected} /> : ''}
       <span>{name}</span>
       {count !== undefined ? <StyledSpan>{count}</StyledSpan> : ''}
     </StyledLink>
   )
 }
 
-const Symbol = ({ svg }) => (
-  <StyledSvg viewBox="0 0 16 16" width="16" height="16">
+const Symbol = ({ svg, selected }) => (
+  <StyledSvg viewBox="0 0 16 16" width="16" height="16" selected={selected}>
     <path fill-rule="evenodd" d={svg}></path>
   </StyledSvg>
 )
@@ -63,13 +62,15 @@ const StyledSpan = styled.span`
 `
 
 const StyledSvg = styled.svg`
+  ${({ selected }) => `
   box-sizing: border-box;
-  color: #24292e;
+  fill: ${selected ? '#ffffff' : '#24292e'};
   cursor: pointer;
   transform-origin: 0px 0px;
   vertical-align: text-bottom;
   overflow: hidden;
   margin-right: 7px;
+  `}
 `
 
 const getButtonProps = (name, context, selected) => {
@@ -88,9 +89,9 @@ const getButtonProps = (name, context, selected) => {
       break
 
     case 'Labels':
-      props.style.color = '#24292e'
+      props.style.color = selected ? '#ffffff' : '#24292e'
       props.style.borderRadius = '6px 0px 0px 6px'
-      props.style.backgroundColor = '#ffffff'
+      props.style.backgroundColor = selected ? '#005cc5' : '#ffffff'
       props.style.hoverColor = '#e1e4e8'
       props.to = '/labels'
       props.count = context.labels.length
@@ -99,9 +100,9 @@ const getButtonProps = (name, context, selected) => {
       break
 
     case 'Milestones':
-      props.style.color = '#24292e'
+      props.style.color = selected ? '#ffffff' : '#24292e'
       props.style.borderRadius = '0px 6px 6px 0px'
-      props.style.backgroundColor = '#ffffff'
+      props.style.backgroundColor = selected ? '#005cc5' : '#ffffff'
       props.style.hoverColor = '#e1e4e8'
       props.to = '/milestones'
       props.count = context.milestones.filter(m => m.isOpen).length
