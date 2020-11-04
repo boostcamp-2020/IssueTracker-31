@@ -22,6 +22,5 @@ it('renders button correctly', () => {
       <Button name={'New Issue'} selected={undefined} />
     </MemoryRouter>,
   )
-  console.log(container.innerHTML)
   expect(container).toHaveTextContent('New Issue')
 })
