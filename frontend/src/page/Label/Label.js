@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react'
-import TabButton from '@Component/LabelPage/TabButton'
+import TabButton from '@Component/common/TabButton'
 import LabelList from '@Component/LabelPage/LabelList'
 import { getLabels } from '@Api/label'
 import styled from 'styled-components'
