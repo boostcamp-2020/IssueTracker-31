@@ -6,18 +6,10 @@ import { getMilestones } from '@Api/milestone'
 
 export const issueListContext = createContext()
 
-const useFetch = (requestFn, setFn, setConditions) => {
+const useFetch = (requestFn, setFn) => {
   useEffect(async () => {
     const response = await requestFn()
     setFn(response)
-    setConditions({
-      author: [],
-      label: [1, 2],
-      assignee: [],
-      milestone: [2],
-      isOpen: true,
-    })
-    console.log('test')
   }, [])
 }
 
@@ -34,8 +26,8 @@ const IssueListPage = props => {
   })
 
   // useFetch(getUsers, setUsers) // TODO
-  useFetch(getLabels, setLabels, setConditions)
-  useFetch(getMilestones, setMilestones, setConditions)
+  useFetch(getLabels, setLabels)
+  useFetch(getMilestones, setMilestones)
 
   return (
     <issueListContext.Provider
