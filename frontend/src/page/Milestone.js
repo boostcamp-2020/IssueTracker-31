@@ -34,7 +34,6 @@ const MilestonePage = () => {
 }
 
 const StyledContainer = styled.div`
-  width: 500px;
   max-width: 1280px;
   margin: 32px auto;
   padding-right: 32px;

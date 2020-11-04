@@ -8,7 +8,7 @@ import CloseIcon from '@Public/js/CloseIcon'
 function MilestoneList() {
   const { milestones } = useContext(milestoneContext)
   return (
-    <StyledContainer>
+    <div>
       <StyledHeader>
         <StyledFilter>
           <StyledFilterItem>
@@ -22,11 +22,9 @@ function MilestoneList() {
       {milestones.map(milestone => (
         <Milestone key={milestone.id} data={milestone}></Milestone>
       ))}
-    </StyledContainer>
+    </div>
   )
 }
-
-const StyledContainer = styled.div``
 
 const StyledHeader = styled.header`
   position: relative;
