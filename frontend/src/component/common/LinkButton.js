@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react'
 import styled from 'styled-components'
 import Button from './Button'
 
-const LinkButton = ({page}) => {
+const LinkButton = ({ page }) => {
   return (
     <StyledNav>
-      <Button name={"Labels"} selected={page === "labels"} />
-      <Button name={"Milestones"} selected={page === "milestones"} />
+      <Button name={'Labels'} selected={page === 'labels'} />
+      <Button name={'Milestones'} selected={page === 'milestones'} />
     </StyledNav>
-  );
-};
+  )
+}
 
 const StyledNav = styled.nav`
   box-sizing: border-box;
@@ -21,6 +21,6 @@ const StyledNav = styled.nav`
   line-height: 1.5;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
     sans-serif, Apple Color Emoji, Segoe UI Emoji;
-`;
+`
 
 export default LinkButton
