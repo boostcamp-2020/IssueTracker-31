@@ -23,7 +23,7 @@ app.use(express.static(publicPath))
 
 app.use('/', Controller)
 app.get('*', (req, res) => {
-  res.sendFile(publicPath + '/index.html');
+  res.sendFile(publicPath + '/index.html')
 })
 
 app.listen(port, err => {
