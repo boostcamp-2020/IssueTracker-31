@@ -3,7 +3,7 @@ import ReactDom from 'react-dom'
 import { BrowserRouter, Route } from 'react-router-dom'
 import IssueListPage from '@Page/IssueList'
 import Login from '@Page/Login'
-import LabelPage from '@Page/Label'
+import LabelPage from '@Page/Label/Label'
 import Header from './component/common/Header'
 const root = document.getElementById('root')
 const App = () => {

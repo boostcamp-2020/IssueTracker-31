@@ -8,10 +8,11 @@ export const labelContext = createContext()
 
 const fetchData = async (requestFn, setFn) => {
   const response = await requestFn()
+  console.log(response)
   setFn(response)
 }
 
-const LabelPage = props => {
+const LabelPage = () => {
   const [labels, setLabels] = useState([])
 
   useEffect(() => {
@@ -20,9 +21,14 @@ const LabelPage = props => {
 
   return (
     <labelContext.Provider value={{ labels, setLabels }}>
+      {labels.map(label => (
+        <li key={label.id}>
+          {label.name}, {label.description}
+        </li>
+      ))}
       <TabButton></TabButton>
       <NewLabelButton></NewLabelButton>
-      <LabelList>{labels}</LabelList>
+      <LabelList></LabelList>
     </labelContext.Provider>
   )
 }
