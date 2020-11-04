@@ -4,6 +4,7 @@ import NewLabelButton from '@Component/LabelPage/NewLabelButton'
 import LabelList from '@Component/LabelPage/LabelList'
 import { getLabels } from '@Api/label'
 import styled from 'styled-components'
+import Button from '@Component/common/Button'
 
 export const labelContext = createContext()
 
@@ -31,7 +32,7 @@ const LabelPage = () => {
       <StyledContainer>
         <StyledButtonContainer>
           <TabButton clicked="label"></TabButton>
-          <NewLabelButton></NewLabelButton>
+          <Button buttonName="New Label" />
         </StyledButtonContainer>
         <LabelList></LabelList>
       </StyledContainer>
