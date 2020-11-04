@@ -4,7 +4,7 @@ import milestoneController from './milestone'
 const router = express.Router()
 
 router.get('/', milestoneController.read)
-/* deprecated *//
+/* deprecated */
 //router.get('/detail', milestoneController.readDetail)
 
 module.exports = router
