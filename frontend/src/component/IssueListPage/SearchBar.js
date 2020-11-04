@@ -5,7 +5,7 @@ import { issueListContext } from '@Page/IssueList'
 const SearchBar = () => {
   const { users, labels, milestones, conditions } = useContext(issueListContext)
   const [filteredString, setFilteredString] = useState('')
-  const popupData = [
+  const popUpData = [
     {
       id: 1,
       text: 'open issues and pull reuests',
@@ -20,31 +20,35 @@ const SearchBar = () => {
     setFilteredString(filterConditionToString(conditions))
   }, [conditions])
 
-  const filterConditionToString = ({
-    author: filteredAuthor,
-    label: filteredLabel,
-    assignee: filteredAssignee,
-    milestone: filteredMilestone,
-    isOpen,
-  }) => {
-    const result = []
-    result.push(createString(users, filteredAuthor, 'nickname', 'author'))
-    result.push(createString(users, filteredAssignee, 'nickname', 'assignee'))
-    result.push(
-      createString(milestones, filteredMilestone, 'title', 'milestone'),
-    )
-    result.push(createString(labels, filteredLabel, 'name', 'label'))
-    if (isOpen) result.push(`is:open`)
-    else result.push(`is:close`)
+  const filterConditionToString = condition => {
+    const keys = Object.keys(condition)
+    const result = [
+      condition.isOpen ? 'is:open' : 'is:close',
+      keys
+        .map(key =>
+          targetOfConcern[key]
+            ? createString(...targetOfConcern[key], condition[key], key)
+            : '',
+        )
+        .join(''),
+    ]
     return result.join(' ')
   }
-  const createString = (store, selectedCondition, info, condition) => {
+
+  const targetOfConcern = {
+    author: [users, 'nickname'],
+    assignee: [users, 'nickname'],
+    milestone: [milestones, 'title'],
+    label: [labels, 'name'],
+  }
+
+  const createString = (store, info, selectedCondition, condition) => {
     if (selectedCondition.includes(0)) return `no:${condition}`
     else
       return store
         .filter(target => selectedCondition.includes(target.id))
-        .map(filtered => `${condition}:${filtered[info]}`)
-        .join(' ')
+        .map(filtered => `${condition}:${filtered[info]} `)
+        .join('')
   }
   return (
     <StyledSeacrchBarContainer>
@@ -54,7 +58,7 @@ const SearchBar = () => {
           <StyledSpan></StyledSpan>
         </StyledSummary>
         <StyledDetailsMenu>
-          <PopUp title="Filter issues" kind="text" data={popupData}></PopUp>
+          <PopUp title="Filter issues" kind="text" data={popUpData}></PopUp>
         </StyledDetailsMenu>
       </details>
       <input type="text" readOnly value={filteredString} />
