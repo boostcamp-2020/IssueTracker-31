@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react'
 import SearchBar from '@Component/IssueListPage/SearchBar'
 import IssueFilter from '@Component/IssueListPage/IssueFilter'
+import Button from '@Component/common/Button'
+import LinkButton from '@Component/common/LinkButton'
 import { getLabels } from '@Api/label'
 import { getMilestones } from '@Api/milestone'
 
@@ -26,6 +28,8 @@ const IssueListPage = props => {
     <issueListContext.Provider value={{ users, labels, milestones }}>
       <SearchBar />
       <IssueFilter />
+      <Button name={"New Issue"} />
+      <LinkButton />
     </issueListContext.Provider>
   )
 }
