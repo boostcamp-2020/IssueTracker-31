@@ -19,6 +19,8 @@ const getMilestone = async () => {
   }
 }
 
+/* deprecated */
+/*
 const getMilestoneDetail = async () => {
   try {
     const milestones = await db.getMilestoneDetail()
@@ -35,8 +37,8 @@ const getMilestoneDetail = async () => {
     }
   }
 }
+*/
 
 export default {
   getMilestone,
-  getMilestoneDetail,
 }

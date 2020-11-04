@@ -18,6 +18,8 @@ const read = async (req, res) => {
   }
 }
 
+/* deprecated */
+/*
 const readDetail = async (req, res) => {
   try {
     const {
@@ -33,8 +35,8 @@ const readDetail = async (req, res) => {
       .json({ success: false, message: resMessage.INTERNAL_SERVER_ERROR })
   }
 }
+*/
 
 export default {
   read,
-  readDetail,
 }

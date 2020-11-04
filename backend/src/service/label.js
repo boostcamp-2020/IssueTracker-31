@@ -11,6 +11,7 @@ const getLabel = async () => {
       data: labels,
     }
   } catch (e) {
+    console.log(e)
     return {
       code: statusCode.DB_ERROR,
       success: false,
