@@ -28,7 +28,7 @@ const IssueListPage = props => {
     <issueListContext.Provider value={{ users, labels, milestones }}>
       <SearchBar />
       <IssueFilter />
-      <Button name={"New Issue"} />
+      <Button name={'New Issue'} />
       <LinkButton />
     </issueListContext.Provider>
   )
