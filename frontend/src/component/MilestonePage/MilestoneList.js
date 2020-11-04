@@ -10,8 +10,14 @@ function MilestoneList() {
   return (
     <StyledContainer>
       <StyledHeader>
-        <OpenIcon /> {milestones.length} Open
-        <CloseIcon /> {milestones.length} Close
+        <StyledFilter>
+          <StyledFilterItem>
+            <OpenIcon /> {milestones.length} Open
+          </StyledFilterItem>
+          <StyledFilterItem>
+            <CloseIcon /> {milestones.length} Close
+          </StyledFilterItem>
+        </StyledFilter>
       </StyledHeader>
       {milestones.map(milestone => (
         <Milestone key={milestone.id} data={milestone}></Milestone>
@@ -31,6 +37,27 @@ const StyledHeader = styled.header`
   border-radius: 6px 6px 0 0;
   font-size: 14px;
   line-height: 1.5;
+`
+
+const StyledFilter = styled.div`
+  padding-left: 6px;
+`
+
+const StyledFilterItem = styled.div`
+  position: relative;
+  display: inline-block;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  color: #24292e;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  background-color: initial;
+  border: 0;
+  appearance: none;
+  margin-left: 10px;
 `
 
 export default MilestoneList
