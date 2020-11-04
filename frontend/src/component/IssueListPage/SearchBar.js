@@ -3,24 +3,42 @@ import styled from 'styled-components'
 import PopUp from '../common/PopUp'
 import { issueListContext } from '@Page/IssueList'
 const SearchBar = () => {
-  const { users, labels, milestones, conditions } = useContext(issueListContext)
+  const { users, labels, milestones, conditions, setConditions } = useContext(
+    issueListContext,
+  )
   const [filteredString, setFilteredString] = useState('')
   const popUpData = [
+    { id: 1, text: 'your issues', concern: 'author' },
     {
-      id: 1,
-      text: 'open issues and pull reuests',
+      id: 2,
+      text: 'everything assinged to you',
+      concern: 'assignee',
     },
-    { id: 2, text: 'your issues' },
-    { id: 3, text: 'your pull requests' },
-    { id: 4, text: 'everything assinged to you' },
-    { id: 5, text: 'everything mentioning to you' },
   ]
+
+  const initializeCondition = {
+    author: [],
+    label: [],
+    assignee: [],
+    milestone: [],
+    isOpen: true,
+  }
 
   useEffect(() => {
     setFilteredString(filterConditionToString(conditions))
   }, [conditions])
 
+  const filterAction = id => {
+    const key = popUpData.find(v => v.id === id).concern
+    return {
+      ...initializeCondition,
+      ...{ [key]: [2] },
+      // TODO user id를 어디에 저장할 지에 따라 결정되는 로직
+    }
+  }
+
   const filterConditionToString = condition => {
+    if (condition.text) setConditions(filterAction(...condition.text))
     const keys = Object.keys(condition)
     const result = [
       condition.isOpen ? 'is:open' : 'is:close',
