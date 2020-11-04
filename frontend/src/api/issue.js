@@ -6,8 +6,4 @@ const getIssues = async filterQuery => {
   return data
 }
 
-const issueApi = {
-  getIssues,
-}
-
-export default issueApi
+export { getIssues }
