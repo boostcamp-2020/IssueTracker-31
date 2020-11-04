@@ -41,24 +41,19 @@ const handleGithubCallback = async (req, res) => {
       },
     }
     const { data } = await axios.get('https://api.github.com/user', config)
-    try {
-      const nickname = data.login
-      const [user] = await userService.findUser(nickname)
-      if (user) res.cookie('user', createToken(user.id, data.login, data.email))
-      else {
-        const userId = await userService.storeUser(data)
-        res.cookie('user', createToken(userId, data.login, data.email))
-      }
-      res.cookie('nickname', data.login)
-      res.redirect(
-        process.env.NODE_ENV === 'development'
-          ? process.env.FRONTEND_HOST
-          : process.env.PRODUCTION_HOST,
-      )
-    } catch (err) {
-      console.log(err)
-      errorResponse(err, res)
+    const nickname = data.login
+    const [user] = await userService.findUser(nickname)
+    if (user) res.cookie('user', createToken(user.id, data.login, data.email))
+    else {
+      const userId = await userService.storeUser(data)
+      res.cookie('user', createToken(userId, data.login, data.email))
     }
+    res.cookie('nickname', data.login)
+    res.redirect(
+      process.env.NODE_ENV === 'development'
+        ? process.env.FRONTEND_HOST
+        : process.env.PRODUCTION_HOST,
+    )
   } catch (err) {
     console.log(err)
     errorResponse(err, res)
