@@ -3,6 +3,7 @@ import TabButton from '@Component/LabelPage/TabButton'
 import NewLabelButton from '@Component/LabelPage/NewLabelButton'
 import LabelList from '@Component/LabelPage/LabelList'
 import { getLabels } from '@Api/label'
+import styled from 'styled-components'
 
 export const labelContext = createContext()
 
@@ -27,11 +28,33 @@ const LabelPage = () => {
           {label.name}, {label.description}
         </li>
       ))}
-      <TabButton></TabButton>
-      <NewLabelButton></NewLabelButton>
-      <LabelList></LabelList>
+      <StyledContainer>
+        <StyledButtonContainer>
+          <TabButton></TabButton>
+          <NewLabelButton></NewLabelButton>
+        </StyledButtonContainer>
+        <LabelList></LabelList>
+      </StyledContainer>
     </labelContext.Provider>
   )
 }
+
+const StyledContainer = styled.div`
+  width: 500px;
+  max-width: 1280px;
+  margin: 32px auto;
+  padding-right: 32px;
+  padding-left: 32px;
+  box-sizing: border-box;
+`
+
+const StyledButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+`
 
 export default LabelPage
