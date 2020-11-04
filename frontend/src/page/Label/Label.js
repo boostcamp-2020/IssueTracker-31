@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react'
 import TabButton from '@Component/LabelPage/TabButton'
-import NewLabelButton from '@Component/LabelPage/NewLabelButton'
 import LabelList from '@Component/LabelPage/LabelList'
 import { getLabels } from '@Api/label'
 import styled from 'styled-components'
@@ -16,10 +15,13 @@ const fetchData = async (requestFn, setFn) => {
 
 const LabelPage = () => {
   const [labels, setLabels] = useState([])
+  const [showForm, setShowForm] = useState(false)
 
   useEffect(() => {
     fetchData(getLabels, setLabels)
   }, [])
+
+  const clickedNewButton = e => setShowForm(!showForm)
 
   return (
     <labelContext.Provider value={{ labels, setLabels }}>
@@ -32,8 +34,9 @@ const LabelPage = () => {
       <StyledContainer>
         <StyledButtonContainer>
           <TabButton clicked="label"></TabButton>
-          <Button buttonName="New Label" />
+          <Button buttonName="New Label" onClick={clickedNewButton} />
         </StyledButtonContainer>
+        {showForm ? <div>Label Form Component</div> : null}
         <LabelList></LabelList>
       </StyledContainer>
     </labelContext.Provider>

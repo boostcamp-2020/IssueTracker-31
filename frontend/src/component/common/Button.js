@@ -2,10 +2,16 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-const Button = ({ buttonName, targetLocation, backgroundColor, color }) => {
+const Button = ({
+  buttonName,
+  targetLocation,
+  backgroundColor,
+  color,
+  onClick,
+}) => {
   if (!targetLocation)
     return (
-      <StyledDiv>
+      <StyledDiv onClick={onClick}>
         <span>{buttonName}</span>
       </StyledDiv>
     )
