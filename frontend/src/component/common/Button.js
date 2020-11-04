@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { issueListContext } from '@Page/IssueList'
+import { IssueListContext } from '@Page/IssueList'
 
 const Button = ({ name, selected }) => {
-  const { style, to, count, symbol } = getButtonProps(name, selected)
+  const context = useContext(IssueListContext)
+  const { style, to, count, symbol } = getButtonProps(name, context, selected)
   return (
     <StyledLink to={to} styleProp={style}>
       {symbol ? <Symbol svg={symbol} /> : ''}
@@ -70,8 +71,7 @@ const StyledSvg = styled.svg`
   margin-right: 7px;
 `
 
-const getButtonProps = (name, selected) => {
-  const context = useContext(issueListContext)
+const getButtonProps = (name, context, selected) => {
   const props = {
     style: {
       color: '#ffffff',
@@ -103,7 +103,7 @@ const getButtonProps = (name, selected) => {
       props.style.backgroundColor = '#ffffff'
       props.style.hoverColor = '#e1e4e8'
       props.to = '/milestones'
-      props.count = context.milestones.length
+      props.count = context.milestones.filter(m => m.isOpen).length
       props.symbol =
         'M 7.75 0 a 0.75 0.75 0 0 1 0.75 0.75 V 3 h 3.634 c 0.414 0 0.814 0.147 1.13 0.414 l 2.07 1.75 a 1.75 1.75 0 0 1 0 2.672 l -2.07 1.75 a 1.75 1.75 0 0 1 -1.13 0.414 H 8.5 v 5.25 a 0.75 0.75 0 1 1 -1.5 0 V 10 H 2.75 A 1.75 1.75 0 0 1 1 8.25 v -3.5 C 1 3.784 1.784 3 2.75 3 H 7 V 0.75 A 0.75 0.75 0 0 1 7.75 0 Z m 0 8.5 h 4.384 a 0.25 0.25 0 0 0 0.161 -0.06 l 2.07 -1.75 a 0.25 0.25 0 0 0 0 -0.38 l -2.07 -1.75 a 0.25 0.25 0 0 0 -0.161 -0.06 H 2.75 a 0.25 0.25 0 0 0 -0.25 0.25 v 3.5 c 0 0.138 0.112 0.25 0.25 0.25 h 5 Z'
       break
