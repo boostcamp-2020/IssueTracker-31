@@ -20,7 +20,7 @@ const IssueListPage = props => {
     isOpen: true,
   })
 
-  useFetch(getUsers, setUsers) // TODO
+  useFetch(getUsers, setUsers)
   useFetch(getLabels, setLabels)
   useFetch(getMilestones, setMilestones)
 

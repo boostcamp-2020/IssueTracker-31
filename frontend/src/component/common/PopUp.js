@@ -1,10 +1,12 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { issueListContext } from '@Page/IssueList'
+import userIcon from '@Public/images/defaultUserIcon.png'
 
 const PopUp = ({ kind, title, data, multiSelect = false }) => {
   const { conditions, setConditions } = useContext(issueListContext)
   if (kind === 'text') return false
+  console.log(data, kind, conditions)
 
   const updateSelectedId = id => {
     const newConditions = { ...conditions }
@@ -44,15 +46,19 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
 
 const PopUpItem = ({ kind, data, updateSelectedId, selectedId }) => {
   const onClickItem = () => updateSelectedId(data.id)
-
+  console.log(kind === 'author' ? data : null)
   return (
     <StyledItemContainer onClick={onClickItem}>
       <StyledCheckSpan visible={selectedId.includes(data.id)}>
         ✓
       </StyledCheckSpan>
-      {kind === 'user' && (
+      {(kind === 'user' || kind === 'author' || kind === 'assignee') && (
         <>
-          <StyledImg src={data.profileUrl} alt="user profile"></StyledImg>
+          <StyledImg
+            src={data.profileUrl || userIcon}
+            alt="user profile"
+          ></StyledImg>
+
           <StyledBoldTextSpan>{data.nickname}</StyledBoldTextSpan>
         </>
       )}

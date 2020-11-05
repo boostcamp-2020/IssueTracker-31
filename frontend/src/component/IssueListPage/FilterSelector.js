@@ -30,7 +30,7 @@ const FilterSelector = ({ type, multiSelect = false }) => {
 const getPopUpProps = (type, context) => {
   switch (type) {
     case 'Author':
-      return { title: 'Filter by author', kind: 'user', data: context.users }
+      return { title: 'Filter by author', kind: 'author', data: context.users }
     case 'Label':
       return {
         title: 'Filter by label',
@@ -49,7 +49,7 @@ const getPopUpProps = (type, context) => {
     case 'Assignee':
       return {
         title: 'Filter by who` assigned',
-        kind: 'user',
+        kind: 'assignee',
         data: context.users, // [{ id: 0, nickname: 'Assigned to nobody' }, ...context.users], // error no user data
       }
     case 'Projects':
