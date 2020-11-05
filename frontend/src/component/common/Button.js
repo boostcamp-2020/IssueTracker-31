@@ -10,7 +10,6 @@ const Button = ({ buttonProps }) => {
 
 const LinkTypeButton = ({ buttonProps }) => {
   const { svg, buttonName, count, targetLocation, style } = buttonProps
-  console.log(style)
   return (
     <StyledDiv
       backgroundColor={style.backgroundColor}

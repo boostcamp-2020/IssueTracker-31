@@ -2,7 +2,6 @@ import React from 'react'
 import Button from '@Component/common/Button'
 
 const LinkButton = ({ buttonName, targetLocation, isGreen, svgName }) => {
-  console.log(buttonName, targetLocation, isGreen, svgName)
   return (
     <Button
       buttonProps={getProps(targetLocation, buttonName, isGreen, svgName)}

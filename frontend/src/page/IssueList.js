@@ -40,7 +40,6 @@ const IssueListPage = props => {
         targetLocation={'/issue/new'}
         isGreen={true}
       />
-      <IssueFilter />
       <IssueList />
     </issueListContext.Provider>
   )
