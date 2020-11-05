@@ -1,19 +1,48 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import FilterSelector from './FilterSelector'
+import { issueListContext } from '@Page/IssueList'
 
-const IssueFilter = props => {
+const IssueFilter = ({ checkedIssues, setCheckedIssues, issues }) => {
+  const { conditions } = useContext(issueListContext)
+
+  const clickInput = e => {
+    if (e.target.checked) setCheckedIssues(issues.map(issue => issue.id))
+    else setCheckedIssues([])
+  }
+
   return (
     <StyledIssueFilterContainer>
-      <StyledCheckBox type="checkbox"></StyledCheckBox>
-      <StyledFilterSelectorContainer>
-        <FilterSelector type="Author" />
-        <FilterSelector type="Label" />
-        <FilterSelector type="Projects" />
-        <FilterSelector type="Milestones" />
-        <FilterSelector type="Assignee" />
-        <FilterSelector type="Sort" />
-      </StyledFilterSelectorContainer>
+      <StyledCheckBox
+        type="checkbox"
+        onChange={clickInput}
+        checked={checkedIssues.length === issues.length && issues.length !== 0}
+      ></StyledCheckBox>
+      <StyledDefaultModeContainer checkedInput={checkedIssues.length}>
+        <StyledSpan isOpen={conditions.isOpen}>
+          {' '}
+          {issues.filter(value => value.isOpen).length} Open
+        </StyledSpan>
+        <StyledSpan isOpen={!conditions.isOpen}>
+          {' '}
+          {issues.filter(value => !value.isOpen).length} Closed
+        </StyledSpan>
+        <StyledFilterSelectorContainer>
+          <FilterSelector type="Author" />
+          <FilterSelector type="Label" multiSelect />
+          <FilterSelector type="Milestones" />
+          <FilterSelector type="Assignee" />
+        </StyledFilterSelectorContainer>
+      </StyledDefaultModeContainer>
+      <StyledCheckedModeContainer
+        checkedInput={
+          checkedIssues.length !== 0 ||
+          (checkedIssues.length === issues.length && issues.length !== 0)
+        }
+      >
+        <StyledSpan>{checkedIssues.length} Selected</StyledSpan>
+        <FilterSelector type="Mark as" />
+      </StyledCheckedModeContainer>
     </StyledIssueFilterContainer>
   )
 }
@@ -49,5 +78,28 @@ const StyledFilterSelectorContainer = styled.div`
   font-size: 14px;
   line-height: 1.5;
 `
-
+const StyledSpan = styled.span`
+  display: inline-block;
+  margin-right: 10px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  background-color: initial;
+  border: 0;
+  appearance: none;
+  color: ${({ isOpen }) => (isOpen ? '#000000' : '#586069')};
+  line-height: 21px;
+`
+const StyledDefaultModeContainer = styled.div`
+  width: 100%;
+  display: ${({ checkedInput }) => (checkedInput ? 'none' : 'flex')};
+`
+const StyledCheckedModeContainer = styled.div`
+  width: 100%;
+  display: ${({ checkedInput }) => (checkedInput ? 'flex' : 'none')};
+  justify-content: space-between;
+`
 export default IssueFilter

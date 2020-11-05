@@ -54,13 +54,13 @@ const structurizeIssueList = issues => {
         const [name, color] = label.split(';')
         return { name, color }
       })
-    }
+    } else row.label = []
     if (row.assignee !== null) {
       row.assignee = row.assignee.split(',').map(assignee => {
         const [id, profileUrl] = assignee.split(';')
         return { id, profileUrl }
       })
-    }
+    } else row.assignee = []
     return row
   })
 }
