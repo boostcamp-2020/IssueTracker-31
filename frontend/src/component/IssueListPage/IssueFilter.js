@@ -41,7 +41,11 @@ const IssueFilter = ({ checkedIssues, setCheckedIssues, issues }) => {
         }
       >
         <StyledSpan>{checkedIssues.length} Selected</StyledSpan>
-        <FilterSelector type="Mark as" />
+        <FilterSelector
+          type="Mark as"
+          checkedIssues={checkedIssues}
+          setCheckedIssues={setCheckedIssues}
+        />
       </StyledCheckedModeContainer>
     </StyledIssueFilterContainer>
   )
