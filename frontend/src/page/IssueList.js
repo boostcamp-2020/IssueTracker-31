@@ -1,5 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react'
 import SearchBar from '@Component/IssueListPage/SearchBar'
+import IssueFilter from '@Component/IssueListPage/IssueFilter'
+import TabButton from '@Component/common/TabButton'
+import LinkButton from '@Component/common/LinkButton'
 import IssueList from '@Component/IssueListPage/IssueList'
 import { getLabels } from '@Api/label'
 import { getMilestones } from '@Api/milestone'
@@ -28,6 +31,15 @@ const IssueListPage = props => {
       value={{ users, labels, milestones, conditions, setConditions }}
     >
       <SearchBar />
+      <TabButton
+        labelCount={labels.length}
+        milestoneCount={milestones.filter(m => m.isOpen).length}
+      />
+      <LinkButton
+        buttonName={'New Issue'}
+        targetLocation={'/issue/new'}
+        isGreen={true}
+      />
       <IssueList />
     </issueListContext.Provider>
   )

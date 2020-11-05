@@ -2,60 +2,91 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-const Button = ({
-  buttonName,
-  targetLocation,
-  backgroundColor,
-  color,
-  onClick,
-}) => {
-  if (!targetLocation)
-    return (
-      <StyledDiv onClick={onClick}>
-        <span>{buttonName}</span>
-      </StyledDiv>
-    )
+const Button = ({ buttonProps }) => {
+  const { targetLocation } = buttonProps
+  if (targetLocation) return <LinkTypeButton buttonProps={buttonProps} />
+  else return <EventTypeButton buttonProps={buttonProps} />
+}
+
+const LinkTypeButton = ({ buttonProps }) => {
+  const { svg, buttonName, count, targetLocation, style } = buttonProps
   return (
-    <StyledLink
-      to={targetLocation}
-      backgroundColor={backgroundColor}
-      color={color}
+    <StyledDiv
+      backgroundColor={style.backgroundColor}
+      color={style.color}
+      hoverColor={style.hoverColor}
+      borderRadius={style.borderRadius}
     >
-      <span>{buttonName}</span>
-    </StyledLink>
+      <StyledLink to={targetLocation}>
+        {svg ? svg : ''}
+        <span>{buttonName}</span>
+        {count !== undefined ? <StyledCount>{count}</StyledCount> : ''}
+      </StyledLink>
+    </StyledDiv>
   )
 }
 
-const StyledLink = styled(Link)`
-  ${({ backgroundColor = '#2ea44f', color = '#ffffff' }) =>
+const EventTypeButton = ({ buttonProps }) => {
+  const { svg, buttonName, style, onClick } = buttonProps
+  return (
+    <StyledDiv
+      onClick={onClick}
+      backgroundColor={style.backgroundColor}
+      color={style.color}
+      hoverColor={style.hoverColor}
+      borderRadius={style.borderRadius}
+    >
+      {svg ? svg : ''}
+      <span>{buttonName}</span>
+    </StyledDiv>
+  )
+}
+
+const StyledDiv = styled.button`
+  ${({
+  backgroundColor = '#2ea44f',
+  color = '#ffffff',
+  hoverColor = '#3ea85f',
+  borderRadius = '6px',
+}) =>
     `
     color: ${color};
     background: ${backgroundColor};
     text-decoration : none;
     cursor: pointer;
-    padding: 5px 16px;
+    border-radius: ${borderRadius};
+    padding: 5px 12px;
     border: 1px solid rgba(27,31,35,0.15);
-    border-radius: 6px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 550;
+    width: auto;
     line-height: 20px;
-`}
+    box-sizing: border-box;
+    &:hover {
+      background-color: ${hoverColor};
+    }`}
+`
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: inherit;
 `
 
-const StyledDiv = styled.div`
-  ${({ backgroundColor = '#2ea44f', color = '#ffffff' }) =>
-    `
-    color: ${color};
-    background: ${backgroundColor};
-    text-decoration : none;
-    cursor: pointer;
-    padding: 5px 16px;
-    border: 1px solid rgba(27,31,35,0.15);
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-`}
+const StyledCount = styled.span`
+  min-width: 20px;
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #24292e;
+  text-align: center;
+  background-color: #ededed;
+  border: 1px solid transparent;
+  border-radius: 2em;
+  display: inline !important;
+  box-sizing: border-box;
+  margin-left: 4px;
 `
 
 export default Button
