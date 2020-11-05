@@ -81,7 +81,9 @@ const getPopUpProps = (type, multiSelect, context, detail) => {
         kind: 'milestone',
         data: [
           { id: 0, title: 'Issues with no milestone' },
-          ...context.milestones,
+          ...context.milestones.map(item => {
+            return { id: item.id, title: item.title }
+          }),
         ],
         targetCondition: context.conditions.milestone,
         updateConditions: updateConditions,
