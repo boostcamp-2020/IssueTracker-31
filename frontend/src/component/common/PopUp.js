@@ -4,6 +4,7 @@ import { issueListContext } from '@Page/IssueList'
 
 const PopUp = ({ kind, title, data, multiSelect = false }) => {
   const { conditions, setConditions } = useContext(issueListContext)
+  if (kind === 'text') return false
 
   const updateSelectedId = id => {
     const newConditions = { ...conditions }
