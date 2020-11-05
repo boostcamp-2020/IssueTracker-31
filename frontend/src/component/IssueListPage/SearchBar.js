@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import PopUp from '../common/PopUp'
 import { issueListContext } from '@Page/IssueList'
@@ -7,6 +7,8 @@ const SearchBar = () => {
     issueListContext,
   )
   const [filteredString, setFilteredString] = useState('')
+  const detail = useRef()
+  const popup = useRef()
   const popUpData = [
     { id: 1, text: 'your issues', concern: 'author' },
     {
@@ -28,17 +30,21 @@ const SearchBar = () => {
     setFilteredString(filterConditionToString(conditions))
   }, [conditions])
 
-  const filterAction = id => {
+  const updateCoditions = id => {
     const key = popUpData.find(v => v.id === id).concern
-    return {
+    const nickname = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('nickname'))
+      .split('=')[1]
+
+    setConditions({
       ...initializeCondition,
-      ...{ [key]: [2] },
-      // TODO user id를 어디에 저장할 지에 따라 결정되는 로직
-    }
+      ...{ [key]: [nickname] },
+    })
+    detail.current.open = false
   }
 
   const filterConditionToString = condition => {
-    if (condition.text) setConditions(filterAction(...condition.text))
     const keys = Object.keys(condition)
     const result = [
       condition.isOpen ? 'is:open' : 'is:close',
@@ -59,9 +65,15 @@ const SearchBar = () => {
     milestone: [milestones, 'title'],
     label: [labels, 'name'],
   }
+  const handleMouseDown = () => {
+    popup.current.focus()
+  }
 
+  const closePopUp = () => {
+    detail.current.open = false
+  }
   const createString = (store, info, selectedCondition, condition) => {
-    if (selectedCondition.includes(0)) return `no:${condition}`
+    if (selectedCondition.includes(0)) return `no:${condition} `
     else
       return store
         .filter(target => selectedCondition.includes(target.id))
@@ -70,17 +82,18 @@ const SearchBar = () => {
   }
   return (
     <StyledSeacrchBarContainer>
-      <details>
+      <details ref={detail} onMouseDown={handleMouseDown} onBlur={closePopUp}>
         <StyledSummary>
           Filters
           <StyledSpan></StyledSpan>
         </StyledSummary>
-        <StyledDetailsMenu>
+        <StyledDetailsMenu ref={popup}>
           <PopUp
             title="Filter issues"
             kind="text"
             data={popUpData}
             targetCondition={[]}
+            updateConditions={updateCoditions}
           ></PopUp>
         </StyledDetailsMenu>
       </details>
@@ -96,6 +109,7 @@ const StyledSeacrchBarContainer = styled.div`
   flex: auto;
   justify-contents: flex-start;
   box-sizing: border-box;
+  z-
 `
 
 const StyledSummary = styled.summary`
