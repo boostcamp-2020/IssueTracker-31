@@ -76,7 +76,12 @@ const SearchBar = () => {
           <StyledSpan></StyledSpan>
         </StyledSummary>
         <StyledDetailsMenu>
-          <PopUp title="Filter issues" kind="text" data={popUpData}></PopUp>
+          <PopUp
+            title="Filter issues"
+            kind="text"
+            data={popUpData}
+            targetCondition={[]}
+          ></PopUp>
         </StyledDetailsMenu>
       </details>
       <input type="text" readOnly value={filteredString} />

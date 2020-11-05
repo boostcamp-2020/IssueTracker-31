@@ -6,6 +6,7 @@ import LinkButton from '@Component/common/LinkButton'
 import IssueList from '@Component/IssueListPage/IssueList'
 import { getLabels } from '@Api/label'
 import { getMilestones } from '@Api/milestone'
+import { getUsers } from '@Api/user'
 import { useFetch } from '@Util/hook'
 
 export const issueListContext = createContext()
@@ -22,7 +23,7 @@ const IssueListPage = props => {
     isOpen: true,
   })
 
-  // useFetch(getUsers, setUsers) // TODO
+  useFetch(getUsers, setUsers)
   useFetch(getLabels, setLabels)
   useFetch(getMilestones, setMilestones)
 
