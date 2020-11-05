@@ -11,7 +11,10 @@ const githubLogin = (req, res) => {
   const url = 'https://github.com/login/oauth/authorize?'
   const query = qs.stringify({
     client_id: process.env.CLIENT_ID,
-    redirect_uri: process.env.BACKEND_HOST + '/users/githublogin',
+    redirect_uri:
+      process.env.NODE_ENV === 'development'
+        ? process.env.BACKEND_HOST + '/users/githublogin'
+        : process.env.PRODUCTION_HOST + '/users/githublogin',
     state: state,
     scope: 'read:user',
   })
@@ -27,7 +30,10 @@ const handleGithubCallback = async (req, res) => {
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
     code: code,
-    redirect_uri: process.env.BACKEND_HOST + '/users/githublogin',
+    redirect_uri:
+      process.env.NODE_ENV === 'development'
+        ? process.env.BACKEND_HOST + '/users/githublogin'
+        : process.env.PRODUCTION_HOST + '/users/githublogin',
     state: returnedState,
   })
   const authUrl = githubUrl + query
