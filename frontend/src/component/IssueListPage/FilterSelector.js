@@ -1,15 +1,19 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import styled from 'styled-components'
 import PopUp from '@Component/common/PopUp'
 import { issueListContext } from '@Page/IssueList'
 
 const FilterSelector = ({ type, multiSelect = false }) => {
   const context = useContext(issueListContext)
-  const popupProps = getPopUpProps(type, multiSelect, context)
+  const detail = useRef()
+
+  const popupProps = getPopUpProps(type, multiSelect, context, detail)
   if (!popupProps) return false
 
+  console.log(detail)
+
   return (
-    <StyledDetail>
+    <StyledDetail ref={detail}>
       <StyledSummary>
         {type}
         <StyledSpan></StyledSpan>
@@ -28,7 +32,7 @@ const FilterSelector = ({ type, multiSelect = false }) => {
   )
 }
 
-const getPopUpProps = (type, multiSelect, context) => {
+const getPopUpProps = (type, multiSelect, context, detail) => {
   const updateConditions = (id, kind) => {
     const newConditions = { ...context.conditions }
     if (id === 0) newConditions[kind] = [id]
@@ -47,11 +51,13 @@ const getPopUpProps = (type, multiSelect, context) => {
       }
     }
     context.setConditions(newConditions)
+    detail.current.open = !detail.current.open
   }
 
   const clickMarkAsPopUp = (id, kind) => {
     // 선택된 아이템들의 id 리스트 필요
     console.log(id)
+    detail.current.open = !detail.current.open
   }
 
   switch (type) {
