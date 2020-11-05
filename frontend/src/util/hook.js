@@ -10,4 +10,4 @@ const fetchData = async (requestFn, setFn, params) => {
   setFn(await requestFn(params))
 }
 
-export { useFetch }
+export { useFetch, fetchData }
