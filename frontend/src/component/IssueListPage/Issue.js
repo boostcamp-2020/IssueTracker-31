@@ -51,6 +51,11 @@ const Issue = ({
 }
 const StyledRow = styled.div`
   display: flex;
+  &:hover {
+    background-color: #f6f8fa;
+  }
+  border-top: 1px solid #ededed;
+  padding: 16px;
 `
 const StyledArticle = styled.article`
   flex: auto;
