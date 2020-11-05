@@ -97,13 +97,15 @@ const getUsers = async (req, res) => {
 
 const verifyToken = (req, res) => {
   try {
-    jwt.verify(req.cookies.user, process.env.JWT_KEY)
+    jwt.verify(req.cookies.userToken, process.env.JWT_KEY)
     return res.status(statusCode.OK).json({
       success: true,
     })
   } catch (err) {
     console.log(err)
-    errorResponse(err, res)
+    return res.status(statusCode.OK).json({
+      success: false,
+    })
   }
 }
 
