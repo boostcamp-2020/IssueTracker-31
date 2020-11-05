@@ -1,17 +1,29 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
+import { issueListContext } from '@Page/IssueList'
 
 const PopUp = ({ kind, title, data, multiSelect = false }) => {
-  const [selectedId, setSelectedId] = useState([])
+  const { conditions, setConditions } = useContext(issueListContext)
+  if (kind === 'text') return false
 
   const updateSelectedId = id => {
-    if (!multiSelect) {
-      setSelectedId([id])
-    } else {
-      if (selectedId.includes(id))
-        setSelectedId(selectedId.filter(value => value !== id))
-      else setSelectedId([...selectedId, id])
+    const newConditions = { ...conditions }
+    if (id === 0) newConditions[kind] = [id]
+    else {
+      if (!multiSelect) {
+        if (newConditions[kind].includes(id)) newConditions[kind] = []
+        else newConditions[kind] = [id]
+      } else {
+        if (conditions[kind].includes(0))
+          newConditions[kind] = newConditions[kind].filter(value => value !== 0)
+        if (conditions[kind].includes(id)) {
+          newConditions[kind] = newConditions[kind].filter(
+            value => value !== id,
+          )
+        } else newConditions[kind] = [...newConditions[kind], id]
+      }
     }
+    setConditions(newConditions)
   }
 
   return (
@@ -23,7 +35,7 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
           kind={kind}
           data={item}
           updateSelectedId={updateSelectedId}
-          selectedId={selectedId}
+          selectedId={conditions[kind]}
         />
       ))}
     </StyledContainer>
@@ -71,10 +83,12 @@ const StyledContainer = styled.div`
   display: inline-block;
   margin-top: 4px;
   margin-bottom: 20px;
+  background-color: #ffffff;
   border: 1px solid #e8eaef;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px 0px;
   overflow: hidden;
+  z-index: 10;
 `
 const StyledHeader = styled.header`
   padding: 8px 10px;
@@ -160,6 +174,7 @@ const StyledCheckSpan = styled.span`
   vertical-align: middle;
   overflow: hidden;
   font-size: 16px;
+  line-height: 1;
 `
 
 export default PopUp
