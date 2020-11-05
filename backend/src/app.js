@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(publicPath))
 
-app.use('/', Controller)
+app.use('/api', Controller)
 app.get('*', (req, res) => {
   res.sendFile(publicPath + '/index.html')
 })
