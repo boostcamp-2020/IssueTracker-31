@@ -2,21 +2,47 @@ import React, { useContext, useRef } from 'react'
 import styled from 'styled-components'
 import PopUp from '@Component/common/PopUp'
 import { issueListContext } from '@Page/IssueList'
+import { patchIssues } from '@Api/issue'
 
-const FilterSelector = ({ type, multiSelect = false }) => {
+const FilterSelector = ({
+  type,
+  multiSelect = false,
+  checkedIssues,
+  setCheckedIssues,
+}) => {
   const context = useContext(issueListContext)
   const detail = useRef()
+  const popup = useRef()
 
-  const popupProps = getPopUpProps(type, multiSelect, context, detail)
+  const popupProps = getPopUpProps(
+    type,
+    multiSelect,
+    context,
+    detail,
+    checkedIssues,
+    setCheckedIssues,
+  )
   if (!popupProps) return false
 
+  const handleMouseDown = () => {
+    popup.current.focus()
+  }
+
+  const closePopUp = () => {
+    detail.current.open = false
+  }
+
   return (
-    <StyledDetail ref={detail}>
+    <StyledDetail
+      ref={detail}
+      onMouseDown={handleMouseDown}
+      onBlur={closePopUp}
+    >
       <StyledSummary>
         {type}
         <StyledSpan></StyledSpan>
       </StyledSummary>
-      <StyledDetailsMenu>
+      <StyledDetailsMenu ref={popup}>
         <PopUp
           title={popupProps.title}
           kind={popupProps.kind}
@@ -30,7 +56,14 @@ const FilterSelector = ({ type, multiSelect = false }) => {
   )
 }
 
-const getPopUpProps = (type, multiSelect, context, detail) => {
+const getPopUpProps = (
+  type,
+  multiSelect,
+  context,
+  detail,
+  checkedIssues,
+  setCheckedIssues,
+) => {
   const updateConditions = (id, kind) => {
     const newConditions = { ...context.conditions }
     if (id === 0) newConditions[kind] = [id]
@@ -53,8 +86,18 @@ const getPopUpProps = (type, multiSelect, context, detail) => {
   }
 
   const clickMarkAsPopUp = (id, kind) => {
-    // 선택된 아이템들의 id 리스트 필요
-    console.log(id)
+    patchIssues({
+      issueId: checkedIssues,
+      isOpen: id === 1 ? true : false,
+    })
+    setCheckedIssues([])
+    context.setConditions({
+      author: [],
+      label: [],
+      assignee: [],
+      milestone: [],
+      isOpen: true,
+    })
     detail.current.open = false
   }
 
