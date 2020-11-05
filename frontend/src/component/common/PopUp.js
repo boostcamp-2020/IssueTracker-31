@@ -1,31 +1,16 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { issueListContext } from '@Page/IssueList'
 import userIcon from '@Public/images/defaultUserIcon.png'
 
-const PopUp = ({ kind, title, data, multiSelect = false }) => {
-  const { conditions, setConditions } = useContext(issueListContext)
+const PopUp = ({
+  kind,
+  title,
+  data,
+  multiSelect = false,
+  targetCondition,
+  updateConditions,
+}) => {
   if (kind === 'text') return false
-
-  const updateSelectedId = id => {
-    const newConditions = { ...conditions }
-    if (id === 0) newConditions[kind] = [id]
-    else {
-      if (!multiSelect) {
-        if (newConditions[kind].includes(id)) newConditions[kind] = []
-        else newConditions[kind] = [id]
-      } else {
-        if (conditions[kind].includes(0))
-          newConditions[kind] = newConditions[kind].filter(value => value !== 0)
-        if (conditions[kind].includes(id)) {
-          newConditions[kind] = newConditions[kind].filter(
-            value => value !== id,
-          )
-        } else newConditions[kind] = [...newConditions[kind], id]
-      }
-    }
-    setConditions(newConditions)
-  }
 
   return (
     <StyledContainer>
@@ -35,8 +20,8 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
           key={item.id}
           kind={kind}
           data={item}
-          updateSelectedId={updateSelectedId}
-          selectedId={conditions[kind]}
+          updateSelectedId={updateConditions}
+          selectedId={targetCondition}
         />
       ))}
     </StyledContainer>
@@ -44,7 +29,7 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
 }
 
 const PopUpItem = ({ kind, data, updateSelectedId, selectedId }) => {
-  const onClickItem = () => updateSelectedId(data.id)
+  const onClickItem = () => updateSelectedId(data.id, kind)
   return (
     <StyledItemContainer onClick={onClickItem}>
       <StyledCheckSpan visible={selectedId.includes(data.id)}>
@@ -75,8 +60,7 @@ const PopUpItem = ({ kind, data, updateSelectedId, selectedId }) => {
           )}
         </>
       )}
-      {kind === 'markAs' && <StyledBigTextSpan>{data.text}</StyledBigTextSpan>}
-      {(kind === 'text' || kind === false) && (
+      {(kind === 'text' || kind === 'markAs' || kind === false) && (
         <StyledBigTextSpan>{data.text}</StyledBigTextSpan>
       )}
     </StyledItemContainer>

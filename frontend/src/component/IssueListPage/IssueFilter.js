@@ -30,10 +30,8 @@ const IssueFilter = ({ checkedIssues, setCheckedIssues, issues }) => {
         <StyledFilterSelectorContainer>
           <FilterSelector type="Author" />
           <FilterSelector type="Label" multiSelect />
-          <FilterSelector type="Projects" />
           <FilterSelector type="Milestones" />
           <FilterSelector type="Assignee" />
-          <FilterSelector type="Sort" />
         </StyledFilterSelectorContainer>
       </StyledDefaultModeContainer>
       <StyledCheckedModeContainer
@@ -43,7 +41,7 @@ const IssueFilter = ({ checkedIssues, setCheckedIssues, issues }) => {
         }
       >
         <StyledSpan>{checkedIssues.length} Selected</StyledSpan>
-        {/* <FilterSelector type="Mark as" /> */}
+        <FilterSelector type="Mark as" />
       </StyledCheckedModeContainer>
     </StyledIssueFilterContainer>
   )
@@ -102,5 +100,6 @@ const StyledDefaultModeContainer = styled.div`
 const StyledCheckedModeContainer = styled.div`
   width: 100%;
   display: ${({ checkedInput }) => (checkedInput ? 'flex' : 'none')};
+  justify-content: space-between;
 `
 export default IssueFilter

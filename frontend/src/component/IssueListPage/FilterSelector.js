@@ -5,8 +5,7 @@ import { issueListContext } from '@Page/IssueList'
 
 const FilterSelector = ({ type, multiSelect = false }) => {
   const context = useContext(issueListContext)
-  const popupProps = getPopUpProps(type, context)
-
+  const popupProps = getPopUpProps(type, multiSelect, context)
   if (!popupProps) return false
 
   return (
@@ -20,6 +19,8 @@ const FilterSelector = ({ type, multiSelect = false }) => {
           title={popupProps.title}
           kind={popupProps.kind}
           data={popupProps.data ? popupProps.data : []}
+          targetCondition={popupProps.targetCondition}
+          updateConditions={popupProps.updateConditions}
           multiSelect={multiSelect}
         ></PopUp>
       </StyledDetailsMenu>
@@ -27,15 +28,48 @@ const FilterSelector = ({ type, multiSelect = false }) => {
   )
 }
 
-const getPopUpProps = (type, context) => {
+const getPopUpProps = (type, multiSelect, context) => {
+  const updateConditions = (id, kind) => {
+    const newConditions = { ...context.conditions }
+    if (id === 0) newConditions[kind] = [id]
+    else {
+      if (!multiSelect) {
+        if (newConditions[kind].includes(id)) newConditions[kind] = []
+        else newConditions[kind] = [id]
+      } else {
+        if (context.conditions[kind].includes(0))
+          newConditions[kind] = newConditions[kind].filter(value => value !== 0)
+        if (context.conditions[kind].includes(id)) {
+          newConditions[kind] = newConditions[kind].filter(
+            value => value !== id,
+          )
+        } else newConditions[kind] = [...newConditions[kind], id]
+      }
+    }
+    context.setConditions(newConditions)
+  }
+
+  const clickMarkAsPopUp = (id, kind) => {
+    // 선택된 아이템들의 id 리스트 필요
+    console.log(id)
+  }
+
   switch (type) {
     case 'Author':
-      return { title: 'Filter by author', kind: 'author', data: context.users }
+      return {
+        title: 'Filter by author',
+        kind: 'author',
+        data: context.users,
+        targetCondition: context.conditions.author,
+        updateConditions: updateConditions,
+      }
     case 'Label':
       return {
         title: 'Filter by label',
         kind: 'label',
         data: [{ id: 0, name: 'Unlabeled' }, ...context.labels],
+        targetCondition: context.conditions.label,
+        updateConditions: updateConditions,
       }
     case 'Milestones':
       return {
@@ -45,12 +79,16 @@ const getPopUpProps = (type, context) => {
           { id: 0, title: 'Issues with no milestone' },
           ...context.milestones,
         ],
+        targetCondition: context.conditions.milestone,
+        updateConditions: updateConditions,
       }
     case 'Assignee':
       return {
         title: 'Filter by who` assigned',
         kind: 'assignee',
-        data: context.users, // [{ id: 0, nickname: 'Assigned to nobody' }, ...context.users], // error no user data
+        data: [{ id: 0, nickname: 'Assigned to nobody' }, ...context.users],
+        targetCondition: context.conditions.assignee,
+        updateConditions: updateConditions,
       }
     case 'Projects':
       return { title: 'Filter by project' }
@@ -64,6 +102,8 @@ const getPopUpProps = (type, context) => {
           { id: 1, text: 'Open' },
           { id: 2, text: 'Closed' },
         ],
+        targetCondition: [],
+        updateConditions: clickMarkAsPopUp,
       }
     default:
       return false
