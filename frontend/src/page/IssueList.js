@@ -17,13 +17,22 @@ const IssueListPage = props => {
   const [users, setUsers] = useState([])
   const [labels, setLabels] = useState([])
   const [milestones, setMilestones] = useState([])
+  const [conditions, setConditions] = useState({
+    author: [],
+    label: [],
+    assignee: [],
+    milestone: [],
+    isOpen: true,
+  })
 
   // useFetch(getUsers, setUsers) // TODO
   useFetch(getLabels, setLabels)
   useFetch(getMilestones, setMilestones)
 
   return (
-    <issueListContext.Provider value={{ users, labels, milestones }}>
+    <issueListContext.Provider
+      value={{ users, labels, milestones, conditions, setConditions }}
+    >
       <SearchBar />
       <IssueFilter />
     </issueListContext.Provider>
