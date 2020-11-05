@@ -6,4 +6,13 @@ const getIssues = async filterQuery => {
   return data
 }
 
-export { getIssues }
+const patchIssues = async params => {
+  const { success, data, message } = await request.PATCH(
+    '/issues/open-close',
+    params,
+  )
+  if (success === false) return console.error(message)
+  return data
+}
+
+export { getIssues, patchIssues }
