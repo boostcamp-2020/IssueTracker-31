@@ -3,20 +3,15 @@ import SearchBar from '@Component/IssueListPage/SearchBar'
 import IssueFilter from '@Component/IssueListPage/IssueFilter'
 import { getLabels } from '@Api/label'
 import { getMilestones } from '@Api/milestone'
+import { useFetch } from '@Util/hook'
 
 export const issueListContext = createContext()
-
-const useFetch = (requestFn, setFn) => {
-  useEffect(async () => {
-    const response = await requestFn()
-    setFn(response)
-  }, [])
-}
 
 const IssueListPage = props => {
   const [users, setUsers] = useState([])
   const [labels, setLabels] = useState([])
   const [milestones, setMilestones] = useState([])
+  const [issues, setIssues] = useState([])
   const [conditions, setConditions] = useState({
     author: [],
     label: [],
@@ -31,7 +26,7 @@ const IssueListPage = props => {
 
   return (
     <issueListContext.Provider
-      value={{ users, labels, milestones, conditions, setConditions }}
+      value={{ users, labels, milestones, issues, conditions, setConditions }}
     >
       <SearchBar />
       <IssueFilter />

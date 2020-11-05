@@ -4,22 +4,15 @@ import LabelList from '@Component/LabelPage/LabelList'
 import { getLabels } from '@Api/label'
 import styled from 'styled-components'
 import Button from '@Component/common/Button'
+import { useFetch } from '@Util/hook'
 
 export const labelContext = createContext()
-
-/* TODO: 위치 변경 */
-const fetchData = async (requestFn, setFn) => {
-  const response = await requestFn()
-  setFn(response)
-}
 
 const LabelPage = () => {
   const [labels, setLabels] = useState([])
   const [showForm, setShowForm] = useState(false)
 
-  useEffect(() => {
-    fetchData(getLabels, setLabels)
-  }, [])
+  useFetch(getLabels, setLabels)
 
   const clickedNewButton = e => setShowForm(!showForm)
 
