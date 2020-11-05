@@ -24,14 +24,16 @@ const IssueList = () => {
         issues={issues}
       />
       <StyledIssueContainer>
-        {issues.map(issue => (
-          <Issue
-            {...issue}
-            checkedIssues={checkedIssues}
-            setCheckedIssues={setCheckedIssues}
-            key={issue.id}
-          />
-        ))}
+        {issues.length
+          ? issues.map(issue => (
+              <Issue
+                {...issue}
+                checkedIssues={checkedIssues}
+                setCheckedIssues={setCheckedIssues}
+                key={issue.id}
+              />
+            ))
+          : 'No Results matched'}
       </StyledIssueContainer>
     </div>
   )
