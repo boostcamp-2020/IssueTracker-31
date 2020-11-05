@@ -1,37 +1,56 @@
 import React from 'react'
 import styled from 'styled-components'
 import Button from '@Component/common/Button'
+import LabelIcon from '@Public/js/LabelIcon'
+import OpenIcon from '@Public/js/OpenIcon'
 
-const TabButton = ({ page, LabelCount, openMilestoneCount }) => {
+const TabButton = ({ clicked, labelCount, milestoneCount }) => {
   return (
     <StyledTabButtonContainer>
-      <Button
-        buttonName="Labels"
-        targetLocation="/labels"
-        backgroundColor={page === 'label' ? '#0366d6' : '#ffffff'}
-        color={page === 'label' ? '#ffffff' : '#000000'}
-      >
-        {LabelCount}
+      <Button buttonProps={getProps(clicked === 'label', labelCount, 'Labels')}>
+        {labelCount}
       </Button>
       <Button
-        buttonName="Milestones"
-        targetLocation="/milestones"
-        backgroundColor={page === 'milestone' ? '#0366d6' : '#ffffff'}
-        color={page === 'milestone' ? '#ffffff' : '#000000'}
+        buttonProps={getProps(
+          clicked === 'milestone',
+          milestoneCount,
+          'Milestones',
+        )}
       >
-        {openMilestoneCount}
+        {milestoneCount}
       </Button>
     </StyledTabButtonContainer>
   )
 }
 
+const getProps = (clicked, count, buttonName) => {
+  return {
+    count,
+    buttonName,
+    targetLocation: buttonName === 'Labels' ? '/labels' : '/milestones',
+    style: {
+      backgroundColor: clicked ? '#0366d6' : '#ffffff',
+      color: clicked ? '#ffffff' : '#000000',
+      hoverColor: clicked ? '#0366d6' : '#e5e5e5',
+      borderRadius:
+        buttonName === 'Labels' ? '6px 0px 0px 6px' : '0px 6px 6px 0px',
+    },
+    svg:
+      buttonName === 'Labels' ? (
+        <LabelIcon clicked={clicked} />
+      ) : (
+        <OpenIcon clicked={clicked} />
+      ),
+  }
+}
+
 const StyledTabButtonContainer = styled.nav`
-  box-sizing: border-box;
-  display: flex !important;
-  white-space: nowrap !important;
+  box- sizing: border-box;
+  display: flex!important;
+  white - space: nowrap!important;
   float: left;
-  font-size: 14px;
-  line-height: 1.5;
-`
+  font - size: 14px;
+  line - height: 1.5;
+  `
 
 export default TabButton
