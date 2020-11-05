@@ -26,18 +26,16 @@ const postIssue = async (connection, { title, userId, milestoneId }) => {
 
 const setRelations = async (
   connection,
-  relations,
+  table,
   firstColumn,
   secondColumn,
+  relations,
 ) => {
   try {
-    //todo : bulk insert
-    relations.forEach(async ({ table, firstId, secondId }) => {
-      const params = {}
-      params[firstColumn] = firstId
-      params[secondColumn] = secondId
-      await connection.query(`INSERT INTO ${table} SET ?`, params)
-    })
+    await connection.query(
+      `INSERT INTO ${table} (${firstColumn}, ${secondColumn}) VALUES ?`,
+      [relations],
+    )
   } catch (err) {
     throw new Error('DB')
   }
