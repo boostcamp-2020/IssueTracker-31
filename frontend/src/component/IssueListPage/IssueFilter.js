@@ -1,18 +1,24 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import FilterSelector from './FilterSelector'
 import { issueListContext } from '@Page/IssueList'
 
-const IssueFilter = () => {
-  const { issues, conditions } = useContext(issueListContext)
-  const [checkedInput, setCheckedInput] = useState(false)
+const IssueFilter = ({ checkedIssues, setCheckedIssues, issues }) => {
+  const { conditions } = useContext(issueListContext)
 
-  const clickInput = () => setCheckedInput(!checkedInput)
+  const clickInput = e => {
+    if (e.target.checked) setCheckedIssues(issues.map(issue => issue.id))
+    else setCheckedIssues([])
+  }
 
   return (
     <StyledIssueFilterContainer>
-      <StyledCheckBox type="checkbox" onClick={clickInput}></StyledCheckBox>
-      <StyledDefaultModeContainer checkedInput={checkedInput}>
+      <StyledCheckBox
+        type="checkbox"
+        onChange={clickInput}
+        checked={checkedIssues.length === issues.length}
+      ></StyledCheckBox>
+      <StyledDefaultModeContainer checkedInput={checkedIssues.length}>
         <StyledSpan isOpen={conditions.isOpen}>
           {' '}
           {issues.filter(value => value.isOpen).length} Open
@@ -30,8 +36,12 @@ const IssueFilter = () => {
           <FilterSelector type="Sort" />
         </StyledFilterSelectorContainer>
       </StyledDefaultModeContainer>
-      <StyledCheckedModeContainer checkedInput={checkedInput}>
-        <StyledSpan>{undefined} Selected</StyledSpan>
+      <StyledCheckedModeContainer
+        checkedInput={
+          checkedIssues.length !== 0 || checkedIssues.length === issues.length
+        }
+      >
+        <StyledSpan>{checkedIssues.length} Selected</StyledSpan>
         {/* <FilterSelector type="Mark as" /> */}
       </StyledCheckedModeContainer>
     </StyledIssueFilterContainer>
