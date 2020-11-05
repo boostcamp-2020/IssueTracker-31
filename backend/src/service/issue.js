@@ -1,50 +1,74 @@
-import db from '../model/issue'
+import issueModel from '../model/issue'
 import commnetModel from '../model/comment'
+import commentImageUrl from '../model/commentImageUrl'
 import pool from '../model/index'
+import relationMaker from '../util/relation-maker'
 
 const getIssues = async filterValues => {
-  if (filterValuesCheck(filterValues) === false) {
-    throw new Error('parameter')
-  }
-  const issues = await db.getIssues(filterValues)
+  if (!isValidFilterValues(filterValues)) throw new Error('parameter')
+  const issues = await issueModel.getIssues(filterValues)
   return structurizeIssueList(issues)
 }
 
 const postIssue = async newIssueData => {
-  const { labeId, assignee, imageUrlId, userId, content } = newIssueData
-  // value validation 추가하기. Array.isArray(array) &&
-  // 트랜잭션 추가하기
+  if (!isValidNewIssueData(newIssueData)) throw new Error('parameter')
+  const { label, assignee, imageUrlId, userId, content } = newIssueData
   const connection = await pool.getConnection()
-  const issueId = await db.postIssue(connection, newIssueData)
-  const commentId = await commnetModel.postComment(
-    issueId,
-    userId,
-    content,
-    true,
-  )
-  const issueRelationMaker = issueRelationClosure(
-    db.setRelations,
-    connection,
-    issueId,
-  )
-  //todo : bulk insert
-  await issueRelationMaker('Issue_label', 'labeId', labeId)
-  await issueRelationMaker('Issue_assignee', 'userId', assignee)
-  // 이미지 테이블에 코멘트id 넣기  //todo : bulk insert
+  try {
+    const issueId = await issueModel.postIssue(connection, newIssueData)
+    const issueRelationMaker = relationMaker(
+      issueModel.setRelations,
+      connection,
+      'issueId',
+      issueId,
+    )
+    if (label) await issueRelationMaker('Issue_label', 'labelId', label)
+    if (assignee) await issueRelationMaker('Issue_assignee', 'userId', assignee)
+    if (content) {
+      const commentId = await commnetModel.postComment(
+        issueId,
+        userId,
+        content,
+        true,
+        connection,
+      )
+      if (commentImageUrl) {
+        await commentImageUrl.updateCommentId(commentId, imageUrlId, connection)
+      }
+    }
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
 }
 
-//todo : bulk insert
-const issueRelationClosure = async (callback, connection, issueId) => {
-  return async (table, columnName, array) => {
-    if (array.length > 0) {
-      const relations = array.map(id => ({
-        table,
-        firstId: issueId,
-        secondId: id,
-      }))
-      await callback(connection, relations, 'issueId', columnName)
-    }
-  }
+const isValidNewIssueData = ({
+  title,
+  userId,
+  content,
+  imageUrlId,
+  label,
+  assignee,
+  milestoneId,
+}) => {
+  if (title === undefined || userId === undefined) return false
+  if (typeof title !== 'string' || title === '') return false
+  if (typeof userId !== 'number' || userId < 1) return false
+  if (content && typeof content !== 'string') return false
+  if (content === undefined && imageUrlId && imageUrlId[0]) return false
+  if (imageUrlId && !isValidIdList(imageUrlId)) return false
+  if (label && !isValidIdList(label)) return false
+  if (assignee && !isValidIdList(assignee)) return false
+  if (milestoneId !== undefined && !isValidIdList([milestoneId])) return false
+  return true
+}
+
+const isValidIdList = idList => {
+  if (!Array.isArray(idList)) return false
+  for (const id of idList) if (typeof id !== 'number' || id < 1) return false
+  return true
 }
 
 const structurizeIssueList = issues => {
@@ -65,7 +89,7 @@ const structurizeIssueList = issues => {
   })
 }
 
-const filterValuesCheck = filterValues => {
+const isValidFilterValues = filterValues => {
   const { isOpen, author, assignee, label, milestone } = filterValues
   if (milestone !== undefined && isNaN(milestone)) return false
   if (author !== undefined && isNaN(author)) return false
