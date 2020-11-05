@@ -3,7 +3,7 @@ import TabButton from '@Component/common/TabButton'
 import LabelList from '@Component/LabelPage/LabelList'
 import { getLabels } from '@Api/label'
 import styled from 'styled-components'
-import Button from '@Component/common/Button'
+import EventButton from '@Component/common/EventButton'
 import { useFetch } from '@Util/hook'
 
 export const labelContext = createContext()
@@ -27,7 +27,7 @@ const LabelPage = () => {
       <StyledContainer>
         <StyledButtonContainer>
           <TabButton clicked="label"></TabButton>
-          <Button buttonName="New Label" onClick={clickedNewButton} />
+          <EventButton buttonName="New Label" onClick={clickedNewButton} />
         </StyledButtonContainer>
         {showForm ? <div>Label Form Component</div> : null}
         <LabelList></LabelList>
