@@ -1,14 +1,13 @@
 import { useEffect } from 'react'
 
-const useFetch = (requestFn, setFn) => {
+const useFetch = (requestFn, setFn, params) => {
   useEffect(() => {
-    fetchData(requestFn, setFn)
+    fetchData(requestFn, setFn, params)
   }, [])
 }
 
-const fetchData = async (requestFn, setFn) => {
-  const response = await requestFn()
-  setFn(response)
+const fetchData = async (requestFn, setFn, params) => {
+  setFn(await requestFn(params))
 }
 
-export { useFetch }
+export { useFetch, fetchData }

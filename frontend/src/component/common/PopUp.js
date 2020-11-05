@@ -71,6 +71,7 @@ const PopUpItem = ({ kind, data, updateSelectedId, selectedId }) => {
           )}
         </>
       )}
+      {kind === 'markAs' && <StyledBigTextSpan>{data.text}</StyledBigTextSpan>}
       {(kind === 'text' || kind === false) && (
         <StyledBigTextSpan>{data.text}</StyledBigTextSpan>
       )}

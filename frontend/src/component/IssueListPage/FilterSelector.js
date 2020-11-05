@@ -4,7 +4,9 @@ import PopUp from '@Component/common/PopUp'
 import { issueListContext } from '@Page/IssueList'
 
 const FilterSelector = ({ type, multiSelect = false }) => {
-  const popupProps = getPopUpProps(type)
+  const context = useContext(issueListContext)
+  const popupProps = getPopUpProps(type, context)
+
   if (!popupProps) return false
 
   return (
@@ -25,9 +27,7 @@ const FilterSelector = ({ type, multiSelect = false }) => {
   )
 }
 
-const getPopUpProps = type => {
-  const context = useContext(issueListContext)
-
+const getPopUpProps = (type, context) => {
   switch (type) {
     case 'Author':
       return { title: 'Filter by author', kind: 'user', data: context.users }
@@ -48,7 +48,7 @@ const getPopUpProps = type => {
       }
     case 'Assignee':
       return {
-        title: "Filter by who' assigned",
+        title: 'Filter by who` assigned',
         kind: 'user',
         data: context.users, // [{ id: 0, nickname: 'Assigned to nobody' }, ...context.users], // error no user data
       }
