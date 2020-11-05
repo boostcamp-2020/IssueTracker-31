@@ -6,7 +6,6 @@ import userIcon from '@Public/images/defaultUserIcon.png'
 const PopUp = ({ kind, title, data, multiSelect = false }) => {
   const { conditions, setConditions } = useContext(issueListContext)
   if (kind === 'text') return false
-  console.log(data, kind, conditions)
 
   const updateSelectedId = id => {
     const newConditions = { ...conditions }
@@ -46,7 +45,6 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
 
 const PopUpItem = ({ kind, data, updateSelectedId, selectedId }) => {
   const onClickItem = () => updateSelectedId(data.id)
-  console.log(kind === 'author' ? data : null)
   return (
     <StyledItemContainer onClick={onClickItem}>
       <StyledCheckSpan visible={selectedId.includes(data.id)}>

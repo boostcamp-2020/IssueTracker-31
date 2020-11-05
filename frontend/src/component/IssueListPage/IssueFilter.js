@@ -16,7 +16,7 @@ const IssueFilter = ({ checkedIssues, setCheckedIssues, issues }) => {
       <StyledCheckBox
         type="checkbox"
         onChange={clickInput}
-        checked={checkedIssues.length === issues.length}
+        checked={checkedIssues.length === issues.length && issues.length !== 0}
       ></StyledCheckBox>
       <StyledDefaultModeContainer checkedInput={checkedIssues.length}>
         <StyledSpan isOpen={conditions.isOpen}>
@@ -38,7 +38,8 @@ const IssueFilter = ({ checkedIssues, setCheckedIssues, issues }) => {
       </StyledDefaultModeContainer>
       <StyledCheckedModeContainer
         checkedInput={
-          checkedIssues.length !== 0 || checkedIssues.length === issues.length
+          checkedIssues.length !== 0 ||
+          (checkedIssues.length === issues.length && issues.length !== 0)
         }
       >
         <StyledSpan>{checkedIssues.length} Selected</StyledSpan>
