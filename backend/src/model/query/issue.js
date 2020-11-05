@@ -40,7 +40,7 @@ const getIssuesFilterCondition = filterValues => {
     if (filtering[key]) conditions.push(filtering[key](filterValues[key]))
 
   const filterString = conditions.join(' AND ').concat(
-    filterValues.label.length > 0
+    filterValues?.label?.length > 0
       ? `
       GROUP BY IL.issueId
       HAVING (COUNT(IL.labelId) = ${filterValues.label.length})`

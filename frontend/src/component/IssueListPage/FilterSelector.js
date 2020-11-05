@@ -3,8 +3,10 @@ import styled from 'styled-components'
 import PopUp from '@Component/common/PopUp'
 import { issueListContext } from '@Page/IssueList'
 
-const FilterSelector = ({ type }) => {
-  const popupProps = getPopUpProps(type)
+const FilterSelector = ({ type, multiSelect = false }) => {
+  const context = useContext(issueListContext)
+  const popupProps = getPopUpProps(type, context)
+
   if (!popupProps) return false
 
   return (
@@ -18,36 +20,51 @@ const FilterSelector = ({ type }) => {
           title={popupProps.title}
           kind={popupProps.kind}
           data={popupProps.data ? popupProps.data : []}
+          multiSelect={multiSelect}
         ></PopUp>
       </StyledDetailsMenu>
     </StyledDetail>
   )
 }
 
-const getPopUpProps = type => {
-  const data = useContext(issueListContext)
-
+const getPopUpProps = (type, context) => {
   switch (type) {
     case 'Author':
-      return { title: 'Filter by author', kind: 'user', data: data.users }
+      return { title: 'Filter by author', kind: 'user', data: context.users }
     case 'Label':
-      return { title: 'Filter by label', kind: 'label', data: data.labels }
+      return {
+        title: 'Filter by label',
+        kind: 'label',
+        data: [{ id: 0, name: 'Unlabeled' }, ...context.labels],
+      }
     case 'Milestones':
       return {
         title: 'Filter by milestone',
         kind: 'milestone',
-        data: data.milestones,
+        data: [
+          { id: 0, title: 'Issues with no milestone' },
+          ...context.milestones,
+        ],
       }
     case 'Assignee':
       return {
-        title: "Filter by who' assigned",
+        title: 'Filter by who` assigned',
         kind: 'user',
-        data: data.users,
+        data: context.users, // [{ id: 0, nickname: 'Assigned to nobody' }, ...context.users], // error no user data
       }
     case 'Projects':
       return { title: 'Filter by project' }
     case 'Sort':
       return { title: 'Sort by' }
+    case 'Mark as':
+      return {
+        title: 'Action',
+        kind: 'markAs',
+        data: [
+          { id: 1, text: 'Open' },
+          { id: 2, text: 'Closed' },
+        ],
+      }
     default:
       return false
   }
@@ -66,7 +83,7 @@ const StyledSummary = styled.summary`
   padding: 0;
   color: #586069;
   list-style: none;
-  font-size: inherit;
+  font-size: 14px;
   text-decoration: none;
   cursor: pointer;
   user-select: none;
