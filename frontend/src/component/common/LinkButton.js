@@ -1,26 +1,31 @@
 import React from 'react'
-import styled from 'styled-components'
-import Button from './Button'
+import Button from '@Component/common/Button'
 
-const LinkButton = ({ page }) => {
+const LinkButton = ({ buttonName, targetLocation, isGreen, svgName }) => {
+  console.log(buttonName, targetLocation, isGreen, svgName)
   return (
-    <StyledNav>
-      <Button name={'Labels'} selected={page === 'labels'} />
-      <Button name={'Milestones'} selected={page === 'milestones'} />
-    </StyledNav>
+    <Button
+      buttonProps={getProps(targetLocation, buttonName, isGreen, svgName)}
+    />
   )
 }
 
-const StyledNav = styled.nav`
-  box-sizing: border-box;
-  display: flex !important;
-  white-space: nowrap !important;
-  float: left;
-  box-sizing: border-box;
-  font-size: 14px;
-  line-height: 1.5;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
-    sans-serif, Apple Color Emoji, Segoe UI Emoji;
-`
+const getProps = (targetLocation, buttonName, isGreen, svgName) => {
+  return {
+    buttonName,
+    targetLocation,
+    svg: svgName ? getSvg(buttonName) : undefined,
+    style: {
+      backgroundColor: isGreen ? '#2ea44f' : '#fafbfc',
+      color: isGreen ? '#ffffff' : '#000000',
+      hoverColor: isGreen ? '#3eb45f' : '#g5g5g5',
+    },
+  }
+}
+
+/* 사용할 때 만들기 */
+const getSvg = buttonName => {
+  // if (buttonName === ) return svgName
+}
 
 export default LinkButton
