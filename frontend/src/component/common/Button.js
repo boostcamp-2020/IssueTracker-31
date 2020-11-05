@@ -1,60 +1,80 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { issueListContext } from '@Page/IssueList'
 
-const Button = ({
-  buttonName,
-  targetLocation,
-  backgroundColor,
-  color,
-  onClick,
-}) => {
-  if (!targetLocation)
-    return (
-      <StyledDiv onClick={onClick}>
-        <span>{buttonName}</span>
-      </StyledDiv>
-    )
+const Button = ({ buttonProps }) => {
+  const { targetLocation } = buttonProps
+  if (targetLocation) return <LinkTypeButton buttonProps={buttonProps} />
+  else return <EventTypeButton buttonProps={buttonProps} />
+}
+
+const LinkTypeButton = ({ buttonProps }) => {
+  const { svg, buttonName, count, targetLocation, style } = buttonProps
+  console.log(style)
   return (
-    <StyledLink to={to} styles={style}>
-      {symbol ? <Symbol svg={symbol} selected={selected} /> : ''}
-      <span>{name}</span>
-      {count !== undefined ? <StyledSpan>{count}</StyledSpan> : ''}
-    </StyledLink>
+    <StyledDiv
+      backgroundColor={style.backgroundColor}
+      color={style.color}
+      hoverColor={style.hoverColor}
+      borderRadius={style.borderRadius}
+    >
+      <StyledLink to={targetLocation}>
+        {svg ? svg : ''}
+        <span>{buttonName}</span>
+        {count !== undefined ? <StyledCount>{count}</StyledCount> : ''}
+      </StyledLink>
+    </StyledDiv>
   )
 }
 
-const Symbol = ({ svg, selected }) => (
-  <StyledSvg viewBox="0 0 16 16" width="16" height="16" selected={selected}>
-    <path fill-rule="evenodd" d={svg}></path>
-  </StyledSvg>
-)
+const EventTypeButton = ({ buttonProps }) => {
+  const { svg, buttonName, style, onClick } = buttonProps
+  return (
+    <StyledDiv
+      onClick={onClick}
+      backgroundColor={style.backgroundColor}
+      color={style.color}
+      hoverColor={style.hoverColor}
+      borderRadius={style.borderRadius}
+    >
+      {svg ? svg : ''}
+      <span>{buttonName}</span>
+    </StyledDiv>
+  )
+}
 
-const StyledLink = styled(Link)`
-  ${({ styles }) => `
-    color: ${styles.color};
-    background: ${styles.backgroundColor};
+const StyledDiv = styled.button`
+  ${({
+  backgroundColor = '#2ea44f',
+  color = '#ffffff',
+  hoverColor = '#3ea85f',
+  borderRadius = '6px',
+}) =>
+    `
+    color: ${color};
+    background: ${backgroundColor};
     text-decoration : none;
     cursor: pointer;
-    border: 1px solid #e1e4e8;
-    border-radius: ${styles.borderRadius};
-    position: relative;
-    float: left;
-    padding: 5px 16px;
-    font-weight: 500;
+    border-radius: ${borderRadius};
+    padding: 5px 12px;
+    border: 1px solid rgba(27,31,35,0.15);
+    font-size: 14px;
+    font-weight: 550;
+    width: auto;
     line-height: 20px;
     box-sizing: border-box;
-    white-space: nowrap!important;
-    ${!styles.selected
-      ? `&:hover {
-      background-color: ${styles.hoverColor};`
-      : ''
-    }
-    `}
+    &:hover {
+      background-color: ${hoverColor};
+    }`}
+`
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: inherit;
 `
 
-const StyledSpan = styled.span`
+const StyledCount = styled.span`
   min-width: 20px;
   padding: 0 6px;
   font-size: 12px;
@@ -68,22 +88,6 @@ const StyledSpan = styled.span`
   display: inline !important;
   box-sizing: border-box;
   margin-left: 4px;
-`
-
-const StyledDiv = styled.div`
-  ${({ backgroundColor = '#2ea44f', color = '#ffffff' }) =>
-    `
-    color: ${color};
-    background: ${backgroundColor};
-    text-decoration : none;
-    cursor: pointer;
-    padding: 5px 16px;
-    border: 1px solid rgba(27,31,35,0.15);
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-`}
 `
 
 export default Button
