@@ -1,14 +1,9 @@
 import React, { createContext, useState, useEffect } from 'react'
 import SearchBar from '@Component/IssueListPage/SearchBar'
 import IssueFilter from '@Component/IssueListPage/IssueFilter'
-<<<<<<< HEAD
-import Button from '@Component/common/Button'
-import LinkButton from '@Component/common/LinkButton'
-=======
 import TabButton from '@Component/common/TabButton'
 import LinkButton from '@Component/common/LinkButton'
 import IssueList from '@Component/IssueListPage/IssueList'
->>>>>>> 690a2d95d7f0cd9eb592155b5cca15a890f31f05
 import { getLabels } from '@Api/label'
 import { getMilestones } from '@Api/milestone'
 import { useFetch } from '@Util/hook'
@@ -36,11 +31,6 @@ const IssueListPage = props => {
       value={{ users, labels, milestones, conditions, setConditions }}
     >
       <SearchBar />
-<<<<<<< HEAD
-      <IssueFilter />
-      <Button name={'New Issue'} />
-      <LinkButton />
-=======
       <TabButton
         labelCount={labels.length}
         milestoneCount={milestones.filter(m => m.isOpen).length}
@@ -51,7 +41,6 @@ const IssueListPage = props => {
         isGreen={true}
       />
       <IssueList />
->>>>>>> 690a2d95d7f0cd9eb592155b5cca15a890f31f05
     </issueListContext.Provider>
   )
 }
