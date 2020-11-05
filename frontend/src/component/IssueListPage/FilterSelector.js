@@ -10,8 +10,6 @@ const FilterSelector = ({ type, multiSelect = false }) => {
   const popupProps = getPopUpProps(type, multiSelect, context, detail)
   if (!popupProps) return false
 
-  console.log(detail)
-
   return (
     <StyledDetail ref={detail}>
       <StyledSummary>
@@ -51,13 +49,13 @@ const getPopUpProps = (type, multiSelect, context, detail) => {
       }
     }
     context.setConditions(newConditions)
-    detail.current.open = !detail.current.open
+    detail.current.open = false
   }
 
   const clickMarkAsPopUp = (id, kind) => {
     // 선택된 아이템들의 id 리스트 필요
     console.log(id)
-    detail.current.open = !detail.current.open
+    detail.current.open = false
   }
 
   switch (type) {
@@ -103,7 +101,7 @@ const getPopUpProps = (type, multiSelect, context, detail) => {
     case 'Mark as':
       return {
         title: 'Action',
-        kind: 'markAs',
+        kind: 'text',
         data: [
           { id: 1, text: 'Open' },
           { id: 2, text: 'Closed' },

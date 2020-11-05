@@ -10,8 +10,6 @@ const PopUp = ({
   targetCondition,
   updateConditions,
 }) => {
-  // if (kind === 'text') return false
-
   return (
     <StyledContainer>
       <StyledHeader>{title}</StyledHeader>
