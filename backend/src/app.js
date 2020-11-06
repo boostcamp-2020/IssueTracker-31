@@ -14,6 +14,7 @@ const publicPath = path.join(__dirname, '../../frontend/build')
 
 app.set('port', port)
 
+
 app.use(cors({ origin: true, credentials: true }))
 app.use(logger('dev'))
 app.use(express.json())

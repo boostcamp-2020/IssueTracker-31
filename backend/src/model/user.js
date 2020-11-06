@@ -11,6 +11,33 @@ const getUsers = async () => {
   }
 }
 
+const findUser = async nickname => {
+  const sql = query.findUserQueryString
+  try {
+    const [row] = await db.query(sql, [nickname])
+    return row
+  } catch (err) {
+    throw new Error('DB')
+  }
+}
+
+const storeUser = async data => {
+  const sql = query.storeUserQueryString
+  try {
+    const [newUser] = await db.query(sql, [
+      data.email,
+      data.login,
+      data.avatar_url,
+      data.id,
+    ])
+    return newUser.insertId
+  } catch (err) {
+    throw new Error('DB')
+  }
+}
+
 export default {
   getUsers,
+  findUser,
+  storeUser,
 }

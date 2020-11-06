@@ -3,12 +3,13 @@ import issueController from './issue'
 import userController from './user'
 import labelController from './label'
 import milestoneController from './milestone'
+import middleware from './user/user'
 
 const router = express.Router()
 
-router.use('/issues', issueController)
+router.use('/issues', middleware.verifyMiddelware, issueController)
 router.use('/users', userController)
-router.use('/labels', labelController)
-router.use('/milestones', milestoneController)
+router.use('/labels', middleware.verifyMiddelware, labelController)
+router.use('/milestones', middleware.verifyMiddelware, milestoneController)
 
 module.exports = router

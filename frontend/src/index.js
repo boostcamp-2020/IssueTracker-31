@@ -9,6 +9,7 @@ import Header from './component/common/Header'
 import NewIssuePage from '@Page/NewIssue'
 
 const root = document.getElementById('root')
+
 const App = () => {
   return (
     <BrowserRouter>
