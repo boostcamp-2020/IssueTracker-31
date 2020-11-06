@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import Request from '../util/request'
 
 function LoginForm() {
   const [value, setValue] = React.useState({
@@ -16,7 +17,7 @@ function LoginForm() {
 
   const handleGithubLogin = () => {
     axios
-      .get('http://localhost:3000/users/github')
+      .get('http://localhost:3000/api/users/github')
       .then(function (res) {
         window.location.href = res.data
       })

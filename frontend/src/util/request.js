@@ -3,7 +3,7 @@ import axios from 'axios'
 const baseURL =
   process.env.NODE_ENV === 'production'
     ? 'http://115.85.181.174:3000/api'
-    : 'http://127.0.0.1:3000/api'
+    : 'http://localhost:3000/api'
 
 const options = {
   withCredentials: true,
@@ -16,6 +16,7 @@ const GET = async (path, params = null) => {
       params,
       ...options,
     })
+    console.log(response)
     return response.data
   } catch (err) {
     console.error(err)
