@@ -1,3 +1,8 @@
+const postIssueQueryString = 'INSERT INTO Issue SET ?'
+
+const setIssueRelationQueryString = (table, firstColumn, secondColumn) =>
+  `INSERT INTO ${table} (${firstColumn}, ${secondColumn}) VALUES ?`
+
 const getIssuesQueryString = filterValues => {
   return `
   SELECT DISTINCT I.id as id, I.userId as userId, I.title as title,
@@ -50,5 +55,7 @@ const getIssuesFilterCondition = filterValues => {
 }
 
 export default {
+  postIssueQueryString,
+  setIssueRelationQueryString,
   getIssuesQueryString,
 }

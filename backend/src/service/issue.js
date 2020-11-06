@@ -17,7 +17,7 @@ const postIssue = async newIssueData => {
   try {
     const issueId = await issueModel.postIssue(connection, newIssueData)
     const issueRelationMaker = relationMaker(
-      issueModel.setRelations,
+      issueModel.setIssueRelations,
       connection,
       'issueId',
       issueId,

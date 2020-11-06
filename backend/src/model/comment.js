@@ -1,4 +1,5 @@
 import db from './index'
+import query from './query/commnet'
 
 const postComment = async (
   issueId,
@@ -9,7 +10,7 @@ const postComment = async (
 ) => {
   try {
     connection = connection ? connection : db
-    const [result] = await connection.query('INSERT INTO Comment SET ?', {
+    const [result] = await connection.query(query.postCommentQueryString, {
       issueId,
       userId,
       content,

@@ -13,7 +13,7 @@ const getIssues = async filterValues => {
 
 const postIssue = async (connection, { title, userId, milestoneId }) => {
   try {
-    const [result] = await connection.query('INSERT INTO Issue SET ?', {
+    const [result] = await connection.query(query.postIssueQueryString, {
       title,
       userId,
       milestoneId,
@@ -24,7 +24,7 @@ const postIssue = async (connection, { title, userId, milestoneId }) => {
   }
 }
 
-const setRelations = async (
+const setIssueRelations = async (
   connection,
   table,
   firstColumn,
@@ -33,7 +33,7 @@ const setRelations = async (
 ) => {
   try {
     await connection.query(
-      `INSERT INTO ${table} (${firstColumn}, ${secondColumn}) VALUES ?`,
+      query.setIssueRelationQueryString(table, firstColumn, secondColumn),
       [relations],
     )
   } catch (err) {
@@ -44,5 +44,5 @@ const setRelations = async (
 export default {
   getIssues,
   postIssue,
-  setRelations,
+  setIssueRelations,
 }
