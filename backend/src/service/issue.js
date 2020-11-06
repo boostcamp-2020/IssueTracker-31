@@ -5,9 +5,19 @@ import pool from '../model/index'
 import relationMaker from '../util/relation-maker'
 
 const getIssues = async filterValues => {
+  const connection = await pool.getConnection()
+  await connection.beginTransaction()
   if (!isValidFilterValues(filterValues)) throw new Error('parameter')
-  const issues = await issueModel.getIssues(filterValues)
-  return structurizeIssueList(issues)
+  try {
+    const issues = await issueModel.getIssues(filterValues)
+    await connection.commit()
+    return structurizeIssueList(issues)
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
 }
 
 const postIssue = async newIssueData => {
