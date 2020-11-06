@@ -16,7 +16,6 @@ const GET = async (path, params = null) => {
       params,
       ...options,
     })
-    console.log(response)
     return response.data
   } catch (err) {
     console.error(err)
