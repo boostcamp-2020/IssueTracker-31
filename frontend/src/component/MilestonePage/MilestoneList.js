@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import Milestone from './Milestone'
 import styled from 'styled-components'
-import { milestoneContext } from '@Page/Milestone'
+import { milestoneContext } from '@Page/Milestone/Milestone'
 import OpenIcon from '@Public/js/OpenIcon'
 import CloseIcon from '@Public/js/CloseIcon'
 

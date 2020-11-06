@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import { BrowserRouter, Route } from 'react-router-dom'
-import IssueListPage from '@Page/IssueList'
-import MilestonePage from '@Page/Milestone'
 import Login from '@Page/Login'
+import IssueListPage from '@Page/IssueList'
 import LabelPage from '@Page/Label/Label'
+import MilestonePage from '@Page/Milestone/Milestone'
 import Header from './component/common/Header'
 import NewIssuePage from '@Page/NewIssue'
 
