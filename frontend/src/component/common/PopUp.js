@@ -1,19 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
+import userIcon from '@Public/images/defaultUserIcon.png'
 
-const PopUp = ({ kind, title, data, multiSelect = false }) => {
-  const [selectedId, setSelectedId] = useState([])
-
-  const updateSelectedId = id => {
-    if (!multiSelect) {
-      setSelectedId([id])
-    } else {
-      if (selectedId.includes(id))
-        setSelectedId(selectedId.filter(value => value !== id))
-      else setSelectedId([...selectedId, id])
-    }
-  }
-
+const PopUp = ({
+  kind,
+  title,
+  data,
+  multiSelect = false,
+  targetCondition,
+  updateConditions,
+}) => {
   return (
     <StyledContainer>
       <StyledHeader>{title}</StyledHeader>
@@ -22,8 +18,8 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
           key={item.id}
           kind={kind}
           data={item}
-          updateSelectedId={updateSelectedId}
-          selectedId={selectedId}
+          updateSelectedId={updateConditions}
+          selectedId={targetCondition}
         />
       ))}
     </StyledContainer>
@@ -31,16 +27,19 @@ const PopUp = ({ kind, title, data, multiSelect = false }) => {
 }
 
 const PopUpItem = ({ kind, data, updateSelectedId, selectedId }) => {
-  const onClickItem = () => updateSelectedId(data.id)
-
+  const onClickItem = () => updateSelectedId(data.id, kind)
   return (
     <StyledItemContainer onClick={onClickItem}>
       <StyledCheckSpan visible={selectedId.includes(data.id)}>
         ✓
       </StyledCheckSpan>
-      {kind === 'user' && (
+      {(kind === 'user' || kind === 'author' || kind === 'assignee') && (
         <>
-          <StyledImg src={data.profileUrl} alt="user profile"></StyledImg>
+          <StyledImg
+            src={data.profileUrl || userIcon}
+            alt="user profile"
+          ></StyledImg>
+
           <StyledBoldTextSpan>{data.nickname}</StyledBoldTextSpan>
         </>
       )}
@@ -59,7 +58,7 @@ const PopUpItem = ({ kind, data, updateSelectedId, selectedId }) => {
           )}
         </>
       )}
-      {(kind === 'text' || kind === false) && (
+      {(kind === 'text' || kind === 'markAs' || kind === false) && (
         <StyledBigTextSpan>{data.text}</StyledBigTextSpan>
       )}
     </StyledItemContainer>
@@ -71,10 +70,12 @@ const StyledContainer = styled.div`
   display: inline-block;
   margin-top: 4px;
   margin-bottom: 20px;
+  background-color: #ffffff;
   border: 1px solid #e8eaef;
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px 0px;
   overflow: hidden;
+  z-index: 10;
 `
 const StyledHeader = styled.header`
   padding: 8px 10px;
@@ -160,6 +161,7 @@ const StyledCheckSpan = styled.span`
   vertical-align: middle;
   overflow: hidden;
   font-size: 16px;
+  line-height: 1;
 `
 
 export default PopUp

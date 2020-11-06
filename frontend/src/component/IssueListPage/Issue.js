@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Label from '../common/Label'
 import styled from 'styled-components'
+
 import { Link } from 'react-router-dom'
 import { getTimePassedFromNow } from '../../util/util'
+
 const Issue = ({
   id,
   title,
@@ -10,10 +12,23 @@ const Issue = ({
   label = [],
   milestone,
   assignee = [],
+  checkedIssues,
+  setCheckedIssues,
 }) => {
+  const selectIssue = id => {
+    if (checkedIssues.includes(id))
+      setCheckedIssues(checkedIssues.filter(v => v !== id))
+    else setCheckedIssues([...checkedIssues, id])
+  }
+  const handleChange = () => selectIssue(id)
+
   return (
     <StyledRow>
-      <input type="checkbox" />
+      <input
+        type="checkbox"
+        onChange={handleChange}
+        checked={checkedIssues.includes(id)}
+      />
       <StyledArticle>
         <StyledLink to={`/issues/${id}`}>{title}</StyledLink>
         <StyledLabels>

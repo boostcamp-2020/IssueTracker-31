@@ -1,5 +1,10 @@
 use issue_tracker;
 
+drop table if exists Issue_label;
+drop table if exists Issue_assignee;
+drop table if exists CommentImageUrl;
+drop table if exists Comment_emoticon;
+drop table if exists Comment;
 drop table if exists Issue;
 drop table if exists User;
 drop table if exists label;
@@ -19,10 +24,10 @@ CREATE TABLE `Label` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL UNIQUE,
   `description` VARCHAR(45),
-  `color` CHAR(6) NOT NULL,
+  `color` CHAR(7) NOT NULL,
   PRIMARY KEY (`id`)
 );
- 
+
 CREATE TABLE `Milestone` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL UNIQUE,
@@ -74,7 +79,7 @@ CREATE TABLE `Issue_label` (
   FOREIGN KEY (issueId)
   REFERENCES Issue(id) ON UPDATE NO ACTION ON DELETE CASCADE,
   FOREIGN KEY (labelId)
-  REFERENCES Label(id) ON UPDATE NO ACTION ON DELETE CASCADE  
+  REFERENCES Label(id) ON UPDATE NO ACTION ON DELETE CASCADE
 );
 
 CREATE TABLE `Issue_assignee` (
@@ -83,7 +88,7 @@ CREATE TABLE `Issue_assignee` (
   FOREIGN KEY (issueId)
   REFERENCES Issue(id) ON UPDATE NO ACTION ON DELETE CASCADE,
   FOREIGN KEY (userId)
-  REFERENCES User(id) ON UPDATE NO ACTION ON DELETE CASCADE 
+  REFERENCES User(id) ON UPDATE NO ACTION ON DELETE CASCADE
 );
 
 CREATE TABLE `Comment_emoticon` (
@@ -97,3 +102,23 @@ CREATE TABLE `Comment_emoticon` (
   FOREIGN KEY (userId)
   REFERENCES User(id) ON UPDATE NO ACTION ON DELETE CASCADE
 );
+
+insert into Milestone (title, dueDate, description, isOpen) values ("title1", "2020-10-31","desc1", 1);
+insert into Milestone (title, dueDate, description, isOpen) values ("title2", "2020-11-01","desc2", 1);
+insert into Milestone (title, dueDate, description, isOpen) values ("title3", "2020-11-02","desc3", 0);
+
+insert into Label (name, description, color) values ("label1", "descLabel1", "#707070");
+insert into Label (name, description, color) values ("label2", "descLabel2", "#ffffff");
+insert into Label (name, description, color) values ("label3", "descLabel3", "#000000");
+
+INSERT INTO User (email, password, nickname) values ("aa@aa.com", "1234", "name1");
+INSERT INTO User (email, password, nickname) values ("bb@bb.com", "1234", "name2");
+INSERT INTO User (email, password, nickname) values ("cc@cc.com", "1234", "name3");
+
+INSERT INTO Issue (userId, title, milestoneId, isOpen) values (1, "issueTitle1", 1, 1);
+INSERT INTO Issue (userId, title, milestoneId, isOpen) values (1, "issueTitle1", 2, 0);
+INSERT INTO Issue (userId, title, isOpen) values (2, "issueTitle1", 1);
+
+insert into Issue_label (issueId, labelId) values (1,1);
+insert into Issue_label (issueId, labelId) values (1,2);
+
