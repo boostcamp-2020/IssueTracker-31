@@ -62,7 +62,7 @@ const handleGithubCallback = async (req, res) => {
     res.cookie('userData', { nickname: nickname, userId: user.id })
     res.redirect(
       process.env.NODE_ENV === 'development'
-        ? process.env.BACKEND_HOST
+        ? process.env.FRONTEND_HOST
         : process.env.PRODUCTION_HOST,
     )
   } catch (err) {
