@@ -1,5 +1,5 @@
 import issueModel from '../model/issue'
-import commnetModel from '../model/comment'
+import commentModel from '../model/comment'
 import commentImageUrl from '../model/commentImageUrl'
 import pool from '../model/index'
 import relationMaker from '../util/relation-maker'
@@ -25,7 +25,7 @@ const postIssue = async newIssueData => {
     if (label) await issueRelationMaker('Issue_label', 'labelId', label)
     if (assignee) await issueRelationMaker('Issue_assignee', 'userId', assignee)
     if (content) {
-      const commentId = await commnetModel.postComment(
+      const commentId = await commentModel.postComment(
         issueId,
         userId,
         content,

@@ -1,5 +1,5 @@
 import db from './index'
-import query from './query/commnet'
+import query from './query/comment'
 
 const postComment = async (
   issueId,
