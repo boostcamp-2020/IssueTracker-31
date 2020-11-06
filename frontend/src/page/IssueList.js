@@ -25,12 +25,13 @@ const IssueListPage = props => {
     milestone: [],
     isOpen: true,
   })
-  
+
   const checkUser = async () => {
     try {
-      const { data } = await Request.GET('/users/verify')
+      const data = await Request.GET('/users/verify')
       return data.success
-    } catch {
+    } catch (error) {
+      console.log(error)
       return false
     }
   }

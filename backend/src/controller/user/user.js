@@ -13,8 +13,8 @@ const githubLogin = (req, res) => {
     client_id: process.env.CLIENT_ID,
     redirect_uri:
       process.env.NODE_ENV === 'development'
-        ? process.env.BACKEND_HOST + '/users/githublogin'
-        : process.env.PRODUCTION_HOST + '/users/githublogin',
+        ? process.env.BACKEND_HOST + '/api/users/githublogin'
+        : process.env.PRODUCTION_HOST + '/api/users/githublogin',
     state: state,
     scope: 'read:user',
   })
@@ -32,8 +32,8 @@ const handleGithubCallback = async (req, res) => {
     code: code,
     redirect_uri:
       process.env.NODE_ENV === 'development'
-        ? process.env.BACKEND_HOST + '/users/githublogin'
-        : process.env.PRODUCTION_HOST + '/users/githublogin',
+        ? process.env.BACKEND_HOST + '/api/users/githublogin'
+        : process.env.PRODUCTION_HOST + '/api/users/githublogin',
     state: returnedState,
   })
   const authUrl = githubUrl + query
@@ -111,10 +111,11 @@ const verifyToken = (req, res) => {
 
 const verifyMiddelware = (req, res, next) => {
   try {
-    const decoded = jwt.verify(req.cookies.user, process.env.JWT_KEY)
+    const decoded = jwt.verify(req.cookies.userToken, process.env.JWT_KEY)
     req.userData = decoded
     next()
   } catch (err) {
+    console.log(err)
     res.redirect(`${process.env.FRONTEND_HOST}/login`)
   }
 }
