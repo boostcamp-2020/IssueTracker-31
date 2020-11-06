@@ -53,11 +53,11 @@ const isValidNewIssueData = ({
   assignee,
   milestoneId,
 }) => {
-  if (title === undefined || userId === undefined) return false
+  if (!title || !userId) return false
   if (typeof title !== 'string' || title === '') return false
   if (typeof userId !== 'number' || userId < 1) return false
-  if (content && typeof content !== 'string') return false
-  if (content === undefined && imageUrlId && imageUrlId[0]) return false
+  if (content !== undefined && typeof content !== 'string') return false
+  if (!content && imageUrlId && imageUrlId[0]) return false
   if (imageUrlId && !isValidIdList(imageUrlId)) return false
   if (label && !isValidIdList(label)) return false
   if (assignee && !isValidIdList(assignee)) return false
