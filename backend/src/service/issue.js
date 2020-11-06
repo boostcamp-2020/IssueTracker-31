@@ -14,6 +14,7 @@ const postIssue = async newIssueData => {
   if (!isValidNewIssueData(newIssueData)) throw new Error('parameter')
   const { label, assignee, imageUrlId, userId, content } = newIssueData
   const connection = await pool.getConnection()
+  await connection.beginTransaction()
   try {
     const issueId = await issueModel.postIssue(connection, newIssueData)
     const issueRelationMaker = relationMaker(
@@ -36,6 +37,7 @@ const postIssue = async newIssueData => {
         await commentImageUrl.updateCommentId(commentId, imageUrlId, connection)
       }
     }
+    await connection.commit()
   } catch (err) {
     await connection.rollback()
     throw err
