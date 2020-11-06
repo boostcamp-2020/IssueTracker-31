@@ -29,7 +29,7 @@ const PopUp = ({
 const PopUpItem = ({ kind, data, updateSelectedId, selectedId }) => {
   const onClickItem = () => updateSelectedId(data.id, kind)
   return (
-    <StyledItemContainer onClick={onClickItem}>
+    <StyledItemContainer onMouseDown={onClickItem}>
       <StyledCheckSpan visible={selectedId.includes(data.id)}>
         ✓
       </StyledCheckSpan>
@@ -75,7 +75,8 @@ const StyledContainer = styled.div`
   border-radius: 6px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px 0px;
   overflow: hidden;
-  z-index: 10;
+  z-index: 100;
+  position: relative;
 `
 const StyledHeader = styled.header`
   padding: 8px 10px;

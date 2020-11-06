@@ -17,7 +17,7 @@ const IssueList = () => {
     })
   }, [conditions])
   return (
-    <div>
+    <StyledIssueListComponent>
       <IssueFilter
         checkedIssues={checkedIssues}
         setCheckedIssues={setCheckedIssues}
@@ -35,10 +35,16 @@ const IssueList = () => {
             ))
           : 'No Results matched'}
       </StyledIssueContainer>
-    </div>
+    </StyledIssueListComponent>
   )
 }
 const StyledIssueContainer = styled.div`
   display: flex;
+  flex-direction: column;
+`
+const StyledIssueListComponent = styled.div`
+  margin: 16px;
+  border: 1px solid #ededed;
+  border-radius: 6px;
 `
 export default IssueList
