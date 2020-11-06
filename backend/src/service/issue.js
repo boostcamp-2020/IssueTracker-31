@@ -1,4 +1,77 @@
-import db from '../model/issue'
+import issueModel from '../model/issue'
+import commentModel from '../model/comment'
+import commentImageUrl from '../model/commentImageUrl'
+import pool from '../model/index'
+import relationMaker from '../util/relation-maker'
+
+const getIssues = async filterValues => {
+  if (!isValidFilterValues(filterValues)) throw new Error('parameter')
+  const issues = await issueModel.getIssues(filterValues)
+  return structurizeIssueList(issues)
+}
+
+const postIssue = async newIssueData => {
+  if (!isValidNewIssueData(newIssueData)) throw new Error('parameter')
+  const { label, assignee, imageUrlId, userId, content } = newIssueData
+  const connection = await pool.getConnection()
+  await connection.beginTransaction()
+  try {
+    const issueId = await issueModel.postIssue(connection, newIssueData)
+    const issueRelationMaker = relationMaker(
+      issueModel.setIssueRelations,
+      connection,
+      'issueId',
+      issueId,
+    )
+    if (label) await issueRelationMaker('Issue_label', 'labelId', label)
+    if (assignee) await issueRelationMaker('Issue_assignee', 'userId', assignee)
+    if (content) {
+      const commentId = await commentModel.postComment(
+        issueId,
+        userId,
+        content,
+        true,
+        connection,
+      )
+      if (commentImageUrl) {
+        await commentImageUrl.updateCommentId(commentId, imageUrlId, connection)
+      }
+    }
+    await connection.commit()
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
+}
+
+const isValidNewIssueData = ({
+  title,
+  userId,
+  content,
+  imageUrlId,
+  label,
+  assignee,
+  milestoneId,
+}) => {
+  if (!title || !userId) return false
+  if (typeof title !== 'string' || title === '') return false
+  if (typeof userId !== 'number' || userId < 1) return false
+  if (content !== undefined && typeof content !== 'string') return false
+  if (!content && imageUrlId && imageUrlId[0]) return false
+  if (imageUrlId && !isValidIdList(imageUrlId)) return false
+  if (label && !isValidIdList(label)) return false
+  if (assignee && !isValidIdList(assignee)) return false
+  if (milestoneId !== undefined && !isValidIdList([milestoneId])) return false
+  return true
+}
+
+const isValidIdList = idList => {
+  if (!Array.isArray(idList)) return false
+  for (const id of idList) if (typeof id !== 'number' || id < 1) return false
+  return true
+}
 
 const structurizeIssueList = issues => {
   return issues.map(row => {
@@ -18,7 +91,7 @@ const structurizeIssueList = issues => {
   })
 }
 
-const filterValuesCheck = filterValues => {
+const isValidFilterValues = filterValues => {
   const { isOpen, author, assignee, label, milestone } = filterValues
   if (milestone !== undefined && isNaN(milestone)) return false
   if (author !== undefined && isNaN(author)) return false
@@ -33,14 +106,7 @@ const filterValuesCheck = filterValues => {
   return true
 }
 
-const getIssues = async filterValues => {
-  if (filterValuesCheck(filterValues) === false) {
-    throw new Error('parameter')
-  }
-  const issues = await db.getIssues(filterValues)
-  return structurizeIssueList(issues)
-}
-
 export default {
   getIssues,
+  postIssue,
 }

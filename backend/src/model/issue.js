@@ -11,6 +11,38 @@ const getIssues = async filterValues => {
   }
 }
 
+const postIssue = async (connection, { title, userId, milestoneId }) => {
+  try {
+    const [result] = await connection.query(query.postIssueQueryString, {
+      title,
+      userId,
+      milestoneId,
+    })
+    return result.insertId
+  } catch (err) {
+    throw new Error('DB')
+  }
+}
+
+const setIssueRelations = async (
+  connection,
+  table,
+  firstColumn,
+  secondColumn,
+  relations,
+) => {
+  try {
+    await connection.query(
+      query.setIssueRelationQueryString(table, firstColumn, secondColumn),
+      [relations],
+    )
+  } catch (err) {
+    throw new Error('DB')
+  }
+}
+
 export default {
   getIssues,
+  postIssue,
+  setIssueRelations,
 }
