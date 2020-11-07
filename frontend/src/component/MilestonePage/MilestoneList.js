@@ -10,7 +10,6 @@ function MilestoneList() {
   const { milestones, setMilestones } = useContext(milestoneContext)
 
   const handleDeleteBtn = async id => {
-    console.log(id)
     const success = await deleteMilestone(id)
     if (success) setMilestones(milestones.filter(item => item.id !== id))
   }
