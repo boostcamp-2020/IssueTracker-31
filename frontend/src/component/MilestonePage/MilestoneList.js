@@ -27,7 +27,11 @@ function MilestoneList() {
         </StyledFilter>
       </StyledHeader>
       {milestones.map(milestone => (
-        <Milestone key={milestone.id} data={milestone}></Milestone>
+        <Milestone
+          key={milestone.id}
+          data={milestone}
+          handleDeleteBtn={handleDeleteBtn}
+        ></Milestone>
       ))}
     </div>
   )

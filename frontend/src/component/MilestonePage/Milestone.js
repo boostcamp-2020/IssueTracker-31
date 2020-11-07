@@ -4,9 +4,8 @@ import DateIcon from '@Public/js/DateIcon'
 import { getMilestoneDateFormat } from '@Util/util'
 import { Link } from 'react-router-dom'
 
-function Milestone({ data }) {
+function Milestone({ data, handleDeleteBtn }) {
   const percent = (data.openIssue / (data.openIssue + data.closeIssue)) * 100
-  const clickDeleteBtn = () => {}
 
   return (
     <StyledContainer>
@@ -43,7 +42,10 @@ function Milestone({ data }) {
             <StyledButton color="#0365d6">Edit</StyledButton>
           </Link>
           <StyledButton color="#0365d6">Close</StyledButton>
-          <StyledButton color="#cb2431" onClick={clickDeleteBtn}>
+          <StyledButton
+            color="#cb2431"
+            onClick={() => handleDeleteBtn(data.id)}
+          >
             Delete
           </StyledButton>
         </StyledButtons>
