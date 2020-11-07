@@ -18,7 +18,9 @@ const create = async (req, res) => {
   const newLabelData = req.body
   try {
     const newLabelId = await labelService.postLabel(newLabelData)
-    return res.json({ success: true, data: { id: newLabelId } })
+    return res
+      .status(statusCode.CREATED)
+      .json({ success: true, data: { id: newLabelId } })
   } catch (err) {
     console.log(err)
     errorResponse(err, res)
