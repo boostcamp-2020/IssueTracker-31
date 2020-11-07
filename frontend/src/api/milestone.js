@@ -6,4 +6,10 @@ const getMilestones = async () => {
   return data
 }
 
-export { getMilestones }
+const deleteMilestone = async id => {
+  const { success, message } = await request.DELETE(`/milestones/${id}`)
+  if (success === false) return console.error(message)
+  return success
+}
+
+export { getMilestones, deleteMilestone }
