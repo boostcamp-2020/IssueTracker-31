@@ -1,10 +1,11 @@
-import db from '../model/label'
+import pool from '../model'
+import labelModel from '../model/label'
 import resMessage from '../util/resMessage'
 import statusCode from '../util/statusCode'
 
 const getLabel = async () => {
   try {
-    const labels = await db.getLabel()
+    const labels = await labelModel.getLabel()
     return {
       code: statusCode.OK,
       success: true,
@@ -20,6 +21,22 @@ const getLabel = async () => {
   }
 }
 
+const postLabel = async newLabelData => {
+  if (!isValidNewLabelData(newLabelData)) throw new Error('parameter')
+  const searchedLabel = await labelModel.getLabelByName(newLabelData.name)
+  if (searchedLabel) throw new Error('DUPLICATE')
+  const connection = await pool.getConnection()
+  await connection.beginTransaction()
+  try {
+    const newLabelId = await labelModel.postLabel(newLabelData)
+    return newLabelId
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
+}
 
 const isValidNewLabelData = ({ name, description, color }) => {
   if (!name || !color) return false
@@ -41,4 +58,5 @@ const isValidNewLabelData = ({ name, description, color }) => {
 
 export default {
   getLabel,
+  postLabel,
 }
