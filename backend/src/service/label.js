@@ -34,15 +34,8 @@ const isValidNewLabelData = ({ name, description, color }) => {
   if (typeof color !== 'string' && color[0] !== '#') return false
   if (description && typeof description !== 'string') return false
   const rgb = color.substr(1)
-  if (rgb.length !== 6) return false
-  for (const digit of rgb) {
-    if (
-      (digit < '0' || digit > '9') &&
-      (digit < 'a' || digit > 'f') &&
-      (digit < 'A' || digit > 'F')
-    )
-      return false
-  }
+  if (rgb.length !== 6 && rgb.length !== 3) return false
+  if (/[^a-fA-F0-9]/gi.test(rgb)) return false
   return true
 }
 
