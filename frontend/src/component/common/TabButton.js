@@ -39,8 +39,8 @@ const getProps = (clicked, count, buttonName) => {
       buttonName === 'Labels' ? (
         <LabelIcon clicked={clicked} />
       ) : (
-          <OpenIcon clicked={clicked} />
-        ),
+        <OpenIcon clicked={clicked} />
+      ),
   }
 }
 

@@ -1,9 +1,9 @@
-import React, { createContext, useState, useEffect } from 'react'
-// import TabButton from '@Component/common/TabButton'
+import React, { createContext, useState } from 'react'
+import styled from 'styled-components'
+import TabButton from '@Component/common/TabButton'
+import LinkButton from '@Component/common/LinkButton'
 import MilestoneList from '@Component/MilestonePage/MilestoneList'
 import { getMilestones } from '@Api/milestone' // TODO: API 다른 거로 바꿔야 함
-import styled from 'styled-components'
-import Button from '@Component/common/Button'
 import { useFetch } from '@Util/hook'
 
 export const milestoneContext = createContext()
@@ -17,8 +17,12 @@ const MilestonePage = () => {
     <milestoneContext.Provider value={{ milestones, setMilestones }}>
       <StyledContainer>
         <StyledButtonContainer>
-          {/* <TabButton clicked="milestone"></TabButton> */}
-          <Button buttonName="New milestone" targetLocation="/milestone/new" />
+          <TabButton clicked="milestone" />
+          <LinkButton
+            buttonName={'New Milestone'}
+            targetLocation={'/milestone/new'}
+            isGreen={true}
+          />
         </StyledButtonContainer>
         <MilestoneList></MilestoneList>
       </StyledContainer>

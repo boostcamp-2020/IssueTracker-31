@@ -44,11 +44,11 @@ const EventTypeButton = ({ buttonProps }) => {
 
 const StyledDiv = styled.button`
   ${({
-  backgroundColor = '#2ea44f',
-  color = '#ffffff',
-  hoverColor = '#3ea85f',
-  borderRadius = '6px',
-}) =>
+    backgroundColor = '#2ea44f',
+    color = '#ffffff',
+    hoverColor = '#3ea85f',
+    borderRadius = '6px',
+  }) =>
     `
     color: ${color};
     background: ${backgroundColor};
