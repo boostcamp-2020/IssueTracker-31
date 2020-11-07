@@ -9,6 +9,11 @@ export default (err, res) => {
       success: false,
       message: '파라미터 값이 잘못 되었습니다.',
     })
+  } else if (err.message == 'DUPLICATE') {
+    res.status(409).json({
+      success: false,
+      message: '중복된 데이터가 존재합니다.',
+    })
   } else {
     res.status(500).json({
       success: false,
