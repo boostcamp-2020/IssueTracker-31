@@ -13,8 +13,13 @@ function Milestone({ data }) {
       <StyledFirstSection>
         <StyledTitle>{data.title}</StyledTitle>
         <StyledDate>
-          {data.dueDate && <DateIcon />}{' '}
-          {data.dueDate ? getMilestoneDateFormat(data.dueDate) : 'No due date'}
+          {data.dueDate ? (
+            <>
+              <DateIcon /> {getMilestoneDateFormat(data.dueDate)}
+            </>
+          ) : (
+            'No due date'
+          )}
         </StyledDate>
         <StyledDescription>{data.description}</StyledDescription>
       </StyledFirstSection>
