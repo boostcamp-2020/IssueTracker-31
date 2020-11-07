@@ -2,8 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import DateIcon from '@Public/js/DateIcon'
 import { getMilestoneDateFormat } from '@Util/util'
+import { Link } from 'react-router-dom'
 
 function Milestone({ data }) {
+  const percent = (data.openIssue / (data.openIssue + data.closeIssue)) * 100
   return (
     <StyledContainer>
       <StyledFirstSection>
@@ -16,13 +18,24 @@ function Milestone({ data }) {
       </StyledFirstSection>
       <StyledSecondSection>
         <StyledProgressBar>
-          <StyledProgressItem></StyledProgressItem>
+          <StyledProgressItem percent={percent}></StyledProgressItem>
         </StyledProgressBar>
-        <StyledStates>
-          <StyledState> % complete</StyledState>
-          <StyledState> open</StyledState>
-          <StyledState> closed</StyledState>
-        </StyledStates>
+        <div>
+          <StyledState>
+            {parseInt(percent)}% <StyledLabel>complete</StyledLabel>
+          </StyledState>
+          <StyledLink to="/">
+            <StyledState>
+              {' '}
+              {data.openIssue} <StyledLabel>open</StyledLabel>
+            </StyledState>
+          </StyledLink>
+          <StyledLink to="/">
+            <StyledState>
+              {data.closeIssue}% <StyledLabel>closed</StyledLabel>
+            </StyledState>
+          </StyledLink>
+        </div>
         <StyledButtons>
           <StyledButton color="#0365d6">Edit</StyledButton>
           <StyledButton color="#0365d6">Close</StyledButton>
@@ -46,6 +59,7 @@ const StyledFirstSection = styled.div`
   border-left: 1px solid #eaecef;
   padding: 15px 20px;
   vertical-align: top;
+  box-sizing: border-box;
 `
 
 const StyledSecondSection = styled.div`
@@ -54,6 +68,7 @@ const StyledSecondSection = styled.div`
   border-right: 1px solid #eaecef;
   padding: 15px 20px;
   vertical-align: top;
+  box-sizing: border-box;
 `
 
 const StyledTitle = styled.h2`
@@ -84,11 +99,37 @@ const StyledDescription = styled.div`
   vertical-align: middle;
 `
 
-const StyledProgressBar = styled.span``
-const StyledProgressItem = styled.span``
-const StyledStates = styled.div``
-const StyledState = styled.div``
 const StyledButtons = styled.div``
 const StyledButton = styled.button``
+const StyledProgressBar = styled.span`
+  height: 10px;
+  display: flex;
+  overflow: hidden;
+  background-color: #e1e4e8;
+  border-radius: 6px;
+  outline: 1px solid transparent;
+  margin-top: 4px;
+  margin-bottom: 8px;
+`
+const StyledProgressItem = styled.span`
+  width: ${({ percent }) => `${percent}%`};
+  outline: 2px solid transparent;
+  background-color: #28a745;
+`
+const StyledLink = styled(Link)`
+  margin-left: 15px;
+`
+
+const StyledState = styled.div`
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #24292e;
+  white-space: nowrap;
+`
+const StyledLabel = styled.span`
+  font-weight: 400;
+`
 
 export default Milestone
