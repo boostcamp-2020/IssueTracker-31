@@ -36,7 +36,22 @@ const getMilestoneWithProgress = async id => {
   }
 }
 
+const createMilestone = async ({
+  title,
+  dueDate = null,
+  description = null,
+}) => {
+  if (!title)
+    throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
+  await db.createMilestone(title, dueDate, description)
+  return {
+    code: statusCode.CREATED,
+    success: true,
+  }
+}
+
 export default {
   getMilestone,
   getMilestoneWithProgress,
+  createMilestone,
 }

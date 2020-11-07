@@ -9,7 +9,14 @@ select m.id, m.title, m.dueDate, m.description, m.isOpen, (
 from Milestone as m
 where m.id = ?
 `
-
+const createMilestone = `
+insert into Milestone (
+  title, 
+  dueDate, 
+  description) 
+values (?, ?, ?)
+`
 export default {
   getMilestoneWithProgress,
+  createMilestone,
 }

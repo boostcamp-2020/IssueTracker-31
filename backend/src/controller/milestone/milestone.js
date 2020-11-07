@@ -34,7 +34,22 @@ const getMilestoneWithProgress = async (req, res) => {
   }
 }
 
+const createMilestone = async (req, res, next) => {
+  try {
+    const {
+      code,
+      success,
+      data,
+      message,
+    } = await milestoneService.createMilestone({ ...req.body })
+    return res.status(code).json({ success, data, message })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export default {
   read,
   getMilestoneWithProgress,
+  createMilestone,
 }
