@@ -5,7 +5,7 @@ import { getMilestoneDateFormat } from '@Util/util'
 import { Link } from 'react-router-dom'
 
 function Milestone({ data }) {
-  const percent = (data.openIssue / (data.openIssue + data.closeIssue)) * 100
+  const percent = (data.closeIssue / (data.openIssue + data.closeIssue)) * 100
   const clickDeleteBtn = () => {}
 
   return (
@@ -33,13 +33,12 @@ function Milestone({ data }) {
           </StyledState>
           <StyledLink to="/">
             <StyledState>
-              {' '}
               {data.openIssue} <StyledLabel>open</StyledLabel>
             </StyledState>
           </StyledLink>
           <StyledLink to="/">
             <StyledState>
-              {data.closeIssue}% <StyledLabel>closed</StyledLabel>
+              {data.closeIssue} <StyledLabel>closed</StyledLabel>
             </StyledState>
           </StyledLink>
         </div>
