@@ -1,16 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 import DateIcon from '@Public/js/DateIcon'
+import { getMilestoneDateFormat } from '@Util/util'
 
 function Milestone({ data }) {
   return (
     <StyledContainer>
       <StyledFirstSection>
         <StyledTitle>{data.title}</StyledTitle>
-        <StyledMeta>
-          <DateIcon /> {data.dueDate || 'No due date'}
-        </StyledMeta>
-        <StyledMeta>{data.description}</StyledMeta>
+        <StyledDate>
+          {data.dueDate && <DateIcon />}{' '}
+          {data.dueDate ? getMilestoneDateFormat(data.dueDate) : 'No due date'}
+        </StyledDate>
+        <StyledDescription>{data.description}</StyledDescription>
       </StyledFirstSection>
       <StyledSecondSection>
         <StyledProgressBar>
@@ -63,13 +65,25 @@ const StyledTitle = styled.h2`
   line-height: 1.2;
 `
 
-const StyledMeta = styled.div`
+const StyledDate = styled.div`
   font-size: 14px;
-  display: block;
+  line-height: 21px;
+  // display: block;
   margin-right: 10px;
   color: #6a737d;
   vertical-align: middle;
 `
+
+const StyledDescription = styled.div`
+  font-size: 16px;
+  line-height: 24px;
+  display: block;
+  margin-top: 5px;
+  margin-right: 10px;
+  color: #6a737d;
+  vertical-align: middle;
+`
+
 const StyledProgressBar = styled.span``
 const StyledProgressItem = styled.span``
 const StyledStates = styled.div``
