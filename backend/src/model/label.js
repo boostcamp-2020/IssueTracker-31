@@ -9,15 +9,15 @@ const getLabel = async () => {
 
 const getLabelByName = async name => {
   const sql = query.getLabelByNameQueryString
-  const [rows] = await db.query(sql, [name])
+  const [rows] = await db.query(sql, name)
+  console.log(rows)
   return rows[0]
 }
 
 const postLabel = async ({ name, description, color }, connection) => {
   connection = connection ? connection : db
-  const sql = query.postLabelQueryString
   try {
-    const [result] = await connection.query(sql, {
+    const [result] = await connection.query(query.postLabelQueryString, {
       name,
       description,
       color,
