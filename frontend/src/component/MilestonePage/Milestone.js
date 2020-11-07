@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 
 function Milestone({ data }) {
   const percent = (data.openIssue / (data.openIssue + data.closeIssue)) * 100
+  const clickDeleteBtn = () => {}
+
   return (
     <StyledContainer>
       <StyledFirstSection>
@@ -37,9 +39,13 @@ function Milestone({ data }) {
           </StyledLink>
         </div>
         <StyledButtons>
-          <StyledButton color="#0365d6">Edit</StyledButton>
+          <Link to="/milestones/edit">
+            <StyledButton color="#0365d6">Edit</StyledButton>
+          </Link>
           <StyledButton color="#0365d6">Close</StyledButton>
-          <StyledButton color="#cb2431">Delete</StyledButton>
+          <StyledButton color="#cb2431" onClick={clickDeleteBtn}>
+            Delete
+          </StyledButton>
         </StyledButtons>
       </StyledSecondSection>
     </StyledContainer>
@@ -99,8 +105,6 @@ const StyledDescription = styled.div`
   vertical-align: middle;
 `
 
-const StyledButtons = styled.div``
-const StyledButton = styled.button``
 const StyledProgressBar = styled.span`
   height: 10px;
   display: flex;
@@ -130,6 +134,22 @@ const StyledState = styled.div`
 `
 const StyledLabel = styled.span`
   font-weight: 400;
+`
+const StyledButtons = styled.div`
+  font-size: 14px;
+  margin-top: 8px;
+  color: #24292e;
+`
+const StyledButton = styled.button`
+  display: inline-block;
+  margin-right: 8px;
+  padding: 0px;
+  text-decoration: none;
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  color: ${({ color }) => color};
+  outline: none;
 `
 
 export default Milestone
