@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
 import Request from '../util/request'
 
 function LoginForm() {
@@ -15,15 +14,13 @@ function LoginForm() {
     setValue({ ...value, [event.target.name]: event.target.value })
   }
 
-  const handleGithubLogin = () => {
-    axios
-      .get('http://localhost:3000/api/users/github')
-      .then(function (res) {
-        window.location.href = res.data
-      })
-      .catch(function (err) {
-        console.log(err)
-      })
+  const handleGithubLogin = async () => {
+    try {
+      const res = await Request.GET('/users/github')
+      window.location.href = res
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
