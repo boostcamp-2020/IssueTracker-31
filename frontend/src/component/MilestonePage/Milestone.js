@@ -4,7 +4,7 @@ import DateIcon from '@Public/js/DateIcon'
 import { getMilestoneDateFormat } from '@Util/util'
 import { Link } from 'react-router-dom'
 
-function Milestone({ data, handleDeleteBtn }) {
+const Milestone = ({ data, handleDeleteBtn }) => {
   const percent = (data.openIssue / (data.openIssue + data.closeIssue)) * 100
 
   return (
