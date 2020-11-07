@@ -1,6 +1,7 @@
 import labelService from '../../service/label'
 import resMessage from '../../util/resMessage'
 import statusCode from '../../util/statusCode'
+import errorResponse from '../../util/error-response'
 
 const read = async (req, res) => {
   try {
@@ -13,6 +14,18 @@ const read = async (req, res) => {
   }
 }
 
+const create = async (req, res) => {
+  const newLabelData = req.body
+  try {
+    const newLabelId = await labelService.postLabel(newLabelData)
+    return res.json({ success: true, data: { id: newLabelId } })
+  } catch (err) {
+    console.log(err)
+    errorResponse(err, res)
+  }
+}
+
 export default {
   read,
+  create,
 }
