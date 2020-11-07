@@ -19,6 +19,24 @@ const getMilestone = async () => {
   }
 }
 
+const getMilestoneWithProgress = async id => {
+  try {
+    const milestones = await db.getMilestoneWithProgress(id)
+    return {
+      code: statusCode.OK,
+      success: true,
+      data: milestones,
+    }
+  } catch (e) {
+    return {
+      code: statusCode.DB_ERROR,
+      success: false,
+      message: resMessage.DB_ERROR,
+    }
+  }
+}
+
 export default {
   getMilestone,
+  getMilestoneWithProgress,
 }
