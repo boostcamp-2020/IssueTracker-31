@@ -1,5 +1,6 @@
 import issueService from '../../service/issue'
 import errorResponse from '../../util/error-response'
+import statusCode from '../../util/statusCode'
 
 const getIssues = async (req, res) => {
   const filterValues = { ...req.query }
@@ -20,7 +21,20 @@ const postIssue = async (req, res) => {
   }
 }
 
+const updateIssueState = async (req, res) => {
+  const data = req.body
+  try {
+    await issueService.updateIssueState(data)
+    return res.status(statusCode.OK).json({
+      success: true,
+    })
+  } catch (err) {
+    errorResponse(err, res)
+  }
+}
+
 export default {
   getIssues,
   postIssue,
+  updateIssueState,
 }

@@ -46,6 +46,20 @@ const postIssue = async newIssueData => {
   }
 }
 
+const updateIssueState = async data => {
+  const connection = await pool.getConnection()
+  await connection.beginTransaction()
+  try {
+    await issueModel.updateIssueState(connection, data)
+    await connection.commit()
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
+}
+
 const isValidNewIssueData = ({
   title,
   userId,
@@ -109,4 +123,5 @@ const isValidFilterValues = filterValues => {
 export default {
   getIssues,
   postIssue,
+  updateIssueState,
 }
