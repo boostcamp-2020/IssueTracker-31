@@ -42,7 +42,9 @@ const isValidNewIssueData = ({
   label,
   assignee,
   milestoneId,
+  ...notAllowed
 }) => {
+  if (Object.keys(notAllowed).length !== 0) return false
   if (!title || !userId) return false
   if (typeof title !== 'string' || title === '') return false
   if (typeof userId !== 'number' || userId < 1) return false
