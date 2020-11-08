@@ -3,6 +3,6 @@ import commentController from './comment'
 
 const router = express.Router()
 
-router.get('/', commentController.read)
+router.patch('/:id', commentController.update)
 
 module.exports = router

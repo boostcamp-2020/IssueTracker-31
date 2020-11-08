@@ -1,7 +1,6 @@
 import db from './index'
 import query from './query/comment'
 
-const getComments = async () => {}
 const postComment = async (
   issueId,
   userId,
@@ -23,7 +22,13 @@ const postComment = async (
   }
 }
 
+const updateComment = async (id, content) => {
+  const result = await db.query(query.updateCommentQueryString, [content, id])
+  if (result[0].affectedRows === 0) throw new Error('NOT_EXIST')
+  if (result[0].changedRows === 0) throw new Error('NOT_MODIFIED')
+}
+
 export default {
-  getComments,
   postComment,
+  updateComment,
 }
