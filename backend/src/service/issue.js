@@ -46,6 +46,28 @@ const postIssue = async newIssueData => {
   }
 }
 
+const updateIssueState = async data => {
+  if (!isValidUpdateStateData(data)) throw new Error('parameter')
+  const connection = await pool.getConnection()
+  await connection.beginTransaction()
+  try {
+    await issueModel.updateIssueState(connection, data)
+    await connection.commit()
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
+}
+
+const isValidUpdateStateData = ({ isOpen, issueId }) => {
+  if (!isOpen || !issueId) return false
+  if (typeof JSON.parse(isOpen) !== 'boolean') return false
+  if (!Array.isArray(JSON.parse(issueId))) return false
+  return true
+}
+
 const isValidNewIssueData = ({
   title,
   userId,
@@ -109,4 +131,5 @@ const isValidFilterValues = filterValues => {
 export default {
   getIssues,
   postIssue,
+  updateIssueState,
 }

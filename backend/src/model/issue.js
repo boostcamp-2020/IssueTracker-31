@@ -41,8 +41,18 @@ const setIssueRelations = async (
   }
 }
 
+const updateIssueState = async (connection, { issueId, isOpen }) => {
+  const sql = query.updateIssueState(issueId, isOpen)
+  try {
+    await connection.query(sql)
+  } catch (err) {
+    throw new Error('DB')
+  }
+}
+
 export default {
   getIssues,
   postIssue,
   setIssueRelations,
+  updateIssueState,
 }
