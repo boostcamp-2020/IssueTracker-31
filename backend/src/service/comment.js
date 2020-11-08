@@ -2,8 +2,8 @@ import db from '../model/comment'
 import resMessage from '../util/resMessage'
 import statusCode from '../util/statusCode'
 
-const updateComment = async (id, { userId, content }) => {
-  if (isNaN(id) || id < 1 || isNaN(userId) || userId < 1)
+const updateComment = async (id, content) => {
+  if (isNaN(id) || id < 1 || !content)
     return {
       code: statusCode.BAD_REQUEST,
       success: false,
