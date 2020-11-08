@@ -46,6 +46,12 @@ const postIssue = async newIssueData => {
   }
 }
 
+const getIssueDetail = async issueId => {
+  if (isNaN(issueId) || issueId < 1) throw new Error('parameter')
+  const issues = await issueModel.getIssueDetail(issueId)
+  return issues
+}
+
 const isValidNewIssueData = ({
   title,
   userId,
@@ -109,4 +115,5 @@ const isValidFilterValues = filterValues => {
 export default {
   getIssues,
   postIssue,
+  getIssueDetail,
 }
