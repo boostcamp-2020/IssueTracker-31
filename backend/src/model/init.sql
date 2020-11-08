@@ -7,12 +7,12 @@ drop table if exists Comment_emoticon;
 drop table if exists Comment;
 drop table if exists Issue;
 drop table if exists User;
-drop table if exists Label;
-drop table if exists Milestone;
+drop table if exists label;
+drop table if exists milestone;
 
 CREATE TABLE `User` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(45),
+  `email` VARCHAR(45) NOT NULL UNIQUE,
   `password` VARCHAR(100) DEFAULT NULL,
   `nickname` VARCHAR(45) NOT NULL UNIQUE,
   `profileUrl` VARCHAR(255),
@@ -62,15 +62,6 @@ CREATE TABLE `Comment` (
 PRIMARY KEY (`id`),
 foreign key (issueId) references Issue(id) on update no action on delete cascade,
 foreign key (userId) references User(id) on update no action on delete SET NULL
-);
-
-CREATE TABLE `CommentImageUrl` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `url` VARCHAR(255) NOT NULL,
-  `commentId` INT DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (commentId)
-  REFERENCES Comment(id) ON UPDATE NO ACTION ON DELETE CASCADE
 );
 
 CREATE TABLE `Issue_label` (
