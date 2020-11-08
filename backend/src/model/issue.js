@@ -25,7 +25,12 @@ const postIssue = async (connection, { title, userId, milestoneId }) => {
 }
 
 const getIssueDetail = async issueId => {
-  return issueId
+  try {
+    const [rows] = await db.query(query.getIssueDetailQueryString, issueId)
+    return rows
+  } catch (err) {
+    throw new Error('DB')
+  }
 }
 
 const setIssueRelations = async (
