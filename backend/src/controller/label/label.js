@@ -37,8 +37,20 @@ const erase = async (req, res) => {
   }
 }
 
+const update = async (req, res) => {
+  const patchingData = req.body
+  try {
+    await labelService.patchLabel(req.params.labelId, patchingData)
+    return res.status(statusCode.OK).json({ success: true })
+  } catch (err) {
+    console.log(err)
+    errorResponse(err, res)
+  }
+}
+
 export default {
   read,
   create,
   erase,
+  update,
 }
