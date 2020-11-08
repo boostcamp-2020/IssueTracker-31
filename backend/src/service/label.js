@@ -34,15 +34,21 @@ const deleteLabel = async labelId => {
   await labelModel.deleteLabel(labelId)
 }
 
+const patchLabel = async (labelId, patchingData) => {
+  if (isNaN(labelId) || labelId < 1 || !isValidLabelData(patchingData))
+    throw new Error('parameter')
+  await labelModel.patchLabel(labelId, patchingData)
+}
+
 const isValidLabelData = ({ name, description, color, ...notAllowed }) => {
   if (Object.keys(notAllowed).length !== 0) return false
   if (name !== undefined && (typeof name !== 'string' || name.trim() === ''))
     return false
   if (color !== undefined) {
-  if (typeof color !== 'string' && color[0] !== '#') return false
-  const rgb = color.substr(1)
-  if (rgb.length !== 6 && rgb.length !== 3) return false
-  if (/[^a-fA-F0-9]/gi.test(rgb)) return false
+    if (typeof color !== 'string' && color[0] !== '#') return false
+    const rgb = color.substr(1)
+    if (rgb.length !== 6 && rgb.length !== 3) return false
+    if (/[^a-fA-F0-9]/gi.test(rgb)) return false
   }
   if (description !== undefined && typeof description !== 'string') return false
   return true
@@ -52,4 +58,5 @@ export default {
   getLabel,
   postLabel,
   deleteLabel,
+  patchLabel,
 }
