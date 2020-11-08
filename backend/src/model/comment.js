@@ -1,6 +1,7 @@
 import db from './index'
 import query from './query/comment'
 
+const getComments = async () => {}
 const postComment = async (
   issueId,
   userId,
@@ -23,5 +24,6 @@ const postComment = async (
 }
 
 export default {
+  getComments,
   postComment,
 }
