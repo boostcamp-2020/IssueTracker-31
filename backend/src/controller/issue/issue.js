@@ -14,10 +14,12 @@ const getIssues = async (req, res) => {
 }
 const postIssue = async (req, res) => {
   const newIssueData = req.body
+  newIssueData.userId = req.userData.id
   try {
     await issueService.postIssue(newIssueData)
     return res.status(statusCode.CREATED).json({ success: true })
   } catch (err) {
+    console.log(err)
     errorResponse(err, res)
   }
 }

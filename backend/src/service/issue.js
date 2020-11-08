@@ -1,6 +1,5 @@
 import issueModel from '../model/issue'
 import commentModel from '../model/comment'
-import commentImageUrl from '../model/commentImageUrl'
 import pool from '../model/index'
 import relationMaker from '../util/relation-maker'
 
@@ -12,7 +11,7 @@ const getIssues = async filterValues => {
 
 const postIssue = async newIssueData => {
   if (!isValidNewIssueData(newIssueData)) throw new Error('parameter')
-  const { label, assignee, imageUrlId, userId, content } = newIssueData
+  const { label, assignee, userId, content } = newIssueData
   const connection = await pool.getConnection()
   await connection.beginTransaction()
   try {
@@ -25,18 +24,8 @@ const postIssue = async newIssueData => {
     )
     if (label) await issueRelationMaker('Issue_label', 'labelId', label)
     if (assignee) await issueRelationMaker('Issue_assignee', 'userId', assignee)
-    if (content) {
-      const commentId = await commentModel.postComment(
-        issueId,
-        userId,
-        content,
-        true,
-        connection,
-      )
-      if (commentImageUrl) {
-        await commentImageUrl.updateCommentId(commentId, imageUrlId, connection)
-      }
-    }
+    if (content)
+      await commentModel.postComment(issueId, userId, content, true, connection)
     await connection.commit()
   } catch (err) {
     await connection.rollback()
@@ -72,17 +61,16 @@ const isValidNewIssueData = ({
   title,
   userId,
   content,
-  imageUrlId,
   label,
   assignee,
   milestoneId,
+  ...notAllowed
 }) => {
+  if (Object.keys(notAllowed).length !== 0) return false
   if (!title || !userId) return false
   if (typeof title !== 'string' || title === '') return false
   if (typeof userId !== 'number' || userId < 1) return false
   if (content !== undefined && typeof content !== 'string') return false
-  if (!content && imageUrlId && imageUrlId[0]) return false
-  if (imageUrlId && !isValidIdList(imageUrlId)) return false
   if (label && !isValidIdList(label)) return false
   if (assignee && !isValidIdList(assignee)) return false
   if (milestoneId !== undefined && !isValidIdList([milestoneId])) return false
