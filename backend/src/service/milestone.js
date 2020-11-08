@@ -1,6 +1,7 @@
 import db from '../model/milestone'
 import resMessage from '../util/resMessage'
 import statusCode from '../util/statusCode'
+import { verifyTextLength } from '../util/utility'
 
 const getMilestone = async () => {
   try {
@@ -58,13 +59,23 @@ const createMilestone = async ({
   dueDate = null,
   description = null,
 }) => {
-  if (!title)
-    throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
+  verifyParams(title, dueDate, description)
   await db.createMilestone(title, dueDate, description)
   return {
     code: statusCode.CREATED,
     success: true,
   }
+}
+
+const verifyParams = (title, dueDate, description) => {
+  if (!title)
+    throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
+  if (title && !verifyTextLength(title, 45))
+    throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
+  if (description && !verifyTextLength(description, 45))
+    throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
+  if (dueDate && !Date.parse(dueDate))
+    throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
 }
 
 export default {
