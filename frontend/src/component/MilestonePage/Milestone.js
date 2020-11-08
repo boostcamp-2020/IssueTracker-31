@@ -5,15 +5,20 @@ import { getMilestoneDateFormat } from '@Util/util'
 import { Link } from 'react-router-dom'
 
 const Milestone = ({ data, handleDeleteBtn }) => {
-  const percent = (data.openIssue / (data.openIssue + data.closeIssue)) * 100
+  const percent = (data.closeIssue / (data.openIssue + data.closeIssue)) * 100
 
   return (
     <StyledContainer>
       <StyledFirstSection>
         <StyledTitle>{data.title}</StyledTitle>
         <StyledDate>
-          {data.dueDate && <DateIcon />}{' '}
-          {data.dueDate ? getMilestoneDateFormat(data.dueDate) : 'No due date'}
+          {data.dueDate ? (
+            <>
+              <DateIcon /> {getMilestoneDateFormat(data.dueDate)}
+            </>
+          ) : (
+            'No due date'
+          )}
         </StyledDate>
         <StyledDescription>{data.description}</StyledDescription>
       </StyledFirstSection>
@@ -27,13 +32,12 @@ const Milestone = ({ data, handleDeleteBtn }) => {
           </StyledState>
           <StyledLink to="/">
             <StyledState>
-              {' '}
               {data.openIssue} <StyledLabel>open</StyledLabel>
             </StyledState>
           </StyledLink>
           <StyledLink to="/">
             <StyledState>
-              {data.closeIssue}% <StyledLabel>closed</StyledLabel>
+              {data.closeIssue} <StyledLabel>closed</StyledLabel>
             </StyledState>
           </StyledLink>
         </div>
