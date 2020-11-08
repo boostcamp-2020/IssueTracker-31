@@ -107,6 +107,7 @@ const isValidFilterValues = filterValues => {
   if (author !== undefined && isNaN(author)) return false
   if (assignee !== undefined && isNaN(assignee)) return false
   if (isOpen !== undefined && isOpen !== '1' && isOpen !== '0') return false
+  if (label.indexOf('0') !== -1 && label.length > 1) return false
   if (label !== undefined) {
     if (!Array.isArray(label)) return false
     for (const labeId of label) {
