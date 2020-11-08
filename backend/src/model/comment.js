@@ -1,6 +1,11 @@
 import db from './index'
 import query from './query/comment'
 
+const getIssueComments = async id => {
+  const [comments] = await db.query(query.getIssueCommentQueryString, id)
+  return comments
+}
+
 const postComment = async (
   issueId,
   userId,
@@ -23,5 +28,6 @@ const postComment = async (
 }
 
 export default {
+  getIssueComments,
   postComment,
 }
