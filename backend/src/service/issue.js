@@ -1,6 +1,5 @@
 import issueModel from '../model/issue'
 import commentModel from '../model/comment'
-import commentImageUrl from '../model/commentImageUrl'
 import pool from '../model/index'
 import relationMaker from '../util/relation-maker'
 
@@ -12,7 +11,7 @@ const getIssues = async filterValues => {
 
 const postIssue = async newIssueData => {
   if (!isValidNewIssueData(newIssueData)) throw new Error('parameter')
-  const { label, assignee, imageUrlId, userId, content } = newIssueData
+  const { label, assignee, userId, content } = newIssueData
   const connection = await pool.getConnection()
   await connection.beginTransaction()
   try {
@@ -25,18 +24,8 @@ const postIssue = async newIssueData => {
     )
     if (label) await issueRelationMaker('Issue_label', 'labelId', label)
     if (assignee) await issueRelationMaker('Issue_assignee', 'userId', assignee)
-    if (content) {
-      const commentId = await commentModel.postComment(
-        issueId,
-        userId,
-        content,
-        true,
-        connection,
-      )
-      if (commentImageUrl) {
-        await commentImageUrl.updateCommentId(commentId, imageUrlId, connection)
-      }
-    }
+    if (content)
+      await commentModel.postComment(issueId, userId, content, true, connection)
     await connection.commit()
   } catch (err) {
     await connection.rollback()
