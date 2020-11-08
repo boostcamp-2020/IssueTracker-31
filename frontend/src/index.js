@@ -6,7 +6,7 @@ import IssueListPage from '@Page/IssueList'
 import LabelPage from '@Page/Label/Label'
 import MilestonePage from '@Page/Milestone/Milestone'
 import Header from './component/common/Header'
-import NewIssuePage from '@Page/NewIssue'
+import CreateIssuePage from '@Page/CreateIssue'
 
 const root = document.getElementById('root')
 
@@ -18,7 +18,7 @@ const App = () => {
       <Route exact path="/" component={IssueListPage} />
       <Route exact path="/labels" component={LabelPage} />
       <Route exact path="/milestones" component={MilestonePage} />
-      <Route exact path="/issue/new" component={NewIssuePage} />
+      <Route exact path="/issue/new" component={CreateIssuePage} />
     </BrowserRouter>
   )
 }

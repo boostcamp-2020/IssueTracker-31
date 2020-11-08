@@ -4,7 +4,7 @@ import ProfileWithContent from '@Component/common/ProfileWithContent'
 import SpeechBubble from '@Component/common/SpeechBubble'
 import Sidebar from '@Component/common/Sidebar'
 
-const NewIssuePage = () => {
+const CreateIssuePage = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [userId, setUserId] = useState(document.cookie.userData || null)
@@ -30,4 +30,4 @@ const StyledWrapper = styled.div`
   box-sizing: border-box;
 `
 
-export default NewIssuePage
+export default CreateIssuePage
