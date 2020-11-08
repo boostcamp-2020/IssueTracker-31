@@ -29,8 +29,18 @@ const postLabel = async ({ name, description, color }, connection) => {
   }
 }
 
+const deleteLabel = async (labelId, connection) => {
+  connection = connection ? connection : db
+  try {
+    await connection.query(query.deleteLabelQueryString, labelId)
+  } catch (err) {
+    throw new Error('DB')
+  }
+}
+
 export default {
   getLabel,
   postLabel,
   getLabelByName,
+  deleteLabel,
 }

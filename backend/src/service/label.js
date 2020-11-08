@@ -28,6 +28,11 @@ const postLabel = async newLabelData => {
   return newLabelId
 }
 
+const deleteLabel = async labelId => {
+  if (isNaN(labelId) || labelId < 1) throw new Error('parameter')
+  await labelModel.deleteLabel(labelId)
+}
+
 const isValidNewLabelData = ({ name, description, color }) => {
   if (!name || !color) return false
   if (typeof name !== 'string') return false
@@ -42,4 +47,5 @@ const isValidNewLabelData = ({ name, description, color }) => {
 export default {
   getLabel,
   postLabel,
+  deleteLabel,
 }

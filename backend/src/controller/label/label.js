@@ -27,7 +27,18 @@ const create = async (req, res) => {
   }
 }
 
+const erase = async (req, res) => {
+  try {
+    await labelService.deleteLabel(req.params.labelId)
+    return res.status(statusCode.OK).json({ success: true })
+  } catch (err) {
+    console.log(err)
+    errorResponse(err, res)
+  }
+}
+
 export default {
   read,
   create,
+  erase,
 }
