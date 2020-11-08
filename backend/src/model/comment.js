@@ -23,9 +23,9 @@ const postComment = async (
 }
 
 const updateComment = async (id, content) => {
-  const result = await db.query(query.updateCommentQueryString, [content, id])
-  if (result[0].affectedRows === 0) throw new Error('NOT_EXIST')
-  if (result[0].changedRows === 0) throw new Error('NOT_MODIFIED')
+  const [result] = await db.query(query.updateCommentQueryString, [content, id])
+  if (result.affectedRows === 0) throw new Error('NOT_EXIST')
+  if (result.changedRows === 0) throw new Error('NOT_MODIFIED')
 }
 
 export default {
