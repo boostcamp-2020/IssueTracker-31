@@ -46,6 +46,12 @@ const postIssue = async newIssueData => {
   }
 }
 
+const getIssueDetail = async issueId => {
+  if (isNaN(issueId) || issueId < 1) throw new Error('parameter')
+  const issues = await issueModel.getIssueDetail(issueId)
+  return issues
+}
+
 const updateIssueState = async data => {
   if (!isValidUpdateStateData(data)) throw new Error('parameter')
   const connection = await pool.getConnection()
@@ -132,4 +138,5 @@ export default {
   getIssues,
   postIssue,
   updateIssueState,
+  getIssueDetail,
 }

@@ -24,6 +24,10 @@ const postIssue = async (connection, { title, userId, milestoneId }) => {
   }
 }
 
+const getIssueDetail = async issueId => {
+  return issueId
+}
+
 const setIssueRelations = async (
   connection,
   table,
@@ -55,4 +59,5 @@ export default {
   postIssue,
   setIssueRelations,
   updateIssueState,
+  getIssueDetail,
 }
