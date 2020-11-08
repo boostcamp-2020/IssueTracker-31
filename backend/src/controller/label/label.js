@@ -28,9 +28,8 @@ const create = async (req, res) => {
 }
 
 const erase = async (req, res) => {
-  const labelId = req.params.labelId
   try {
-    await labelService.deleteLabel(labelId)
+    await labelService.deleteLabel(req.params.labelId)
     return res.status(statusCode.OK).json({ success: true })
   } catch (err) {
     console.log(err)
