@@ -6,6 +6,12 @@ const getIssues = async filterQuery => {
   return data
 }
 
+const createIssue = async body => {
+  const { success, message } = await request.POST('/issues', body)
+  if (success === false) console.error(message)
+  return success
+}
+
 const patchIssues = async params => {
   const { success, data, message } = await request.PATCH(
     '/issues/open-close',
@@ -15,4 +21,4 @@ const patchIssues = async params => {
   return data
 }
 
-export { getIssues, patchIssues }
+export { getIssues, createIssue, patchIssues }
