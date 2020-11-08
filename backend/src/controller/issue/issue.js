@@ -1,7 +1,7 @@
 import issueService from '../../service/issue'
 import statusCode from '../../util/statusCode'
+import resMessage from '../../util/resMessage'
 import errorResponse from '../../util/error-response'
-import statusCode from '../../util/statusCode'
 
 const getIssues = async (req, res) => {
   const filterValues = { ...req.query }
@@ -12,6 +12,23 @@ const getIssues = async (req, res) => {
     errorResponse(err, res)
   }
 }
+
+const getIssueComments = async (req, res) => {
+  try {
+    const {
+      code,
+      success,
+      data,
+      message,
+    } = await issueService.getIssueComments(req.params.id)
+    return res.status(code).json({ success, data, message })
+  } catch (err) {
+    return res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .json({ success: false, message: resMessage.INTERNAL_SERVER_ERROR })
+  }
+}
+
 const postIssue = async (req, res) => {
   const newIssueData = req.body
   try {
@@ -36,6 +53,7 @@ const updateIssueState = async (req, res) => {
 
 export default {
   getIssues,
+  getIssueComments,
   postIssue,
   updateIssueState,
 }

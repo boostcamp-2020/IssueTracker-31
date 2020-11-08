@@ -3,11 +3,36 @@ import commentModel from '../model/comment'
 import commentImageUrl from '../model/commentImageUrl'
 import pool from '../model/index'
 import relationMaker from '../util/relation-maker'
+import statusCode from '../util/statusCode'
+import resMessage from '../util/resMessage'
 
 const getIssues = async filterValues => {
   if (!isValidFilterValues(filterValues)) throw new Error('parameter')
   const issues = await issueModel.getIssues(filterValues)
   return structurizeIssueList(issues)
+}
+
+const getIssueComments = async id => {
+  if (isNaN(id) || id < 1)
+    return {
+      code: statusCode.BAD_REQUEST,
+      success: false,
+      message: resMessage.OUT_OF_VALUE,
+    }
+  try {
+    const comments = await commentModel.getIssueComments(id)
+    return {
+      code: statusCode.OK,
+      success: true,
+      data: comments,
+    }
+  } catch (error) {
+    return {
+      code: statusCode.DB_ERROR,
+      success: false,
+      message: resMessage.DB_ERROR,
+    }
+  }
 }
 
 const postIssue = async newIssueData => {
@@ -130,6 +155,7 @@ const isValidFilterValues = filterValues => {
 
 export default {
   getIssues,
+  getIssueComments,
   postIssue,
   updateIssueState,
 }
