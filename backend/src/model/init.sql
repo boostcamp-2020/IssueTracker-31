@@ -12,7 +12,7 @@ drop table if exists Milestone;
 
 CREATE TABLE `User` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(45) NOT NULL UNIQUE,
+  `email` VARCHAR(45),
   `password` VARCHAR(100) DEFAULT NULL,
   `nickname` VARCHAR(45) NOT NULL UNIQUE,
   `profileUrl` VARCHAR(255),
