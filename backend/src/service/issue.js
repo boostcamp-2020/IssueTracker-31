@@ -47,6 +47,7 @@ const postIssue = async newIssueData => {
 }
 
 const updateIssueState = async data => {
+  if (!isValidUpdateStateData(data)) throw new Error('parameter')
   const connection = await pool.getConnection()
   await connection.beginTransaction()
   try {
@@ -58,6 +59,13 @@ const updateIssueState = async data => {
   } finally {
     connection.release()
   }
+}
+
+const isValidUpdateStateData = ({ isOpen, issueId }) => {
+  if (!isOpen || !issueId) return false
+  if (typeof JSON.parse(isOpen) !== 'boolean') return false
+  if (!Array.isArray(JSON.parse(issueId))) return false
+  return true
 }
 
 const isValidNewIssueData = ({
