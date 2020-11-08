@@ -64,15 +64,6 @@ foreign key (issueId) references Issue(id) on update no action on delete cascade
 foreign key (userId) references User(id) on update no action on delete SET NULL
 );
 
-CREATE TABLE `CommentImageUrl` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `url` VARCHAR(255) NOT NULL,
-  `commentId` INT DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (commentId)
-  REFERENCES Comment(id) ON UPDATE NO ACTION ON DELETE CASCADE
-);
-
 CREATE TABLE `Issue_label` (
   `issueId` INT NOT NULL,
   `labelId` INT NOT NULL,
