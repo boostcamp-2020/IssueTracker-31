@@ -94,7 +94,7 @@ const verifyParams = ({ title, dueDate, description, isOpen }) => {
     throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
   if (dueDate && !Date.parse(dueDate))
     throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
-  if (isOpen && (isOpen !== 1 || isOpen !== 0))
+  if (isOpen !== undefined && isOpen !== 1 && isOpen !== 0)
     throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
 }
 
