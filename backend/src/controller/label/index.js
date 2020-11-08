@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.get('/', labelController.read)
 router.post('/', labelController.create)
-router.delete('/:labelId', labelController.erase)
+router.delete('/:id', labelController.erase)
+router.patch('/:id', labelController.update)
 
 module.exports = router

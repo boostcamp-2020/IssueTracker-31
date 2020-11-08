@@ -29,7 +29,18 @@ const create = async (req, res) => {
 
 const erase = async (req, res) => {
   try {
-    await labelService.deleteLabel(req.params.labelId)
+    await labelService.deleteLabel(req.params.id)
+    return res.status(statusCode.OK).json({ success: true })
+  } catch (err) {
+    console.log(err)
+    errorResponse(err, res)
+  }
+}
+
+const update = async (req, res) => {
+  const patchingData = req.body
+  try {
+    await labelService.patchLabel(req.params.id, patchingData)
     return res.status(statusCode.OK).json({ success: true })
   } catch (err) {
     console.log(err)
@@ -41,4 +52,5 @@ export default {
   read,
   create,
   erase,
+  update,
 }
