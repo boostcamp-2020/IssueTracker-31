@@ -23,10 +23,8 @@ const postIssue = async (req, res) => {
 
 const getIssueDetail = async (req, res) => {
   try {
-    const issueDetail = await issueService.postIssue(req.params.id)
-    return res
-      .status(statusCode.CREATED)
-      .json({ success: true, data: issueDetail })
+    const issueDetail = await issueService.getIssueDetail(req.params.id)
+    return res.status(statusCode.OK).json({ success: true, data: issueDetail })
   } catch (err) {
     errorResponse(err, res)
   }
