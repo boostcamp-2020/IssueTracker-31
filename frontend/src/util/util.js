@@ -9,4 +9,23 @@ const getTimePassedFromNow = time => {
   return `${Math.floor(second)} days ago`
 }
 
-export { getTimePassedFromNow }
+const getMilestoneDateFormat = date => {
+  const monthString = {
+    1: 'January',
+    2: 'February',
+    3: 'March',
+    4: 'April',
+    5: 'May',
+    6: 'June',
+    7: 'July',
+    8: 'August',
+    9: 'September',
+    10: 'October',
+    11: 'November',
+    12: 'December',
+  }
+  const [year, month, day] = date.split(/[- ]/, 3)
+  return `Due by ${monthString[parseInt(month)]} ${day}, ${year}`
+}
+
+export { getTimePassedFromNow, getMilestoneDateFormat }

@@ -4,9 +4,15 @@ import styled from 'styled-components'
 import { milestoneContext } from '@Page/Milestone/Milestone'
 import OpenIcon from '@Public/js/OpenIcon'
 import CloseIcon from '@Public/js/CloseIcon'
+import { deleteMilestone } from '@Api/milestone'
 
-function MilestoneList() {
-  const { milestones } = useContext(milestoneContext)
+const MilestoneList = () => {
+  const { milestones, setMilestones } = useContext(milestoneContext)
+
+  const handleDeleteBtn = async id => {
+    const success = await deleteMilestone(id)
+    if (success) setMilestones(milestones.filter(item => item.id !== id))
+  }
   return (
     <div>
       <StyledHeader>
@@ -20,7 +26,11 @@ function MilestoneList() {
         </StyledFilter>
       </StyledHeader>
       {milestones.map(milestone => (
-        <Milestone key={milestone.id} data={milestone}></Milestone>
+        <Milestone
+          key={milestone.id}
+          data={milestone}
+          handleDeleteBtn={handleDeleteBtn}
+        ></Milestone>
       ))}
     </div>
   )
