@@ -12,7 +12,6 @@ router.use('/issues', middleware.verifyMiddleware, issueController)
 router.use('/users', userController)
 router.use('/labels', middleware.verifyMiddleware, labelController)
 router.use('/milestones', middleware.verifyMiddleware, milestoneController)
-// router.use('/comments', middleware.verifyMiddleware, commentController)
-router.use('/comments', commentController)
+router.use('/comments', middleware.verifyMiddleware, commentController)
 
 module.exports = router
