@@ -1,4 +1,7 @@
 import issueModel from '../model/issue'
+import labelModel from '../model/label'
+import milestoneModel from '../model/milestone'
+import userModel from '../model/user'
 import commentModel from '../model/comment'
 import commentImageUrl from '../model/commentImageUrl'
 import pool from '../model/index'
@@ -48,8 +51,13 @@ const postIssue = async newIssueData => {
 
 const getIssueDetail = async issueId => {
   if (isNaN(issueId) || issueId < 1) throw new Error('parameter')
-  const issues = await issueModel.getIssueDetail(issueId)
-  return issues
+  const [[issue], label, milestone, assignee] = await Promise.all([
+    issueModel.getIssueDetail(issueId),
+    labelModel.getLabelsOnIssue(issueId),
+    milestoneModel.getMilestoneOnIssue(issueId),
+    userModel.getAssigneesOnIssue(issueId),
+  ])
+  return { ...issue, label, milestone, assignee }
 }
 
 const updateIssueState = async data => {
