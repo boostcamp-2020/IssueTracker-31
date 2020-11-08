@@ -6,4 +6,10 @@ const getMilestones = async () => {
   return data
 }
 
-export { getMilestones }
+const getMilestonesDetail = async () => {
+  const { success, data, message } = await request.GET('/milestones/detail')
+  if (success === false) return console.error(message)
+  return data
+}
+
+export { getMilestones, getMilestonesDetail }
