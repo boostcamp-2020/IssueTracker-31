@@ -23,10 +23,15 @@ const removeMilestone = id => {
   return doQuery(query.removeMilestone, id)
 }
 
+const updateMilestone = (id, params) => {
+  return doQuery(query.updateMilestone(params), [...Object.values(params), id])
+}
+
 export default {
   getMilestone,
   getMilestoneDetail,
   getMilestoneWithProgress,
   createMilestone,
   removeMilestone,
+  updateMilestone,
 }

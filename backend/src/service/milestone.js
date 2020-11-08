@@ -1,7 +1,7 @@
 import db from '../model/milestone'
 import resMessage from '../util/resMessage'
 import statusCode from '../util/statusCode'
-import { verifyTextLength } from '../util/utility'
+import { verifyTextLength, verifyRequiredParams } from '../util/utility'
 
 const getMilestone = async () => {
   try {
@@ -59,7 +59,8 @@ const createMilestone = async ({
   dueDate = null,
   description = null,
 }) => {
-  verifyParams(title, dueDate, description)
+  verifyRequiredParams(title)
+  verifyParams({ title, dueDate, description })
   await db.createMilestone(title, dueDate, description)
   return {
     code: statusCode.CREATED,
@@ -68,23 +69,32 @@ const createMilestone = async ({
 }
 
 const removeMilestone = async id => {
-  if (!id)
-    throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
+  verifyRequiredParams(id)
   await db.removeMilestone(id)
   return {
-    code: statusCode.CREATED,
+    code: statusCode.OK,
     success: true,
   }
 }
 
-const verifyParams = (title, dueDate, description) => {
-  if (!title)
-    throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
+const updateMilestone = async (id, params) => {
+  verifyRequiredParams(id)
+  verifyParams(params)
+  await db.updateMilestone(id, params)
+  return {
+    code: statusCode.OK,
+    success: true,
+  }
+}
+
+const verifyParams = ({ title, dueDate, description, isOpen }) => {
   if (title && !verifyTextLength(title, 45))
     throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
   if (description && !verifyTextLength(description, 45))
     throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
   if (dueDate && !Date.parse(dueDate))
+    throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
+  if (isOpen && (isOpen !== 1 || isOpen !== 0))
     throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
 }
 
@@ -94,4 +104,5 @@ export default {
   createMilestone,
   getMilestoneDetail,
   removeMilestone,
+  updateMilestone,
 }

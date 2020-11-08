@@ -70,10 +70,22 @@ const remove = async (req, res, next) => {
   }
 }
 
+const update = async (req, res, next) => {
+  try {
+    const { code, success } = await milestoneService.updateMilestone(
+      req.params.id,
+      { ...req.body },
+    )
+    return res.status(code).json({ success })
+  } catch (error) {
+    next(error)
+  }
+}
 export default {
   read,
   readDetail,
   create,
   readDetails,
   remove,
+  update,
 }

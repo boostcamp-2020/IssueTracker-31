@@ -32,6 +32,13 @@ const removeMilestone = `
 delete from Milestone
 where id = ?
 `
+const updateMilestone = params => `
+update Milestone
+set ${Object.keys(params)
+  .map(column => `${column} = ?`)
+  .join(',')}
+where id = ?
+`
 
 export default {
   getMilestone,
@@ -39,4 +46,5 @@ export default {
   getMilestoneWithProgress,
   createMilestone,
   removeMilestone,
+  updateMilestone,
 }
