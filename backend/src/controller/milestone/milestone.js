@@ -17,7 +17,21 @@ const read = async (req, res) => {
       .json({ success: false, message: resMessage.INTERNAL_SERVER_ERROR })
   }
 }
-
+const getDetail = async (req, res) => {
+  try {
+    const {
+      code,
+      success,
+      data,
+      message,
+    } = await milestoneService.getMilestoneDetail()
+    return res.status(code).json({ success, data, message })
+  } catch (error) {
+    return res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .json({ success: false, message: resMessage.INTERNAL_SERVER_ERROR })
+  }
+}
 const getMilestoneWithProgress = async (req, res) => {
   try {
     const {
@@ -52,4 +66,5 @@ export default {
   read,
   getMilestoneWithProgress,
   createMilestone,
+  getDetail,
 }

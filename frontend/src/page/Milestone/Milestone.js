@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import TabButton from '@Component/common/TabButton'
 import LinkButton from '@Component/common/LinkButton'
 import MilestoneList from '@Component/MilestonePage/MilestoneList'
-import { getMilestones } from '@Api/milestone' // TODO: API 다른 거로 바꿔야 함
+import { getMilestonesDetail } from '@Api/milestone' // TODO: API 다른 거로 바꿔야 함
 import { useFetch } from '@Util/hook'
 
 export const milestoneContext = createContext()
@@ -11,7 +11,7 @@ export const milestoneContext = createContext()
 const MilestonePage = () => {
   const [milestones, setMilestones] = useState([])
 
-  useFetch(getMilestones, setMilestones)
+  useFetch(getMilestonesDetail, setMilestones)
 
   return (
     <milestoneContext.Provider value={{ milestones, setMilestones }}>

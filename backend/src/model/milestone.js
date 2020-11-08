@@ -2,8 +2,11 @@ import db, { doQuery } from './index'
 import query from './query/milestone'
 
 const getMilestone = async () => {
-  const sql = 'SELECT id, title, dueDate, description, isOpen from Milestone'
-  const [rows] = await db.query(sql)
+  const [rows] = await db.query(query.getMilestone)
+  return rows
+}
+const getMilestoneDetail = async () => {
+  const [rows] = await db.query(query.getMilestoneDetail)
   return rows
 }
 
@@ -17,6 +20,7 @@ const createMilestone = (...params) => {
 }
 export default {
   getMilestone,
+  getMilestoneDetail,
   getMilestoneWithProgress,
   createMilestone,
 }
