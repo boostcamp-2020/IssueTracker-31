@@ -13,7 +13,8 @@ const getIssues = async (req, res) => {
 }
 const postIssue = async (req, res) => {
   const newIssueData = req.body
-  newIssueData.userId = req.cookies.userData.userId
+  console.log(req.userData)
+  newIssueData.userId = req.userData.id
   try {
     await issueService.postIssue(newIssueData)
     return res.status(statusCode.CREATED).json({ success: true })
