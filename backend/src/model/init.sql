@@ -7,8 +7,8 @@ drop table if exists Comment_emoticon;
 drop table if exists Comment;
 drop table if exists Issue;
 drop table if exists User;
-drop table if exists label;
-drop table if exists milestone;
+drop table if exists Label;
+drop table if exists Milestone;
 
 CREATE TABLE `User` (
   `id` INT NOT NULL AUTO_INCREMENT,
