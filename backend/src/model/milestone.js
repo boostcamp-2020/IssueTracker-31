@@ -18,9 +18,15 @@ const getMilestoneWithProgress = async id => {
 const createMilestone = (...params) => {
   return doQuery(query.createMilestone, params)
 }
+
+const removeMilestone = id => {
+  return doQuery(query.removeMilestone, id)
+}
+
 export default {
   getMilestone,
   getMilestoneDetail,
   getMilestoneWithProgress,
   createMilestone,
+  removeMilestone,
 }

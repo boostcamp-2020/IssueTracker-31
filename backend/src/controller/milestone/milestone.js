@@ -17,7 +17,7 @@ const read = async (req, res) => {
       .json({ success: false, message: resMessage.INTERNAL_SERVER_ERROR })
   }
 }
-const getDetail = async (req, res) => {
+const readDetails = async (req, res) => {
   try {
     const {
       code,
@@ -32,7 +32,7 @@ const getDetail = async (req, res) => {
       .json({ success: false, message: resMessage.INTERNAL_SERVER_ERROR })
   }
 }
-const getMilestoneWithProgress = async (req, res) => {
+const readDetail = async (req, res) => {
   try {
     const {
       code,
@@ -48,15 +48,23 @@ const getMilestoneWithProgress = async (req, res) => {
   }
 }
 
-const createMilestone = async (req, res, next) => {
+const create = async (req, res, next) => {
   try {
-    const {
-      code,
-      success,
-      data,
-      message,
-    } = await milestoneService.createMilestone({ ...req.body })
-    return res.status(code).json({ success, data, message })
+    const { code, success } = await milestoneService.createMilestone({
+      ...req.body,
+    })
+    return res.status(code).json({ success })
+  } catch (error) {
+    next(error)
+  }
+}
+
+const remove = async (req, res, next) => {
+  try {
+    const { code, success } = await milestoneService.removeMilestone(
+      req.params.id,
+    )
+    return res.status(code).json({ success })
   } catch (error) {
     next(error)
   }
@@ -64,7 +72,8 @@ const createMilestone = async (req, res, next) => {
 
 export default {
   read,
-  getMilestoneWithProgress,
-  createMilestone,
-  getDetail,
+  readDetail,
+  create,
+  readDetails,
+  remove,
 }

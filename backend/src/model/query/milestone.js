@@ -27,9 +27,16 @@ insert into Milestone (
   description) 
 values (?, ?, ?)
 `
+
+const removeMilestone = `
+delete from Milestone
+where id = ?
+`
+
 export default {
   getMilestone,
   getMilestoneDetail,
   getMilestoneWithProgress,
   createMilestone,
+  removeMilestone,
 }

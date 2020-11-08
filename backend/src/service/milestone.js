@@ -67,6 +67,16 @@ const createMilestone = async ({
   }
 }
 
+const removeMilestone = async id => {
+  if (!id)
+    throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
+  await db.removeMilestone(id)
+  return {
+    code: statusCode.CREATED,
+    success: true,
+  }
+}
+
 const verifyParams = (title, dueDate, description) => {
   if (!title)
     throw { status: statusCode.BAD_REQUEST, message: resMessage.OUT_OF_VALUE }
@@ -83,4 +93,5 @@ export default {
   getMilestoneWithProgress,
   createMilestone,
   getMilestoneDetail,
+  removeMilestone,
 }

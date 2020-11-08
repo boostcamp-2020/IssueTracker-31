@@ -4,7 +4,8 @@ import milestoneController from './milestone'
 const router = express.Router()
 
 router.get('/', milestoneController.read)
-router.get('/:id', milestoneController.getMilestoneWithProgress)
-router.post('/', milestoneController.createMilestone)
-router.get('/detail', milestoneController.getDetail)
+router.get('/:id', milestoneController.readDetail)
+router.post('/', milestoneController.create)
+router.get('/detail', milestoneController.readDetails)
+router.delete('/:id', milestoneController.remove)
 module.exports = router
