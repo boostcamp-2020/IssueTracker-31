@@ -9,9 +9,17 @@ const getAssigneesOnIssueQueryString = `
   JOIN Issue_assignee as ia ON u.id = ia.userId
   WHERE ia.issueId = ?;
 `
+const addAssigneeOnissueQueryString =
+  'INSERT INTO Issue_assignee (issueId, userId) VALUES ?'
+
+const deleteAssigneeOnissueQueryString =
+  'DELETE FROM Issue_assignee WHERE (issueId, userId) IN (?);'
+
 export default {
   getUsersQueryString,
   findUserQueryString,
   storeUserQueryString,
   getAssigneesOnIssueQueryString,
+  addAssigneeOnissueQueryString,
+  deleteAssigneeOnissueQueryString,
 }
