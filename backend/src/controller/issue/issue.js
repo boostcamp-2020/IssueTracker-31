@@ -44,9 +44,23 @@ const updateIssueState = async (req, res) => {
   }
 }
 
+const updateAssigneesOnIssue = async (req, res) => {
+  const data = req.body
+  const issueId = req.params.id
+  try {
+    await issueService.updateAssigneesOnIssue(issueId, data.add, data.delete)
+    return res.status(statusCode.OK).json({
+      success: true,
+    })
+  } catch (err) {
+    errorResponse(err, res)
+  }
+}
+
 export default {
   getIssues,
   postIssue,
   getIssueDetail,
   updateIssueState,
+  updateAssigneesOnIssue,
 }
