@@ -1,16 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { createImageUrl } from '@Api/comment'
 
 const ImageInput = () => {
-  const textStatus = 'error'
+  const [status, setStatus] = useState('default')
 
+  const getImageUrl = async e => {
+    setStatus('loading')
+    const { success, url } = await createImageUrl(e.target.files[0])
+    if (!success) return setStatus('error')
+    console.log(url)
+    setStatus('default')
+  }
   return (
     <StyledWrapper>
-      <StyledInput type="file" accept=".jpeg,.png,.jpg"></StyledInput>
-      <StyledText status={textStatus === 'default'}>
+      <StyledInput
+        type="file"
+        accept=".jpeg,.png,.jpg"
+        onChange={getImageUrl}
+      ></StyledInput>
+      <StyledText status={status === 'default'}>
         Attach files by dragging & dropping, selecting or pasting them.
       </StyledText>
-      <StyledText status={textStatus === 'loading'}>
+      <StyledText status={status === 'loading'}>
         <img
           alt=""
           width="16"
@@ -19,7 +31,7 @@ const ImageInput = () => {
         />
         <StyledSpan>Loading</StyledSpan>
       </StyledText>
-      <StyledText status={textStatus === 'error'}>Error</StyledText>
+      <StyledText status={status === 'error'}>Error</StyledText>
     </StyledWrapper>
   )
 }
