@@ -86,6 +86,32 @@ const isValidUpdateIssueData = ({
   return true
 }
 
+const updateAssigneesOnIssue = async (issueId, addList, deleteList) => {
+  if (!isValidIds(addList) || !isValidIds(deleteList))
+    throw new Error('parameter')
+  const connection = await pool.getConnection()
+  await connection.beginTransaction()
+  try {
+    if (deleteList && deleteList.length > 0)
+      await userModel.deleteAssigneeOnissue(issueId, deleteList, connection)
+    if (addList && addList.length > 0)
+      await userModel.addAssigneeOnissue(issueId, addList, connection)
+    connection.commit()
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
+}
+
+const isValidIds = idList => {
+  if (idList === undefined) return true
+  if (!Array.isArray(idList)) return false
+  for (const id of idList) if (isNaN(id) || id < 1) return false
+  return true
+}
+
 const isValidUpdateStateData = ({ isOpen, issueId }) => {
   if (!isOpen || !issueId) return false
   if (typeof JSON.parse(isOpen) !== 'boolean') return false
@@ -145,6 +171,7 @@ const isValidFilterValues = filterValues => {
   if (isOpen !== undefined && isOpen !== '1' && isOpen !== '0') return false
   if (label !== undefined) {
     if (!Array.isArray(label)) return false
+    if (label.indexOf('0') !== -1 && label.length > 1) return false
     for (const labeId of label) {
       if (isNaN(labeId) || labeId === '') return false
     }
@@ -158,4 +185,5 @@ export default {
   updateIssueState,
   getIssueDetail,
   updateIssue,
+  updateAssigneesOnIssue,
 }
