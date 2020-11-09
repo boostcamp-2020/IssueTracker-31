@@ -7,13 +7,13 @@ import Sidebar from '@Component/common/Sidebar'
 const CreateIssuePage = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [userId, setUserId] = useState(document.cookie.userData || null)
+  const [userId, setUserId] = useState(null)
   const [assignee, setAssignee] = useState([])
   const [label, setLabel] = useState([])
   const [milestoneId, setMilestoneId] = useState(null)
   return (
     <StyledWrapper>
-      <ProfileWithContent>
+      <ProfileWithContent userId={userId}>
         <SpeechBubble />
       </ProfileWithContent>
       <Sidebar />
