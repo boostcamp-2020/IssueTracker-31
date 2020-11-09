@@ -6,6 +6,7 @@ const update = async (req, res) => {
   try {
     const { code, success, data, message } = await commentService.updateComment(
       req.params.id,
+      req.userData.id,
       req.body.content,
     )
     return res.status(code).json({ success, data, message })

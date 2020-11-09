@@ -2,7 +2,7 @@ import db from '../model/comment'
 import resMessage from '../util/resMessage'
 import statusCode from '../util/statusCode'
 
-const updateComment = async (id, content) => {
+const updateComment = async (id, userId, content) => {
   if (isNaN(id) || id < 1 || !content)
     return {
       code: statusCode.BAD_REQUEST,
@@ -10,7 +10,7 @@ const updateComment = async (id, content) => {
       message: resMessage.OUT_OF_VALUE,
     }
   try {
-    await db.updateComment(id, content)
+    await db.updateComment(id, userId, content)
     return {
       code: statusCode.OK,
       success: true,
