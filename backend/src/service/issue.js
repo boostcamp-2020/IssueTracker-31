@@ -64,6 +64,32 @@ const updateIssueState = async data => {
   }
 }
 
+const updateAssigneesOnIssue = async (issueId, addList, deleteList) => {
+  if (!isValidIds(addList) || !isValidIds(deleteList))
+    throw new Error('parameter')
+  const connection = await pool.getConnection()
+  await connection.beginTransaction()
+  try {
+    if (deleteList && deleteList.length > 0)
+      await userModel.deleteAssigneeOnissue(issueId, deleteList, connection)
+    if (addList && addList.length > 0)
+      await userModel.addAssigneeOnissue(issueId, addList, connection)
+    connection.commit()
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
+}
+
+const isValidIds = idList => {
+  if (idList === undefined) return true
+  if (!Array.isArray(idList)) return false
+  for (const id of idList) if (isNaN(id) || id < 1) return false
+  return true
+}
+
 const isValidUpdateStateData = ({ isOpen, issueId }) => {
   if (!isOpen || !issueId) return false
   if (typeof JSON.parse(isOpen) !== 'boolean') return false
@@ -135,4 +161,5 @@ export default {
   postIssue,
   updateIssueState,
   getIssueDetail,
+  updateAssigneesOnIssue,
 }
