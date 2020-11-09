@@ -1,5 +1,24 @@
 const postIssueQueryString = 'INSERT INTO Issue SET ?'
 
+const updateIssueState = (issueId, isOpen) => {
+  let query = `UPDATE Issue SET isOpen = ${isOpen} WHERE id in `
+  const converted = issueId.split('')
+  converted[0] = '('
+  converted[converted.length - 1] = ')'
+  query += converted.join('')
+  return query
+}
+
+const getIssueDetailQueryString = `
+  SELECT i.id as issueId, i.title, i.isOpen, i.createdAt,
+    u.nickname as author, u.profileUrl,
+    count(c.id) as commentCount
+  FROM Issue as i
+  LEFT JOIN User as u ON u.id = i.userId
+  LEFT JOIN Comment as c on i.id = c.issueId
+  WHERE i.id = ?;
+`
+
 const setIssueRelationQueryString = (table, firstColumn, secondColumn) =>
   `INSERT INTO ${table} (${firstColumn}, ${secondColumn}) VALUES ?`
 
@@ -58,4 +77,6 @@ export default {
   postIssueQueryString,
   setIssueRelationQueryString,
   getIssuesQueryString,
+  updateIssueState,
+  getIssueDetailQueryString,
 }

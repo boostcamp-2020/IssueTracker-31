@@ -13,9 +13,32 @@ const getIssues = async (req, res) => {
 }
 const postIssue = async (req, res) => {
   const newIssueData = req.body
+  newIssueData.userId = req.userData.id
   try {
     await issueService.postIssue(newIssueData)
     return res.status(statusCode.CREATED).json({ success: true })
+  } catch (err) {
+    console.log(err)
+    errorResponse(err, res)
+  }
+}
+
+const getIssueDetail = async (req, res) => {
+  try {
+    const issueDetail = await issueService.getIssueDetail(req.params.id)
+    return res.status(statusCode.OK).json({ success: true, data: issueDetail })
+  } catch (err) {
+    errorResponse(err, res)
+  }
+}
+
+const updateIssueState = async (req, res) => {
+  const data = req.body
+  try {
+    await issueService.updateIssueState(data)
+    return res.status(statusCode.OK).json({
+      success: true,
+    })
   } catch (err) {
     errorResponse(err, res)
   }
@@ -24,4 +47,6 @@ const postIssue = async (req, res) => {
 export default {
   getIssues,
   postIssue,
+  getIssueDetail,
+  updateIssueState,
 }

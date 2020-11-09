@@ -1,6 +1,8 @@
 import issueModel from '../model/issue'
+import labelModel from '../model/label'
+import milestoneModel from '../model/milestone'
+import userModel from '../model/user'
 import commentModel from '../model/comment'
-import commentImageUrl from '../model/commentImageUrl'
 import pool from '../model/index'
 import relationMaker from '../util/relation-maker'
 
@@ -12,7 +14,7 @@ const getIssues = async filterValues => {
 
 const postIssue = async newIssueData => {
   if (!isValidNewIssueData(newIssueData)) throw new Error('parameter')
-  const { label, assignee, imageUrlId, userId, content } = newIssueData
+  const { label, assignee, userId, content } = newIssueData
   const connection = await pool.getConnection()
   await connection.beginTransaction()
   try {
@@ -25,18 +27,8 @@ const postIssue = async newIssueData => {
     )
     if (label) await issueRelationMaker('Issue_label', 'labelId', label)
     if (assignee) await issueRelationMaker('Issue_assignee', 'userId', assignee)
-    if (content) {
-      const commentId = await commentModel.postComment(
-        issueId,
-        userId,
-        content,
-        true,
-        connection,
-      )
-      if (commentImageUrl) {
-        await commentImageUrl.updateCommentId(commentId, imageUrlId, connection)
-      }
-    }
+    if (content)
+      await commentModel.postComment(issueId, userId, content, true, connection)
     await connection.commit()
   } catch (err) {
     await connection.rollback()
@@ -46,21 +38,53 @@ const postIssue = async newIssueData => {
   }
 }
 
+const getIssueDetail = async issueId => {
+  if (isNaN(issueId) || issueId < 1) throw new Error('parameter')
+  const [[issue], label, milestone, assignee] = await Promise.all([
+    issueModel.getIssueDetail(issueId),
+    labelModel.getLabelsOnIssue(issueId),
+    milestoneModel.getMilestoneOnIssue(issueId),
+    userModel.getAssigneesOnIssue(issueId),
+  ])
+  return { ...issue, label, milestone, assignee }
+}
+
+const updateIssueState = async data => {
+  if (!isValidUpdateStateData(data)) throw new Error('parameter')
+  const connection = await pool.getConnection()
+  await connection.beginTransaction()
+  try {
+    await issueModel.updateIssueState(connection, data)
+    await connection.commit()
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
+}
+
+const isValidUpdateStateData = ({ isOpen, issueId }) => {
+  if (!isOpen || !issueId) return false
+  if (typeof JSON.parse(isOpen) !== 'boolean') return false
+  if (!Array.isArray(JSON.parse(issueId))) return false
+  return true
+}
+
 const isValidNewIssueData = ({
   title,
   userId,
   content,
-  imageUrlId,
   label,
   assignee,
   milestoneId,
+  ...notAllowed
 }) => {
+  if (Object.keys(notAllowed).length !== 0) return false
   if (!title || !userId) return false
   if (typeof title !== 'string' || title === '') return false
   if (typeof userId !== 'number' || userId < 1) return false
   if (content !== undefined && typeof content !== 'string') return false
-  if (!content && imageUrlId && imageUrlId[0]) return false
-  if (imageUrlId && !isValidIdList(imageUrlId)) return false
   if (label && !isValidIdList(label)) return false
   if (assignee && !isValidIdList(assignee)) return false
   if (milestoneId !== undefined && !isValidIdList([milestoneId])) return false
@@ -109,4 +133,6 @@ const isValidFilterValues = filterValues => {
 export default {
   getIssues,
   postIssue,
+  updateIssueState,
+  getIssueDetail,
 }

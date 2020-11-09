@@ -24,6 +24,19 @@ const postIssue = async (connection, { title, userId, milestoneId }) => {
   }
 }
 
+const getIssueDetail = async (issueId, connection) => {
+  connection = connection ? connection : db
+  try {
+    const [rows] = await connection.query(
+      query.getIssueDetailQueryString,
+      issueId,
+    )
+    return rows
+  } catch (err) {
+    throw new Error('DB')
+  }
+}
+
 const setIssueRelations = async (
   connection,
   table,
@@ -41,8 +54,19 @@ const setIssueRelations = async (
   }
 }
 
+const updateIssueState = async (connection, { issueId, isOpen }) => {
+  const sql = query.updateIssueState(issueId, isOpen)
+  try {
+    await connection.query(sql)
+  } catch (err) {
+    throw new Error('DB')
+  }
+}
+
 export default {
   getIssues,
   postIssue,
   setIssueRelations,
+  updateIssueState,
+  getIssueDetail,
 }

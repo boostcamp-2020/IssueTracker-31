@@ -38,9 +38,35 @@ const deleteLabel = async (labelId, connection) => {
   }
 }
 
+const patchLabel = async (labelId, patchingData, connection) => {
+  connection = connection ? connection : db
+  try {
+    await connection.query(query.patchLabelQueryString, [patchingData, labelId])
+  } catch (err) {
+    console.log(err)
+    throw new Error('DB')
+  }
+}
+
+const getLabelsOnIssue = async (issueId, connection) => {
+  connection = connection ? connection : db
+  try {
+    const [labels] = await connection.query(
+      query.getLabelsOnIssueQueryString,
+      issueId,
+    )
+    return labels
+  } catch (err) {
+    console.log(err)
+    throw new Error('DB')
+  }
+}
+
 export default {
   getLabel,
   postLabel,
   getLabelByName,
   deleteLabel,
+  patchLabel,
+  getLabelsOnIssue,
 }
