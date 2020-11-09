@@ -27,7 +27,6 @@ const StyledSvg = styled.svg`
   transform-origin: 0px 0px;
   vertical-align: text-bottom;
   overflow: hidden;
-  margin-right: 7px;
   `}
 `
 

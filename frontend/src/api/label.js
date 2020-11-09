@@ -13,4 +13,10 @@ const createLabel = async params => {
   return data
 }
 
-export { getLabels, createLabel }
+const updateLabel = async ({ id, params }) => {
+  const { success, message } = await request.PATCH(`/labels/${id}`, params)
+  if (success === false) return console.error(message)
+  return true
+}
+
+export { getLabels, createLabel, updateLabel }

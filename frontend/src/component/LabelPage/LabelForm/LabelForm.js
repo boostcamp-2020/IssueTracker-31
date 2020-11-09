@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import RefreshIcon from '@Public/js/RefreshIcon'
 import { getContrast, verifyTextLength } from '@Util/util'
 import EventButton from '@Component/common/EventButton'
-import { createLabel } from '@Api/label'
+import { createLabel, updateLabel } from '@Api/label'
 import { labelContext } from '@Page/Label/Label'
 
 const generateRandomColor = () => `#${Math.random().toString(16).slice(-6)}`
@@ -72,9 +72,17 @@ const LabelForm = props => {
   }
 
   const handleCreateButton = async () => {
-    const res = await createLabel(label)
+    const id = await createLabel(label)
+    if (id) {
+      setLabels([...labels, { id, ...label }])
+      props.toggleComponent()
+    }
+  }
+
+  const handleEditButton = async () => {
+    const res = await updateLabel({ id: props.id, params: label })
     if (res) {
-      setLabels([...labels, { id: res.id, ...label }])
+      setLabels([...labels, { id: props.id, ...label }])
       props.toggleComponent()
     }
   }
@@ -136,6 +144,7 @@ const LabelForm = props => {
             <EventButton
               buttonName="Save changes"
               isGreen={true}
+              onClick={handleEditButton}
               overrideStyle={buttonStyle}
             ></EventButton>
           ) : (
