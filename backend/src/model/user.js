@@ -36,8 +36,7 @@ const storeUser = async data => {
   }
 }
 
-const getAssigneesOnIssue = async (issueId, connection) => {
-  connection = connection ? connection : db
+const getAssigneesOnIssue = async (issueId, connection = db) => {
   try {
     const [assignees] = await connection.query(
       query.getAssigneesOnIssueQueryString,
@@ -50,9 +49,33 @@ const getAssigneesOnIssue = async (issueId, connection) => {
   }
 }
 
+const addAssigneeOnissue = async (issueId, addList, connection = db) => {
+  try {
+    await connection.query(query.addAssigneeOnissueQueryString, [
+      addList.map(assigneeId => [issueId, assigneeId]),
+    ])
+  } catch (err) {
+    console.log(err)
+    throw new Error('DB')
+  }
+}
+
+const deleteAssigneeOnissue = async (issueId, deleteList, connection = db) => {
+  try {
+    await connection.query(query.deleteAssigneeOnissueQueryString, [
+      deleteList.map(assigneeId => [issueId, assigneeId]),
+    ])
+  } catch (err) {
+    console.log(err)
+    throw new Error('DB')
+  }
+}
+
 export default {
   getUsers,
   findUser,
   storeUser,
   getAssigneesOnIssue,
+  addAssigneeOnissue,
+  deleteAssigneeOnissue,
 }
