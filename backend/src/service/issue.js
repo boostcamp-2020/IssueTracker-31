@@ -123,6 +123,7 @@ const isValidFilterValues = filterValues => {
   if (isOpen !== undefined && isOpen !== '1' && isOpen !== '0') return false
   if (label !== undefined) {
     if (!Array.isArray(label)) return false
+    if (label.indexOf('0') !== -1 && label.length > 1) return false
     for (const labeId of label) {
       if (isNaN(labeId) || labeId === '') return false
     }
