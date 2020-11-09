@@ -108,6 +108,25 @@ const updateAssigneesOnIssue = async (issueId, addList, deleteList) => {
   }
 }
 
+const updateLabelsOnIssue = async (issueId, addList, deleteList) => {
+  if (!isValidIds(addList) || !isValidIds(deleteList))
+    throw new Error('parameter')
+  const connection = await pool.getConnection()
+  await connection.beginTransaction()
+  try {
+    if (deleteList && deleteList.length > 0)
+      await labelModel.deleteLabelsOnIssue(issueId, deleteList, connection)
+    if (addList && addList.length > 0)
+      await labelModel.addLabelsOnIssue(issueId, addList, connection)
+    connection.commit()
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
+}
+
 const isValidIds = idList => {
   if (idList === undefined) return true
   if (!Array.isArray(idList)) return false
@@ -189,4 +208,5 @@ export default {
   updateIssueState,
   getIssueDetail,
   updateAssigneesOnIssue,
+  updateLabelsOnIssue,
 }
