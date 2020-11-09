@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import RefreshIcon from '@Public/js/RefreshIcon'
 import { getContrast, verifyTextLength } from '@Util/util'
 import EventButton from '@Component/common/EventButton'
-import { createLabel, updateLabel } from '@Api/label'
+import { createLabel, updateLabel, deleteLabel } from '@Api/label'
 import { labelContext } from '@Page/Label/Label'
 
 const generateRandomColor = () => `#${Math.random().toString(16).slice(-6)}`
@@ -22,10 +22,7 @@ const initialLabelState = ({ id, name, color, description }) => {
     description: '',
   }
 }
-const buttonStyle = `
-  margin-right: 6px;
-  width: max-content;
-`
+
 const labelReducer = (state, action) => {
   switch (action.type) {
     case 'CHANGE_NAME':
@@ -80,8 +77,7 @@ const LabelForm = props => {
   }
 
   const handleEditButton = async () => {
-    const res = await updateLabel({ id: props.id, params: label })
-    if (res) {
+    if (await updateLabel({ id: props.id, params: label })) {
       setLabels(
         labels.map(origin => {
           if (origin.id === props.id) return { ...origin, ...label }
@@ -92,6 +88,12 @@ const LabelForm = props => {
     }
   }
 
+  const handleDelete = async () => {
+    if (await deleteLabel(props.id)) {
+      setLabels(labels.filter(origin => origin.id !== props.id))
+      props.toggleComponent()
+    }
+  }
   return (
     <StyledLabelFormContainer>
       <StyledHeader>
@@ -100,7 +102,15 @@ const LabelForm = props => {
           color={label.color}
           description={label.description}
         />
-        {props.id ? <div>delete</div> : ''}
+        {props.id ? (
+          <EventButton
+            buttonName="Delete"
+            onClick={handleDelete}
+            overrideStyle={deleteButtonStyle}
+          ></EventButton>
+        ) : (
+          ''
+        )}
       </StyledHeader>
       <StyledForm>
         <StyledDl>
@@ -167,7 +177,7 @@ const LabelForm = props => {
 }
 
 const StyledLabelFormContainer = styled.div`
-  /* background-color: gray; */
+  width: fit-content;
 `
 const StyledActionContainer = styled.div`
   display: flex;
@@ -184,6 +194,9 @@ const StyledHeader = styled.header`
 const StyledForm = styled.div`
   width: 100%;
   display: flex;
+`
+const StyledDeleteButton = styled.button`
+  color: #586069;
 `
 const StyledButton = styled.button`
   ${({ backgroundColor }) =>
@@ -232,5 +245,14 @@ const StyledDd = styled.dd`
 const StyledDt = styled.dt`
   font-size: 14px;
   font-weight: 600;
+`
+const buttonStyle = `
+  margin-right: 6px;
+  width: max-content;
+`
+const deleteButtonStyle = `
+  background:none;
+  border:none;
+  color:#586069;
 `
 export default LabelForm
