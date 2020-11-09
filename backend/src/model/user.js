@@ -67,6 +67,7 @@ const deleteAssigneeOnissue = async (issueId, deleteList, connection = db) => {
     ])
   } catch (err) {
     console.log(err)
+    if (err.code === 'ER_DUP_ENTRY') throw new Error('DUPLICATE')
     throw new Error('DB')
   }
 }
