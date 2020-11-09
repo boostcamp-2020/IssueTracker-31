@@ -82,7 +82,12 @@ const LabelForm = props => {
   const handleEditButton = async () => {
     const res = await updateLabel({ id: props.id, params: label })
     if (res) {
-      setLabels([...labels, { id: props.id, ...label }])
+      setLabels(
+        labels.map(origin => {
+          if (origin.id === props.id) return { ...origin, ...label }
+          else return origin
+        }),
+      )
       props.toggleComponent()
     }
   }
