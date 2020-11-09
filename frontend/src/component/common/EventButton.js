@@ -1,13 +1,27 @@
 import React from 'react'
 import Button from '@Component/common/Button'
 
-const EventButton = ({ buttonName, onClick, isGreen, svgName }) => {
+const EventButton = ({
+  buttonName,
+  onClick,
+  isGreen,
+  svgName,
+  overrideStyle,
+}) => {
   return (
-    <Button buttonProps={getProps(onClick, buttonName, isGreen, svgName)} />
+    <Button
+      buttonProps={getProps(
+        onClick,
+        buttonName,
+        isGreen,
+        svgName,
+        overrideStyle,
+      )}
+    />
   )
 }
 
-const getProps = (onClick, buttonName, isGreen, svgName) => {
+const getProps = (onClick, buttonName, isGreen, svgName, overrideStyle) => {
   return {
     onClick,
     buttonName,
@@ -16,6 +30,7 @@ const getProps = (onClick, buttonName, isGreen, svgName) => {
       backgroundColor: isGreen ? '#2ea44f' : '#fafbfc',
       color: isGreen ? '#ffffff' : '#000000',
       hoverColor: isGreen ? '#3eb45f' : '#g5g5g5',
+      overrideStyle,
     },
   }
 }
