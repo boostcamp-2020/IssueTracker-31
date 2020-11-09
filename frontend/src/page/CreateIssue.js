@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, createContext } from 'react'
 import styled from 'styled-components'
 import ProfileWithContent from '@Component/common/ProfileWithContent'
 import SpeechBubble from '@Component/common/SpeechBubble'
 import Sidebar from '@Component/common/Sidebar'
+
+export const createIssueContext = createContext()
 
 const CreateIssuePage = () => {
   const [title, setTitle] = useState('')
@@ -12,12 +14,16 @@ const CreateIssuePage = () => {
   const [label, setLabel] = useState([])
   const [milestoneId, setMilestoneId] = useState(null)
   return (
-    <StyledWrapper>
-      <ProfileWithContent>
-        <SpeechBubble />
-      </ProfileWithContent>
-      <Sidebar />
-    </StyledWrapper>
+    <createIssueContext.Provider
+      value={{ title, content, userId, label, milestoneId, assignee }}
+    >
+      <StyledWrapper>
+        <ProfileWithContent>
+          <SpeechBubble />
+        </ProfileWithContent>
+        <Sidebar page="createIssue" />
+      </StyledWrapper>
+    </createIssueContext.Provider>
   )
 }
 
