@@ -7,8 +7,8 @@ const IssueDetailPage = () => {
     <div>
       <IssueDetailHeader
         issueId={1}
-        isOpen={true}
-        createdAt={'2020-11-02 00:00:00'}
+        isOpen={false}
+        createdAt={'2020-11-09 00:00:00'}
         nickname={'hyex'}
         commentCnt={3}
         title={title}

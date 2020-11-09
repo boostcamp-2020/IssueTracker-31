@@ -5,6 +5,7 @@ import LinkButton from '@Component/common/LinkButton'
 import { patchIssueDetail } from '@Api/issue'
 import OpenIssueIcon from '@Public/js/OpenIssueIcon'
 import ClosedIssueIcon from '@Public/js/ClosedIssueIcon'
+import { getTimePassedFromNow } from '@Util/util'
 
 const IssueDetailHeader = ({
   issueId,
@@ -76,7 +77,11 @@ const IssueDetailHeader = ({
           </StyledState>
         )}
         <StyledTextArea>
-          <StyledNickname></StyledNickname>
+          <StyledNickname>{nickname}</StyledNickname>
+          <span> opened this issue </span>
+          {getTimePassedFromNow(createdAt)}
+          <span> · </span>
+          {commentCnt || 0} comments
         </StyledTextArea>
       </StyledMetaSection>
     </StyledWrapper>
@@ -110,8 +115,19 @@ const StyledState = styled.div`
   white-space: nowrap;
   border-radius: 2em;
 `
-const StyledTextArea = styled.span``
-const StyledNickname = styled.span``
+const StyledTextArea = styled.div`
+  margin-bottom: 8px;
+  min-width: 0;
+  flex: auto;
+  font-size: 14px;
+  line-height: 21px;
+`
+const StyledNickname = styled.span`
+  font-weight: 600;
+  color: #586069;
+  font-size: 14px;
+  line-height: 21px;
+`
 
 const StyledWrapper = styled.header`
   width: 100%;
