@@ -36,8 +36,23 @@ const storeUser = async data => {
   }
 }
 
+const getAssigneesOnIssue = async (issueId, connection) => {
+  connection = connection ? connection : db
+  try {
+    const [assignees] = await connection.query(
+      query.getAssigneesOnIssueQueryString,
+      issueId,
+    )
+    return assignees
+  } catch (err) {
+    console.log(err)
+    throw new Error('DB')
+  }
+}
+
 export default {
   getUsers,
   findUser,
   storeUser,
+  getAssigneesOnIssue,
 }

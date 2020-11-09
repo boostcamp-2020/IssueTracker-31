@@ -6,5 +6,6 @@ const router = express.Router()
 router.get('/', issueController.getIssues)
 router.post('/', issueController.postIssue)
 router.patch('/open-close', issueController.updateIssueState)
+router.get('/:id', issueController.getIssueDetail)
 
 module.exports = router

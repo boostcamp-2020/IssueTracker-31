@@ -8,7 +8,17 @@ const getMilestoneDetail = `select m.id, m.title, m.dueDate, m.description, m.is
   where m.id = i.milestoneId and i.isOpen = 0
   ) as closeIssue
 from Milestone as m`
+const getMilestoneOnIssueQueryString = `
+  SELECT m.id, m.title,
+    count(CASE WHEN i.isOpen=1 THEN 1 END) as openIssue,
+    count(CASE WHEN i.isOpen=0 THEN 1 END) as closeIssue
+  FROM Milestone as m
+  JOIN Issue as i ON m.id = i.milestoneId
+  WHERE m.id = (SELECT milestoneId FROM Issue WHERE id = ?)
+  GROUP BY m.id;
+`
 export default {
   getMilestone,
   getMilestoneDetail,
+  getMilestoneOnIssueQueryString,
 }

@@ -1,7 +1,6 @@
 import issueService from '../../service/issue'
 import statusCode from '../../util/statusCode'
 import errorResponse from '../../util/error-response'
-import statusCode from '../../util/statusCode'
 
 const getIssues = async (req, res) => {
   const filterValues = { ...req.query }
@@ -24,6 +23,15 @@ const postIssue = async (req, res) => {
   }
 }
 
+const getIssueDetail = async (req, res) => {
+  try {
+    const issueDetail = await issueService.getIssueDetail(req.params.id)
+    return res.status(statusCode.OK).json({ success: true, data: issueDetail })
+  } catch (err) {
+    errorResponse(err, res)
+  }
+}
+
 const updateIssueState = async (req, res) => {
   const data = req.body
   try {
@@ -39,5 +47,6 @@ const updateIssueState = async (req, res) => {
 export default {
   getIssues,
   postIssue,
+  getIssueDetail,
   updateIssueState,
 }
