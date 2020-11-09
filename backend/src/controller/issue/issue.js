@@ -44,9 +44,22 @@ const updateIssueState = async (req, res) => {
   }
 }
 
+const updateIssue = async (req, res) => {
+  const issueData = req.body
+  try {
+    await issueService.updateIssue(req.params.id, issueData)
+    return res.status(statusCode.OK).json({
+      success: true,
+    })
+  } catch (err) {
+    errorResponse(err, res)
+  }
+}
+
 export default {
   getIssues,
   postIssue,
   getIssueDetail,
   updateIssueState,
+  updateIssue,
 }

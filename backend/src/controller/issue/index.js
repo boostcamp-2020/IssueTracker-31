@@ -7,5 +7,5 @@ router.get('/', issueController.getIssues)
 router.post('/', issueController.postIssue)
 router.patch('/open-close', issueController.updateIssueState)
 router.get('/:id', issueController.getIssueDetail)
-
+router.patch('/:id', issueController.updateIssue)
 module.exports = router
