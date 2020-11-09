@@ -41,7 +41,6 @@ const getIssuesQueryString = filterValues => {
   LEFT JOIN User U ON I.userId = U.id
   LEFT JOIN Milestone M ON I.milestoneId = M.id
   LEFT JOIN Issue_label IL ON IL.issueId = I.id
-  LEFT JOIN Issue_assignee IA ON I.id = IA.issueId
   ${getIssuesFilterCondition(filterValues)}`
 }
 
@@ -61,21 +60,22 @@ const filtering = {
 const getIssuesFilterCondition = filterValues => {
   const conditions = []
   const filterKeys = Object.keys(filterValues)
-  if (filterKeys.length === 0) return ' ORDER BY I.id DESC'
-
+  if (filterKeys.length === 0) return 'ORDER BY I.id DESC'
+  const assigneeJoin =
+    filterValues.assignee === undefined
+      ? ' '
+      : 'LEFT JOIN Issue_assignee IA ON I.id = IA.issueId'
   for (const key of filterKeys)
     if (filtering[key]) conditions.push(filtering[key](filterValues[key]))
 
   const filterString = conditions.join(' AND ').concat(
-    filterValues.label &&
-      filterValues.label.length > 0 &&
-      filterValues.label[0] !== '0'
+    filterValues?.label?.length > 0 && filterValues.label[0] !== '0'
       ? `
       GROUP BY IL.issueId
       HAVING (COUNT(IL.labelId) = ${filterValues.label.length})`
       : '',
   )
-  return `WHERE ${filterString} ORDER BY I.id DESC`
+  return `${assigneeJoin} WHERE ${filterString} ORDER BY I.id DESC`
 }
 
 export default {
