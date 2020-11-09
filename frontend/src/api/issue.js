@@ -21,4 +21,11 @@ const patchIssues = async params => {
   return data
 }
 
-export { getIssues, createIssue, patchIssues }
+const patchIssueDetail = async ({ id, body }) => {
+  const { success, data, message } = await request.PATCH(`/issues/${id}`, body)
+  if (success === false) return console.error(message)
+  if (data) return data
+  else return success
+}
+
+export { getIssues, createIssue, patchIssues, patchIssueDetail }
