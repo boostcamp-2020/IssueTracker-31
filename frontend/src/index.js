@@ -7,6 +7,7 @@ import LabelPage from '@Page/Label/Label'
 import MilestonePage from '@Page/Milestone/Milestone'
 import Header from './component/common/Header'
 import CreateIssuePage from '@Page/CreateIssue'
+import IssueDetailPage from '@Page/IssueDetail'
 
 const root = document.getElementById('root')
 
@@ -19,6 +20,7 @@ const App = () => {
       <Route exact path="/labels" component={LabelPage} />
       <Route exact path="/milestones" component={MilestonePage} />
       <Route exact path="/issue/new" component={CreateIssuePage} />
+      <Route exact path="/issues" component={IssueDetailPage} />
     </BrowserRouter>
   )
 }
