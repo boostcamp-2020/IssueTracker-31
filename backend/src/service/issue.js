@@ -64,6 +64,28 @@ const updateIssueState = async data => {
   }
 }
 
+const updateIssue = async (issueId, issueData) => {
+  if (isNaN(issueId) || issueId < 1 || !isValidUpdateIssueData(issueData))
+    throw new Error('parameter')
+  await issueModel.updateIssue(issueId, issueData)
+}
+
+const isValidUpdateIssueData = ({
+  title,
+  milestoneId,
+  isOpen,
+  ...notAllowed
+}) => {
+  if (Object.keys(notAllowed).length !== 0) return false
+  if (!title && !milestoneId && isOpen === undefined) return false
+  if (title !== undefined && (typeof title !== 'string' || title.trim() === ''))
+    return false
+  if (milestoneId !== undefined && (isNaN(milestoneId) || milestoneId < 1))
+    return false
+  if (isOpen !== undefined && isOpen !== 0 && isOpen !== 1) return false
+  return true
+}
+
 const isValidUpdateStateData = ({ isOpen, issueId }) => {
   if (!isOpen || !issueId) return false
   if (typeof JSON.parse(isOpen) !== 'boolean') return false
@@ -135,4 +157,5 @@ export default {
   postIssue,
   updateIssueState,
   getIssueDetail,
+  updateIssue,
 }
