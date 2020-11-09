@@ -7,4 +7,10 @@ const getLabels = async () => {
   return data
 }
 
-export { getLabels }
+const createLabel = async params => {
+  const { success, data, message } = await request.POST('/labels', params)
+  if (success === false) return console.error(message)
+  return data
+}
+
+export { getLabels, createLabel }

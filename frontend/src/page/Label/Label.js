@@ -30,7 +30,7 @@ const LabelPage = () => {
           <TabButton clicked="label"></TabButton>
           <EventButton buttonName="New Label" onClick={toggleComponent} />
         </StyledButtonContainer>
-        {showForm ? <LabelForm handleCancel={toggleComponent} /> : null}
+        {showForm ? <LabelForm toggleComponent={toggleComponent} /> : null}
         <LabelList></LabelList>
       </StyledContainer>
     </labelContext.Provider>

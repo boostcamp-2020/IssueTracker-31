@@ -1,9 +1,11 @@
-import React, { useState, useReducer } from 'react'
+import React, { useContext, useReducer } from 'react'
 import Label from '@Component/common/Label'
 import styled from 'styled-components'
 import RefreshIcon from '@Public/js/RefreshIcon'
 import { getContrast, verifyTextLength } from '@Util/util'
 import EventButton from '@Component/common/EventButton'
+import { createLabel } from '@Api/label'
+import { labelContext } from '@Page/Label/Label'
 
 const generateRandomColor = () => `#${Math.random().toString(16).slice(-6)}`
 
@@ -45,6 +47,8 @@ const labelReducer = (state, action) => {
 }
 
 const LabelForm = props => {
+  const { setLabels, labels } = useContext(labelContext)
+
   const [label, dispatchLabel] = useReducer(
     labelReducer,
     initialLabelState(props),
@@ -65,6 +69,14 @@ const LabelForm = props => {
   const handleColor = e => {
     if (e.target.value.match('^#[0-9a-f]*$'))
       dispatchLabel({ type: 'CHANGE_COLOR', color: e.target.value })
+  }
+
+  const handleCreateButton = async () => {
+    const res = await createLabel(label)
+    if (res) {
+      setLabels([...labels, { id: res.id, ...label }])
+      props.toggleComponent()
+    }
   }
 
   return (
@@ -117,14 +129,23 @@ const LabelForm = props => {
         <StyledActionContainer>
           <EventButton
             buttonName="Cancel"
-            onClick={props.handleCancel}
+            onClick={props.toggleComponent}
             overrideStyle={buttonStyle}
           />
-          <EventButton
-            buttonName="Save changes"
-            isGreen={true}
-            overrideStyle={buttonStyle}
-          ></EventButton>
+          {props.id ? (
+            <EventButton
+              buttonName="Save changes"
+              isGreen={true}
+              overrideStyle={buttonStyle}
+            ></EventButton>
+          ) : (
+            <EventButton
+              buttonName="Create label"
+              isGreen={true}
+              onClick={handleCreateButton}
+              overrideStyle={buttonStyle}
+            ></EventButton>
+          )}
         </StyledActionContainer>
       </StyledForm>
     </StyledLabelFormContainer>
