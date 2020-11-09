@@ -1,7 +1,6 @@
 import issueService from '../../service/issue'
 import statusCode from '../../util/statusCode'
 import errorResponse from '../../util/error-response'
-import statusCode from '../../util/statusCode'
 
 const getIssues = async (req, res) => {
   const filterValues = { ...req.query }
