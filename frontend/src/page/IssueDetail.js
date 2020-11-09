@@ -4,7 +4,7 @@ import IssueDetailHeader from '@Component/IssueDetailPage/IssueDetailHeader'
 const IssueDetailPage = () => {
   return (
     <div>
-      <IssueDetailHeader></IssueDetailHeader>IssueDetailPage
+      <IssueDetailHeader />
     </div>
   )
 }
