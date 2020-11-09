@@ -1,18 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import EventButton from '@Component/common/EventButton'
 import LinkButton from '@Component/common/LinkButton'
+import { patchIssueDetail } from '@Api/issue'
+import OpenIssueIcon from '@Public/js/OpenIssueIcon'
+import ClosedIssueIcon from '@Public/js/ClosedIssueIcon'
 
-const IssueDetailHeader = ({ title }) => {
+const IssueDetailHeader = ({
+  issueId,
+  isOpen,
+  createdAt,
+  nickname,
+  commentCnt,
+  title,
+  setTitle,
+}) => {
   const [mode, setMode] = useState('default')
-
+  const editInput = useRef()
   const onClickEditButton = () => {
     if (mode === 'default') setMode('edit')
     else setMode('default')
   }
 
-  const onClickSaveButton = () => {
-    console.log('clicked save btn')
+  const onClickSaveButton = async e => {
+    const changedTitle = editInput.current.value
+    if (title === changedTitle) return setMode('default')
+    const success = await patchIssueDetail({
+      id: issueId,
+      body: { title: changedTitle },
+    })
+    if (success) setTitle(changedTitle)
+    setMode('default')
   }
 
   return (
@@ -35,15 +53,65 @@ const IssueDetailHeader = ({ title }) => {
         </StyledButtonWrapper>
       </StyledTitleSection>
       <StyledTitleSection show={mode === 'edit'}>
-        <StyledInput defaultValue={title || 'Issue temp title'} />
+        <StyledInput
+          defaultValue={title || 'Issue temp title'}
+          ref={editInput}
+        />
         <StyledButtonWrapper>
           <EventButton buttonName="Save" onClick={onClickSaveButton} />
           <StyledButton onClick={onClickEditButton}>Cancel</StyledButton>
         </StyledButtonWrapper>
       </StyledTitleSection>
+      <StyledMetaSection>
+        {isOpen && (
+          <StyledState isOpen={isOpen}>
+            <OpenIssueIcon color={'#ffffff'} />
+            Open
+          </StyledState>
+        )}
+        {!isOpen && (
+          <StyledState isOpen={isOpen}>
+            <ClosedIssueIcon color={'#ffffff'} />
+            Closed
+          </StyledState>
+        )}
+        <StyledTextArea>
+          <StyledNickname></StyledNickname>
+        </StyledTextArea>
+      </StyledMetaSection>
     </StyledWrapper>
   )
 }
+
+const StyledMetaSection = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #586069;
+  border-bottom: 1px solid #e1e4e8;
+`
+const StyledState = styled.div`
+  margin-right: 8px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+  color: #ffffff;
+  background-color: ${({ isOpen }) => (isOpen ? '#28a745' : '#d73a49')};
+  border-color: transparent;
+  padding: 5px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 2em;
+`
+const StyledTextArea = styled.span``
+const StyledNickname = styled.span``
 
 const StyledWrapper = styled.header`
   width: 100%;
