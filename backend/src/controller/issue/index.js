@@ -8,5 +8,6 @@ router.post('/', issueController.postIssue)
 router.patch('/open-close', issueController.updateIssueState)
 router.get('/:id', issueController.getIssueDetail)
 router.post('/:id/assignee', issueController.updateAssigneesOnIssue)
+router.post('/:id/labels', issueController.updateLabelsOnIssue)
 
 module.exports = router
