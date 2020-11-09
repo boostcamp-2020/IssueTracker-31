@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { setState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import SidebarItem from './SidebarItem'
+import createIssueContext from '@Page/CreateIssue'
 
-const Sidebar = () => {
+const Sidebar = ({ page }) => {
+  const { assignee, label, milestoneId } = useContext(
+    page === 'createIssue' ? createIssueContext : '',
+  )
   return (
     <StyledSidebar>
-      <SidebarItem title="Assignees">No one</SidebarItem>
-      <SidebarItem title="Labels">None yet</SidebarItem>
-      <SidebarItem title="Milestone">No milestone</SidebarItem>
+      <SidebarItem title="Assignees" defaultMessage="No one—">
+        {assignee}
+      </SidebarItem>
+      <SidebarItem title="Labels" defaultMessage="None yet">
+        {label}
+      </SidebarItem>
+      <SidebarItem title="Milestone" defaultMessage="No mileston">
+        {milestoneId}
+      </SidebarItem>
     </StyledSidebar>
   )
 }
