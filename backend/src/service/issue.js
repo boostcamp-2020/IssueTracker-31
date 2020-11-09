@@ -5,11 +5,36 @@ import userModel from '../model/user'
 import commentModel from '../model/comment'
 import pool from '../model/index'
 import relationMaker from '../util/relation-maker'
+import statusCode from '../util/statusCode'
+import resMessage from '../util/resMessage'
 
 const getIssues = async filterValues => {
   if (!isValidFilterValues(filterValues)) throw new Error('parameter')
   const issues = await issueModel.getIssues(filterValues)
   return structurizeIssueList(issues)
+}
+
+const getIssueComments = async id => {
+  if (isNaN(id) || id < 1)
+    return {
+      code: statusCode.BAD_REQUEST,
+      success: false,
+      message: resMessage.OUT_OF_VALUE,
+    }
+  try {
+    const comments = await commentModel.getIssueComments(id)
+    return {
+      code: statusCode.OK,
+      success: true,
+      data: comments,
+    }
+  } catch (error) {
+    return {
+      code: statusCode.DB_ERROR,
+      success: false,
+      message: resMessage.DB_ERROR,
+    }
+  }
 }
 
 const postIssue = async newIssueData => {
@@ -62,6 +87,51 @@ const updateIssueState = async data => {
   } finally {
     connection.release()
   }
+}
+
+const updateAssigneesOnIssue = async (issueId, addList, deleteList) => {
+  if (!isValidIds(addList) || !isValidIds(deleteList))
+    throw new Error('parameter')
+  const connection = await pool.getConnection()
+  await connection.beginTransaction()
+  try {
+    if (deleteList && deleteList.length > 0)
+      await userModel.deleteAssigneeOnissue(issueId, deleteList, connection)
+    if (addList && addList.length > 0)
+      await userModel.addAssigneeOnissue(issueId, addList, connection)
+    connection.commit()
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
+}
+
+const updateLabelsOnIssue = async (issueId, addList, deleteList) => {
+  if (!isValidIds(addList) || !isValidIds(deleteList))
+    throw new Error('parameter')
+  const connection = await pool.getConnection()
+  await connection.beginTransaction()
+  try {
+    if (deleteList && deleteList.length > 0)
+      await labelModel.deleteLabelsOnIssue(issueId, deleteList, connection)
+    if (addList && addList.length > 0)
+      await labelModel.addLabelsOnIssue(issueId, addList, connection)
+    connection.commit()
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
+}
+
+const isValidIds = idList => {
+  if (idList === undefined) return true
+  if (!Array.isArray(idList)) return false
+  for (const id of idList) if (isNaN(id) || id < 1) return false
+  return true
 }
 
 const isValidUpdateStateData = ({ isOpen, issueId }) => {
@@ -123,6 +193,7 @@ const isValidFilterValues = filterValues => {
   if (isOpen !== undefined && isOpen !== '1' && isOpen !== '0') return false
   if (label !== undefined) {
     if (!Array.isArray(label)) return false
+    if (label.indexOf('0') !== -1 && label.length > 1) return false
     for (const labeId of label) {
       if (isNaN(labeId) || labeId === '') return false
     }
@@ -132,7 +203,10 @@ const isValidFilterValues = filterValues => {
 
 export default {
   getIssues,
+  getIssueComments,
   postIssue,
   updateIssueState,
   getIssueDetail,
+  updateAssigneesOnIssue,
+  updateLabelsOnIssue,
 }

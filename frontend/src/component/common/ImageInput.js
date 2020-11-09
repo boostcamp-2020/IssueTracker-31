@@ -34,6 +34,7 @@ const ImageInput = () => {
         <StyledSpan>Loading</StyledSpan>
       </StyledText>
       <StyledText status={status === 'error'}>Error</StyledText>
+      <StyledText status={textStatus === 'error'}>Error</StyledText>
     </StyledWrapper>
   )
 }

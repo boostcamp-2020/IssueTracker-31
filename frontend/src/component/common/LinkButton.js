@@ -1,15 +1,15 @@
 import React from 'react'
 import Button from '@Component/common/Button'
 
-const LinkButton = ({ buttonName, targetLocation, isGreen, svgName }) => {
+const LinkButton = ({ buttonName, targetLocation, isGreen, svgName, font }) => {
   return (
     <Button
-      buttonProps={getProps(targetLocation, buttonName, isGreen, svgName)}
+      buttonProps={getProps(targetLocation, buttonName, isGreen, svgName, font)}
     />
   )
 }
 
-const getProps = (targetLocation, buttonName, isGreen, svgName) => {
+const getProps = (targetLocation, buttonName, isGreen, svgName, font) => {
   return {
     buttonName,
     targetLocation,
@@ -18,6 +18,8 @@ const getProps = (targetLocation, buttonName, isGreen, svgName) => {
       backgroundColor: isGreen ? '#2ea44f' : '#fafbfc',
       color: isGreen ? '#ffffff' : '#000000',
       hoverColor: isGreen ? '#3eb45f' : '#g5g5g5',
+      fontSize: font.size,
+      fontWeight: font.weight,
     },
   }
 }
