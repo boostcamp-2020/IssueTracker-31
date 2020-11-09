@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
 import TabButton from '@Component/common/TabButton'
 import LabelList from '@Component/LabelPage/LabelList'
+import LabelForm from '@Component/LabelPage/LabelForm/LabelForm'
 import { getLabels } from '@Api/label'
 import styled from 'styled-components'
 import EventButton from '@Component/common/EventButton'
@@ -14,7 +15,7 @@ const LabelPage = () => {
 
   useFetch(getLabels, setLabels)
 
-  const clickedNewButton = e => setShowForm(!showForm)
+  const toggleComponent = e => setShowForm(!showForm)
 
   return (
     <labelContext.Provider value={{ labels, setLabels }}>
@@ -27,9 +28,9 @@ const LabelPage = () => {
       <StyledContainer>
         <StyledButtonContainer>
           <TabButton clicked="label"></TabButton>
-          <EventButton buttonName="New Label" onClick={clickedNewButton} />
+          <EventButton buttonName="New Label" onClick={toggleComponent} />
         </StyledButtonContainer>
-        {showForm ? <div>Label Form Component</div> : null}
+        {showForm ? <LabelForm handleCancel={toggleComponent} /> : null}
         <LabelList></LabelList>
       </StyledContainer>
     </labelContext.Provider>

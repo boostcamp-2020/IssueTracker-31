@@ -3,6 +3,7 @@ import Label from '@Component/common/Label'
 import styled from 'styled-components'
 import RefreshIcon from '@Public/js/RefreshIcon'
 import { getContrast, verifyTextLength } from '@Util/util'
+import EventButton from '@Component/common/EventButton'
 
 const generateRandomColor = () => `#${Math.random().toString(16).slice(-6)}`
 
@@ -19,6 +20,10 @@ const initialLabelState = ({ id, name, color, description }) => {
     description: '',
   }
 }
+const buttonStyle = `
+  margin-right: 6px;
+  width: max-content;
+`
 const labelReducer = (state, action) => {
   switch (action.type) {
     case 'CHANGE_NAME':
@@ -73,42 +78,54 @@ const LabelForm = props => {
         {props.id ? <div>delete</div> : ''}
       </StyledHeader>
       <StyledForm>
-        <dl>
+        <StyledDl>
           <StyledDt>Label name</StyledDt>
           <StyledDd>
-            <input
+            <StyledInput
               type="text"
               onChange={handleName}
               value={label.name ? label.name : ''}
               placeholder="Label name"
             />
           </StyledDd>
-        </dl>
-        <dl>
+        </StyledDl>
+        <StyledDl>
           <StyledDt>Description</StyledDt>
           <StyledDd>
-            <input
+            <StyledInput
               type="text"
               onChange={handleDescription}
               value={label.description}
               placeholder="Description (optional)"
             />
           </StyledDd>
-        </dl>
-        <dl>
+        </StyledDl>
+        <StyledDl>
           <StyledDt>Color</StyledDt>
-          <StyledDd>
+          <StyledDdFlex>
             <StyledButton backgroundColor={label.color} onClick={resetColor}>
               <RefreshIcon color={getContrast(label.color)} />
             </StyledButton>
-            <input
+            <StyledInput
               onChange={handleColor}
               value={label.color}
               maxLength={7}
               pattern="[0-9a-f]"
-            ></input>
-          </StyledDd>
-        </dl>
+            ></StyledInput>
+          </StyledDdFlex>
+        </StyledDl>
+        <StyledActionContainer>
+          <EventButton
+            buttonName="Cancel"
+            onClick={props.handleCancel}
+            overrideStyle={buttonStyle}
+          />
+          <EventButton
+            buttonName="Save changes"
+            isGreen={true}
+            overrideStyle={buttonStyle}
+          ></EventButton>
+        </StyledActionContainer>
       </StyledForm>
     </StyledLabelFormContainer>
   )
@@ -117,6 +134,14 @@ const LabelForm = props => {
 const StyledLabelFormContainer = styled.div`
   /* background-color: gray; */
 `
+const StyledActionContainer = styled.div`
+  display: flex;
+  height: 33px;
+  margin-left: 32px;
+  margin-top: 33px;
+  margin-bottom: 16px;
+  justify-content: flex-end;
+`
 const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
@@ -124,10 +149,6 @@ const StyledHeader = styled.header`
 const StyledForm = styled.div`
   width: 100%;
   display: flex;
-`
-const StyledDt = styled.dt`
-  font-size: 14px;
-  font-weight: 600;
 `
 const StyledButton = styled.button`
   ${({ backgroundColor }) =>
@@ -139,6 +160,7 @@ const StyledButton = styled.button`
     box-shadow: none;
     outline: none;
   }
+  margin-right: 6px;
   border-radius: 6px;
   padding: 0;
   cursor: pointer;
@@ -149,8 +171,31 @@ const StyledButton = styled.button`
   flex-shrink: 0;
   box-sizing: border-box;
 `
-const StyledDd = styled.dd`
+const StyledInput = styled.input`
+  padding: 5px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #24292e;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  outline: none;
+`
+const StyledDl = styled.dl`
+  padding-right: 16px;
+`
+const StyledDdFlex = styled.dd`
   display: flex;
   margin-left: 0;
+`
+const StyledDd = styled.dd`
+  margin-left: 0;
+`
+const StyledDt = styled.dt`
+  font-size: 14px;
+  font-weight: 600;
 `
 export default LabelForm
