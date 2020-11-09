@@ -46,4 +46,16 @@ const hexToRGB = hexColor => [
   parseInt(hexColor.slice(4, 6), 16),
 ]
 
-export { getTimePassedFromNow, getMilestoneDateFormat, getContrast }
+const textEncoder = new TextEncoder()
+
+const verifyTextLength = (text, length) => {
+  if (textEncoder.encode(text).length <= length) return true
+  return false
+}
+
+export {
+  getTimePassedFromNow,
+  getMilestoneDateFormat,
+  getContrast,
+  verifyTextLength,
+}
