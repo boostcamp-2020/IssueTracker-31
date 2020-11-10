@@ -25,7 +25,11 @@ const CreateIssuePage = () => {
         cancelAction={cancelAction}
         page={'createIssue'}
       />
-      <Sidebar />
+      <Sidebar
+        label={[label, setLabel]}
+        assignee={[assignee, setAssignee]}
+        milestone={[milestoneId, setMilestoneId]}
+       />
     </StyledWrapper>
   )
 }
