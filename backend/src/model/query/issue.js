@@ -9,6 +9,8 @@ const updateIssueState = (issueId, isOpen) => {
   return query
 }
 
+const updateIssueQueryString = 'UPDATE Issue SET ?  WHERE id=?'
+
 const getIssueDetailQueryString = `
   SELECT i.id as issueId, i.title, i.isOpen, i.createdAt,
     u.nickname as author, u.profileUrl,
@@ -84,4 +86,5 @@ export default {
   getIssuesQueryString,
   updateIssueState,
   getIssueDetailQueryString,
+  updateIssueQueryString,
 }
