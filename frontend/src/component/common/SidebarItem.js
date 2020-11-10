@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import SettingIcon from '@Public/js/SettingIcon'
 
-const SidebarItem = ({ title, children }) => {
+const SidebarItem = ({ title, defaultMessage, children }) => {
   return (
     <StyledSidebarItem>
       <StyledTitle>
