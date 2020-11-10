@@ -94,6 +94,9 @@ CREATE TABLE `Comment_emoticon` (
   REFERENCES User(id) ON UPDATE NO ACTION ON DELETE CASCADE
 );
 
+alter table Issue_assignee add unique Issue_assignee_unique_issueID_userId(issueID, userId);
+alter table Issue_label add unique Issue_label_unique_issueID_labelId(issueID, labelId);
+
 insert into Milestone (title, dueDate, description, isOpen) values ("title1", "2020-10-31","desc1", 1);
 insert into Milestone (title, dueDate, description, isOpen) values ("title2", "2020-11-01","desc2", 1);
 insert into Milestone (title, dueDate, description, isOpen) values ("title3", "2020-11-02","desc3", 0);

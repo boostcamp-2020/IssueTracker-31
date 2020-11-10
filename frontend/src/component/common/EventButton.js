@@ -6,6 +6,7 @@ const EventButton = ({
   onClick,
   isGreen,
   svgName,
+  font,
   overrideStyle,
 }) => {
   return (
@@ -15,13 +16,14 @@ const EventButton = ({
         buttonName,
         isGreen,
         svgName,
+        font,
         overrideStyle,
       )}
     />
   )
 }
 
-const getProps = (onClick, buttonName, isGreen, svgName, overrideStyle) => {
+const getProps = (onClick, buttonName, isGreen, svgName, font, overrideStyle) => {
   return {
     onClick,
     buttonName,
@@ -30,6 +32,8 @@ const getProps = (onClick, buttonName, isGreen, svgName, overrideStyle) => {
       backgroundColor: isGreen ? '#2ea44f' : '#fafbfc',
       color: isGreen ? '#ffffff' : '#000000',
       hoverColor: isGreen ? '#3eb45f' : '#g5g5g5',
+      fontSize: font ? font.size : null,
+      fontWeight: font ? font.weight : null,
       overrideStyle,
     },
   }

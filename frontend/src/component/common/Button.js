@@ -16,6 +16,8 @@ const LinkTypeButton = ({ buttonProps }) => {
       color={style.color}
       hoverColor={style.hoverColor}
       borderRadius={style.borderRadius}
+      fontSize={style.fontSize}
+      fontWeight={style.fontWeight}
     >
       <StyledLink to={targetLocation}>
         {svg ? svg : ''}
@@ -35,6 +37,8 @@ const EventTypeButton = ({ buttonProps }) => {
       color={style.color}
       hoverColor={style.hoverColor}
       borderRadius={style.borderRadius}
+      fontSize={style.fontSize}
+      fontWeight={style.fontWeight}
       overrideStyle={style.overrideStyle}
     >
       {svg ? svg : ''}
@@ -49,6 +53,8 @@ const StyledDiv = styled.button`
     color = '#ffffff',
     hoverColor = '#3ea85f',
     borderRadius = '6px',
+    fontSize = '14px',
+    fontWeight = '550',
     overrideStyle,
   }) =>
     `
@@ -59,8 +65,8 @@ const StyledDiv = styled.button`
     border-radius: ${borderRadius};
     padding: 5px 12px;
     border: 1px solid rgba(27,31,35,0.15);
-    font-size: 14px;
-    font-weight: 550;
+    font-size: ${fontSize};
+    font-weight: ${fontWeight};
     width: auto;
     line-height: 20px;
     box-sizing: border-box;

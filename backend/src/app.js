@@ -11,7 +11,6 @@ import statusCode from './util/statusCode'
 import resMessage from './util/resMessage'
 const app = express()
 const port = process.env.PORT || 3000
-const publicPath = path.join(__dirname, '../../frontend/build')
 
 app.set('port', port)
 
@@ -20,10 +19,14 @@ app.use(cors({ origin: true, credentials: true }))
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(express.static(publicPath))
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api', Controller)
 app.get('*', (req, res) => {
+  let publicPath = ''
+  if (process.env.NODE_ENV === 'production')
+    publicPath = path.join(__dirname, '../../frontend/build')
+  else publicPath = path.join(__dirname, '../../frontend/public')
   res.sendFile(publicPath + '/index.html')
 })
 
