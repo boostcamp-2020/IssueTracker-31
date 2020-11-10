@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Milestone from './Milestone'
 import OpenIcon from '@Public/js/OpenIcon'
@@ -6,6 +6,10 @@ import CloseIcon from '@Public/js/CloseIcon'
 import { deleteMilestone } from '@Api/milestone'
 
 const MilestoneList = ({ milestones, setMilestones }) => {
+  const [status, setStatus] = useState(1)
+
+  const displayOnlyOpen = () => !status && setStatus(1)
+  const displayOnlyClose = () => status && setStatus(0)
   const handleDeleteBtn = async id => {
     const success = await deleteMilestone(id)
     if (success) setMilestones(milestones.filter(item => item.id !== id))
@@ -13,22 +17,24 @@ const MilestoneList = ({ milestones, setMilestones }) => {
   return (
     <div>
       <StyledHeader>
-        <StyledFilter>
-          <StyledFilterItem>
-            <OpenIcon /> {milestones.length} Open
-          </StyledFilterItem>
-          <StyledFilterItem>
-            <CloseIcon /> {milestones.length} Close
-          </StyledFilterItem>
-        </StyledFilter>
+        <StyledStatus>
+          <StyledStatusButton onClick={displayOnlyOpen}>
+            <OpenIcon /> {milestones.filter(item => item.isOpen).length} Open
+          </StyledStatusButton>
+          <StyledStatusButton onClick={displayOnlyClose}>
+            <CloseIcon /> {milestones.filter(item => !item.isOpen).length} Close
+          </StyledStatusButton>
+        </StyledStatus>
       </StyledHeader>
-      {milestones.map(milestone => (
-        <Milestone
-          key={milestone.id}
-          data={milestone}
-          handleDeleteBtn={handleDeleteBtn}
-        ></Milestone>
-      ))}
+      {milestones
+        .filter(item => item.isOpen === status)
+        .map(milestone => (
+          <Milestone
+            key={milestone.id}
+            data={milestone}
+            handleDeleteBtn={handleDeleteBtn}
+          ></Milestone>
+        ))}
     </div>
   )
 }
@@ -44,16 +50,20 @@ const StyledHeader = styled.header`
   line-height: 1.5;
 `
 
-const StyledFilter = styled.div`
+const StyledStatus = styled.div`
   padding-left: 6px;
 `
 
-const StyledFilterItem = styled.div`
+const StyledStatusButton = styled.div`
   position: relative;
   display: inline-block;
+  margin: 0px;
+  margin-left: 10px;
+  padding: 13px 0px;
   padding-top: 13px;
   padding-bottom: 13px;
   color: #24292e;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -62,7 +72,6 @@ const StyledFilterItem = styled.div`
   background-color: initial;
   border: 0;
   appearance: none;
-  margin-left: 10px;
 `
 
 export default MilestoneList
