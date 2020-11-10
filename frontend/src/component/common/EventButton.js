@@ -23,7 +23,14 @@ const EventButton = ({
   )
 }
 
-const getProps = (onClick, buttonName, isGreen, svgName, font, overrideStyle) => {
+const getProps = (
+  onClick,
+  buttonName,
+  isGreen,
+  svgName,
+  font,
+  overrideStyle,
+) => {
   return {
     onClick,
     buttonName,

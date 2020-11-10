@@ -13,9 +13,22 @@ const CreateIssuePage = () => {
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [assignee, setAssignee] = useState([1,2,3])
-  const [label, setLabel] = useState([2,3,4])
-  const [milestoneId, setMilestoneId] = useState(null)
+  const [assignee, setAssignee] = useState([
+    {
+      nickname: 'abc',
+      profileUrl: 'https://avatars3.githubusercontent.com/u/53181778?s=60&v=4',
+    },
+    { nickname: 'xyz' },
+  ])
+  const [label, setLabel] = useState([
+    { name: 'ppp', color: '#123123' },
+    { name: 'aaa', color: '#fd12f3' },
+  ])
+  const [milestone, setMilestone] = useState({
+    closeIssue: 3,
+    openIssue: 4,
+    title: 'backend',
+  }) //null
 
   const updateLabels = newLabels => {
     setLabel(newLabels)
@@ -25,8 +38,8 @@ const CreateIssuePage = () => {
     setAssignee(newAssignees)
   }
 
-  const updateMilestone = newMilestoneId => {
-    setMilestoneId(newMilestoneId)
+  const updateMilestone = newMilestone => {
+    setMilestone(newMilestone)
   }
 
   return (
@@ -41,11 +54,11 @@ const CreateIssuePage = () => {
       <Sidebar
         labels={label}
         assignees={assignee}
-        milestoneId={milestoneId}
+        milestone={milestone}
         updateLabel={updateLabels}
         updateAssignee={updateAssignees}
         updateMilestone={updateMilestone}
-       />
+      />
     </StyledWrapper>
   )
 }

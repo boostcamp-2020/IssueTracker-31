@@ -1,11 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import SidebarItem from './SidebarItem'
+import Label from './Label'
+import userIcon from '@Public/images/defaultUserIcon.png'
 
 const Sidebar = ({
   labels,
   assignees,
-  milestoneId,
+  milestone,
   updateLabel,
   updateAssignee,
   updateMilestone,
@@ -23,7 +25,7 @@ const Sidebar = ({
       </SidebarItem>
       <SidebarItem title="Milestone" popup={null}>
         <MilestoneContent
-          milestoneId={milestoneId}
+          milestone={milestone}
           update={updateMilestone}
         ></MilestoneContent>
       </SidebarItem>
@@ -42,9 +44,12 @@ const AssigneeContent = ({ assignees, update }) => {
     return (
       <React.Fragment>
         {assignees.map((assignee, idx) => (
-          <StyledDiv key={idx}>
-            <StyledImg src="https://avatars3.githubusercontent.com/u/53181778?s=60&v=4"></StyledImg>
-            {assignee}
+          <StyledDiv key={assignee.nickname + idx}>
+            <StyledImg
+              src={assignee.profileUrl || userIcon}
+              alt="user profile"
+            />
+            <StyledSpan>{assignee.nickname}</StyledSpan>
           </StyledDiv>
         ))}
       </React.Fragment>
@@ -52,16 +57,12 @@ const AssigneeContent = ({ assignees, update }) => {
   }
 
   const StyledDiv = styled.div`
-    height: 20px;
+    height: 27px;
     font-weight: 600;
+    display: table;
+    height: 100%;
+    text-align: center;
   `
-
-  const StyledImg = styled.img`
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-  `
-
   return <StyledContent display="block">{getAssigneeComponent()}</StyledContent>
 }
 
@@ -70,8 +71,8 @@ const LabelContent = ({ labels, update }) => {
     if (!labels.length) return <React.Fragment>None yet</React.Fragment>
     return (
       <React.Fragment>
-        {labels.map((assignee, idx) => (
-          <div key={idx}> {assignee} </div>
+        {labels.map((label, i) => (
+          <Label key={label.name + i} {...label} />
         ))}
       </React.Fragment>
     )
@@ -80,14 +81,61 @@ const LabelContent = ({ labels, update }) => {
   return <StyledContent>{getLabelComponent()}</StyledContent>
 }
 
-const MilestoneContent = ({ milestoneId, update }) => {
-  const getLabelComponent = () => {
-    if (!milestoneId) return <React.Fragment>No milestone</React.Fragment>
-    return <div>{milestoneId}</div>
+const MilestoneContent = ({ milestone, update }) => {
+  const percent = parseInt(
+    (milestone.closeIssue / (milestone.openIssue + milestone.closeIssue)) * 100,
+  )
+  const getMilestoneComponent = () => {
+    if (!milestone) return <React.Fragment>No milestone</React.Fragment>
+    return (
+      <StyledDiv>
+        <StyledProgressBar>
+          <StyledProgressItem percent={percent} />
+        </StyledProgressBar>
+        <StyledSpan>{milestone.title}</StyledSpan>
+      </StyledDiv>
+    )
   }
 
-  return <StyledContent>{getLabelComponent()}</StyledContent>
+  const StyledDiv = styled.div`
+    height: 27px;
+    font-weight: 600;
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+  `
+  return <StyledContent>{getMilestoneComponent()}</StyledContent>
 }
+
+const StyledProgressBar = styled.span`
+  height: 10px;
+  display: flex;
+  overflow: hidden;
+  background-color: #e1e4e8;
+  border-radius: 6px;
+  outline: 1px solid transparent;
+  margin-top: 4px;
+  margin-bottom: 8px;
+`
+
+const StyledSpan = styled.span`
+  display: table-cell;
+  vertical-align: middle;
+`
+
+const StyledImg = styled.img`
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 3px 4px;
+`
+
+const StyledProgressItem = styled.span`
+  width: ${({ percent }) => `${percent}%`};
+  outline: 2px solid transparent;
+  background-color: #28a745;
+`
 
 const StyledSidebar = styled.div`
   width: 25%;

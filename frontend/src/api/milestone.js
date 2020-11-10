@@ -19,4 +19,3 @@ const getMilestonesDetail = async () => {
 }
 
 export { getMilestones, deleteMilestone, getMilestonesDetail }
-

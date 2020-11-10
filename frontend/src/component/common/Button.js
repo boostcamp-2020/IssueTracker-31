@@ -11,7 +11,8 @@ const Button = ({ buttonProps }) => {
 const LinkTypeButton = ({ buttonProps }) => {
   const { svg, buttonName, count, targetLocation, style } = buttonProps
   return (
-    <StyledDiv
+    <StyledLink
+      to={targetLocation}
       backgroundColor={style.backgroundColor}
       color={style.color}
       hoverColor={style.hoverColor}
@@ -19,12 +20,10 @@ const LinkTypeButton = ({ buttonProps }) => {
       fontSize={style.fontSize}
       fontWeight={style.fontWeight}
     >
-      <StyledLink to={targetLocation}>
-        {svg ? svg : ''}
-        <span>{buttonName}</span>
-        {count !== undefined ? <StyledCount>{count}</StyledCount> : ''}
-      </StyledLink>
-    </StyledDiv>
+      {svg ? svg : ''}
+      <span>{buttonName}</span>
+      {count !== undefined ? <StyledCount>{count}</StyledCount> : ''}
+    </StyledLink>
   )
 }
 
@@ -58,33 +57,58 @@ const StyledDiv = styled.button`
     overrideStyle,
   }) =>
     `
-    color: ${color};
-    background: ${backgroundColor};
-    text-decoration : none;
-    cursor: pointer;
-    border-radius: ${borderRadius};
-    padding: 5px 12px;
-    border: 1px solid rgba(27,31,35,0.15);
-    font-size: ${fontSize};
-    font-weight: ${fontWeight};
-    width: auto;
-    line-height: 20px;
-    box-sizing: border-box;
-    :focus {
-      box-shadow: none;
-      outline: none;
-    }
-    &:hover {
-      background-color: ${hoverColor};
-    }
-    ${overrideStyle}
-    `}
+  color: ${color};
+  background: ${backgroundColor};
+  text-decoration : none;
+  cursor: pointer;
+  border-radius: ${borderRadius};
+  padding: 6px 10px;
+  border: 1px solid rgba(27,31,35,0.15);
+  font-size: ${fontSize};
+  font-weight: ${fontWeight};
+  width: auto;
+  box-sizing: border-box;
+  :focus {
+    box-shadow: none;
+    outline: none;
+  }
+  &:hover {
+    background-color: ${hoverColor};
+  }
+  ${overrideStyle}
+  `}
 `
 const StyledLink = styled(Link)`
-  text-decoration: none;
+  ${({
+    backgroundColor = '#2ea44f',
+    color = '#ffffff',
+    hoverColor = '#3ea85f',
+    borderRadius = '6px',
+    fontSize = '14px',
+    fontWeight = '550',
+    overrideStyle,
+  }) =>
+    `
+  color: ${color};
+  background: ${backgroundColor};
+  text-decoration : none;
   cursor: pointer;
+  border-radius: ${borderRadius};
+  padding: 6px 10px;
+  border: 1px solid rgba(27,31,35,0.15);
+  font-size: ${fontSize};
+  font-weight: ${fontWeight};
+  width: auto;
   box-sizing: border-box;
-  color: inherit;
+  :focus {
+    box-shadow: none;
+    outline: none;
+  }
+  &:hover {
+    background-color: ${hoverColor};
+  }
+  ${overrideStyle}
+  `}
 `
 
 const StyledCount = styled.span`
