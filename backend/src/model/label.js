@@ -48,10 +48,50 @@ const patchLabel = async (labelId, patchingData, connection) => {
   }
 }
 
+const getLabelsOnIssue = async (issueId, connection) => {
+  connection = connection ? connection : db
+  try {
+    const [labels] = await connection.query(
+      query.getLabelsOnIssueQueryString,
+      issueId,
+    )
+    return labels
+  } catch (err) {
+    console.log(err)
+    throw new Error('DB')
+  }
+}
+
+const addLabelsOnIssue = async (issueId, addList, connection = db) => {
+  try {
+    await connection.query(query.addLabelsOnIssueQueryString, [
+      addList.map(labelId => [issueId, labelId]),
+    ])
+  } catch (err) {
+    console.log(err)
+    if (err.code === 'ER_DUP_ENTRY') throw new Error('DUPLICATE')
+    throw new Error('DB')
+  }
+}
+
+const deleteLabelsOnIssue = async (issueId, deleteList, connection = db) => {
+  try {
+    await connection.query(query.deleteLabelsOnIssueQueryString, [
+      deleteList.map(labelId => [issueId, labelId]),
+    ])
+  } catch (err) {
+    console.log(err)
+    throw new Error('DB')
+  }
+}
+
 export default {
   getLabel,
   postLabel,
   getLabelByName,
   deleteLabel,
   patchLabel,
+  getLabelsOnIssue,
+  addLabelsOnIssue,
+  deleteLabelsOnIssue,
 }

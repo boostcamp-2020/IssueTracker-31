@@ -25,10 +25,17 @@ const ImageInput = () => {
         Attach files by dragging & dropping, selecting or pasting them.
       </StyledText>
       <StyledText status={status === 'loading'}>
-        <img alt="" width="16" />
+
+        <img
+          alt=""
+          width="16"
+          height="16"
+          src="https://github.githubassets.com/images/spinners/octocat-spinner-32.gif"
+        />
         <StyledSpan>Loading</StyledSpan>
       </StyledText>
       <StyledText status={status === 'error'}>Error</StyledText>
+
     </StyledWrapper>
   )
 }
@@ -43,8 +50,13 @@ const StyledWrapper = styled.div`
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;
   box-sizing: border-box;
+<<<<<<< HEAD
   margin-top: -13px;
 `
+=======
+`
+
+>>>>>>> f98b20619f61c9751c34722505d2c0627e9cdcf9
 const StyledInput = styled.input`
   width: 100%;
   min-height: 0;
@@ -58,6 +70,10 @@ const StyledInput = styled.input`
   cursor: pointer;
   box-sizing: border-box;
 `
+<<<<<<< HEAD
+=======
+
+>>>>>>> f98b20619f61c9751c34722505d2c0627e9cdcf9
 const StyledText = styled.span`
   height: 100%;
   width: 100%;
@@ -72,6 +88,10 @@ const StyledText = styled.span`
   padding-right: 8px;
   vertical-align: top;
 `
+<<<<<<< HEAD
+=======
+
+>>>>>>> f98b20619f61c9751c34722505d2c0627e9cdcf9
 const StyledSpan = styled.span`
   margin: 0px 5px;
 `

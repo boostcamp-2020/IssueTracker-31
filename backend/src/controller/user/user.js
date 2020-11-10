@@ -109,7 +109,7 @@ const verifyToken = (req, res) => {
   }
 }
 
-const verifyMiddelware = (req, res, next) => {
+const verifyMiddleware = (req, res, next) => {
   try {
     const decoded = jwt.verify(req.cookies.userToken, process.env.JWT_KEY)
     req.userData = decoded
@@ -125,5 +125,5 @@ export default {
   handleGithubCallback,
   getUsers,
   verifyToken,
-  verifyMiddelware,
+  verifyMiddleware,
 }
