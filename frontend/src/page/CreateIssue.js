@@ -1,29 +1,32 @@
 import React, { useState, createContext } from 'react'
 import styled from 'styled-components'
-import ProfileWithContent from '@Component/common/ProfileWithContent'
-import SpeechBubble from '@Component/common/SpeechBubble'
+import ProfileWithContent from '@Component/common/content/ProfileWithContent'
 import Sidebar from '@Component/common/Sidebar'
 
 export const createIssueContext = createContext()
 
 const CreateIssuePage = () => {
+  // submit action
+  const submitAction = () => {}
+  // cancel action
+  const cancelAction = () => {}
+
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [userId, setUserId] = useState(document.cookie.userData || null)
   const [assignee, setAssignee] = useState([])
   const [label, setLabel] = useState([])
   const [milestoneId, setMilestoneId] = useState(null)
   return (
-    <createIssueContext.Provider
-      value={{ title, content, userId, label, milestoneId, assignee }}
-    >
-      <StyledWrapper>
-        <ProfileWithContent>
-          <SpeechBubble />
-        </ProfileWithContent>
-        <Sidebar page="createIssue" />
-      </StyledWrapper>
-    </createIssueContext.Provider>
+    <StyledWrapper>
+      <ProfileWithContent
+        title={[title, setTitle]}
+        content={[content, setContent]}
+        submitAction={submitAction}
+        cancelAction={cancelAction}
+        page={'createIssue'}
+      />
+      <Sidebar />
+    </StyledWrapper>
   )
 }
 

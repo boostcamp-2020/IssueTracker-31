@@ -5,11 +5,36 @@ import userModel from '../model/user'
 import commentModel from '../model/comment'
 import pool from '../model/index'
 import relationMaker from '../util/relation-maker'
+import statusCode from '../util/statusCode'
+import resMessage from '../util/resMessage'
 
 const getIssues = async filterValues => {
   if (!isValidFilterValues(filterValues)) throw new Error('parameter')
   const issues = await issueModel.getIssues(filterValues)
   return structurizeIssueList(issues)
+}
+
+const getIssueComments = async id => {
+  if (isNaN(id) || id < 1)
+    return {
+      code: statusCode.BAD_REQUEST,
+      success: false,
+      message: resMessage.OUT_OF_VALUE,
+    }
+  try {
+    const comments = await commentModel.getIssueComments(id)
+    return {
+      code: statusCode.OK,
+      success: true,
+      data: comments,
+    }
+  } catch (error) {
+    return {
+      code: statusCode.DB_ERROR,
+      success: false,
+      message: resMessage.DB_ERROR,
+    }
+  }
 }
 
 const postIssue = async newIssueData => {
@@ -64,6 +89,28 @@ const updateIssueState = async data => {
   }
 }
 
+const updateIssue = async (issueId, issueData) => {
+  if (isNaN(issueId) || issueId < 1 || !isValidUpdateIssueData(issueData))
+    throw new Error('parameter')
+  await issueModel.updateIssue(issueId, issueData)
+}
+
+const isValidUpdateIssueData = ({
+  title,
+  milestoneId,
+  isOpen,
+  ...notAllowed
+}) => {
+  if (Object.keys(notAllowed).length !== 0) return false
+  if (!title && !milestoneId && isOpen === undefined) return false
+  if (title !== undefined && (typeof title !== 'string' || title.trim() === ''))
+    return false
+  if (milestoneId !== undefined && (isNaN(milestoneId) || milestoneId < 1))
+    return false
+  if (isOpen !== undefined && isOpen !== 0 && isOpen !== 1) return false
+  return true
+}
+
 const updateAssigneesOnIssue = async (issueId, addList, deleteList) => {
   if (!isValidIds(addList) || !isValidIds(deleteList))
     throw new Error('parameter')
@@ -74,6 +121,25 @@ const updateAssigneesOnIssue = async (issueId, addList, deleteList) => {
       await userModel.deleteAssigneeOnissue(issueId, deleteList, connection)
     if (addList && addList.length > 0)
       await userModel.addAssigneeOnissue(issueId, addList, connection)
+    connection.commit()
+  } catch (err) {
+    await connection.rollback()
+    throw err
+  } finally {
+    connection.release()
+  }
+}
+
+const updateLabelsOnIssue = async (issueId, addList, deleteList) => {
+  if (!isValidIds(addList) || !isValidIds(deleteList))
+    throw new Error('parameter')
+  const connection = await pool.getConnection()
+  await connection.beginTransaction()
+  try {
+    if (deleteList && deleteList.length > 0)
+      await labelModel.deleteLabelsOnIssue(issueId, deleteList, connection)
+    if (addList && addList.length > 0)
+      await labelModel.addLabelsOnIssue(issueId, addList, connection)
     connection.commit()
   } catch (err) {
     await connection.rollback()
@@ -159,8 +225,11 @@ const isValidFilterValues = filterValues => {
 
 export default {
   getIssues,
+  getIssueComments,
   postIssue,
   updateIssueState,
   getIssueDetail,
+  updateIssue,
   updateAssigneesOnIssue,
+  updateLabelsOnIssue,
 }

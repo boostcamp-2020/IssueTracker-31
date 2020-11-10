@@ -25,9 +25,9 @@ where m.id = ?
 
 const createMilestone = `
 insert into Milestone (
-  title, 
-  dueDate, 
-  description) 
+  title,
+  dueDate,
+  description)
 values (?, ?, ?)
 `
 

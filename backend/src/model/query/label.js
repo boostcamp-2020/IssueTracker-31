@@ -10,6 +10,12 @@ const getLabelsOnIssueQueryString = `
   WHERE il.issueId = ?
 `
 
+const addLabelsOnIssueQueryString =
+  'INSERT INTO Issue_label (issueId, labelId) VALUES ?'
+
+const deleteLabelsOnIssueQueryString =
+  'DELETE FROM Issue_label WHERE (issueId, labelId) IN (?);'
+
 export default {
   getLabelQueryString,
   postLabelQueryString,
@@ -17,4 +23,6 @@ export default {
   deleteLabelQueryString,
   patchLabelQueryString,
   getLabelsOnIssueQueryString,
+  addLabelsOnIssueQueryString,
+  deleteLabelsOnIssueQueryString,
 }
