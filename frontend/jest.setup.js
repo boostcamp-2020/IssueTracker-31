@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-
+import { TextEncoder } from 'util'
+global.TextEncoder = TextEncoder
 const baseURL =
   process.env.NODE_ENV === 'production'
     ? 'http://127.0.0.1:3000/api'

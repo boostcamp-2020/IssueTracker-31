@@ -39,6 +39,7 @@ const EventTypeButton = ({ buttonProps }) => {
       borderRadius={style.borderRadius}
       fontSize={style.fontSize}
       fontWeight={style.fontWeight}
+      overrideStyle={style.overrideStyle}
     >
       {svg ? svg : ''}
       <span>{buttonName}</span>
@@ -54,6 +55,7 @@ const StyledDiv = styled.button`
     borderRadius = '6px',
     fontSize = '14px',
     fontWeight = '550',
+    overrideStyle,
   }) =>
     `
     color: ${color};
@@ -68,9 +70,15 @@ const StyledDiv = styled.button`
     width: auto;
     line-height: 20px;
     box-sizing: border-box;
+    :focus {
+      box-shadow: none;
+      outline: none;
+    }
     &:hover {
       background-color: ${hoverColor};
-    }`}
+    }
+    ${overrideStyle}
+    `}
 `
 const StyledLink = styled(Link)`
   text-decoration: none;
