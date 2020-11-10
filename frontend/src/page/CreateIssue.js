@@ -1,21 +1,28 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import ProfileWithContent from '@Component/common/ProfileWithContent'
-import SpeechBubble from '@Component/common/SpeechBubble'
+import ProfileWithContent from '@Component/common/content/ProfileWithContent'
 import Sidebar from '@Component/common/Sidebar'
 
 const CreateIssuePage = () => {
+  // submit action
+
+  // cancel action
+
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [userId, setUserId] = useState(document.cookie.userData || null)
   const [assignee, setAssignee] = useState([])
   const [label, setLabel] = useState([])
   const [milestoneId, setMilestoneId] = useState(null)
   return (
     <StyledWrapper>
-      <ProfileWithContent>
-        <SpeechBubble />
-      </ProfileWithContent>
+      <ProfileWithContent
+        title={[title, setTitle]}
+        content={[content, setContent]}
+        assignee={[assignee, setAssignee]}
+        label={[label, setLabel]}
+        milestoneId={[milestoneId, setMilestoneId]}
+        b
+      />
       <Sidebar />
     </StyledWrapper>
   )
