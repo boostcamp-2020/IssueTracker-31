@@ -24,7 +24,7 @@ const getMilestoneDateFormat = date => {
     11: 'November',
     12: 'December',
   }
-  const [year, month, day] = date.split(/[- ]/, 3)
+  const [year, month, day] = date.split(/[- T]/, 3)
   return `Due by ${monthString[parseInt(month)]} ${day}, ${year}`
 }
 
