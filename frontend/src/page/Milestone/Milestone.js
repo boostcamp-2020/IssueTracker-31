@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import TabButton from '@Component/common/TabButton'
 import LinkButton from '@Component/common/LinkButton'
 import MilestoneList from '@Component/MilestonePage/MilestoneList'
-import { getMilestonesDetail } from '@Api/milestone' // TODO: API 다른 거로 바꿔야 함
+import { getMilestonesDetail } from '@Api/milestone'
 import { useFetch } from '@Util/hook'
 
 export const milestoneContext = createContext()
