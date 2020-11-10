@@ -21,14 +21,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use('/api', Controller)
 
-if (process.env.NODE_ENV === 'production') {
-  console.log(process.env.NODE_ENV)
-  const publicPath = path.join(__dirname, '../../frontend/build')
-  app.use(express.static(publicPath))
-  app.get('*', (req, res) => {
-    res.sendFile(publicPath + '/index.html')
-  })
-}
+const publicPath = path.join(__dirname, '../../frontend/build')
+app.use(express.static(publicPath))
+app.get('*', (req, res) => {
+  res.sendFile(publicPath + '/index.html')
+})
 
 app.use((err, req, res, next) => {
   if (err.status)
