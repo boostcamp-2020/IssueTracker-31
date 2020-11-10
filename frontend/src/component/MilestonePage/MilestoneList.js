@@ -5,9 +5,7 @@ import OpenIcon from '@Public/js/OpenIcon'
 import CloseIcon from '@Public/js/CloseIcon'
 import { deleteMilestone } from '@Api/milestone'
 
-const MilestoneList = () => {
-  const { milestones, setMilestones } = useContext(milestoneContext)
-
+const MilestoneList = ({ milestones, setMilestones }) => {
   const handleDeleteBtn = async id => {
     const success = await deleteMilestone(id)
     if (success) setMilestones(milestones.filter(item => item.id !== id))

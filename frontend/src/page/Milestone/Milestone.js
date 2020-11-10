@@ -14,19 +14,17 @@ const MilestonePage = () => {
   useFetch(getMilestonesDetail, setMilestones)
 
   return (
-    <milestoneContext.Provider value={{ milestones, setMilestones }}>
-      <StyledContainer>
-        <StyledButtonContainer>
-          <TabButton clicked="milestone" />
-          <LinkButton
-            buttonName={'New Milestone'}
-            targetLocation={'/milestone/new'}
-            isGreen={true}
-          />
-        </StyledButtonContainer>
-        <MilestoneList></MilestoneList>
-      </StyledContainer>
-    </milestoneContext.Provider>
+    <StyledContainer>
+      <StyledButtonContainer>
+        <TabButton clicked="milestone" />
+        <LinkButton
+          buttonName={'New Milestone'}
+          targetLocation={'/milestone/new'}
+          isGreen={true}
+        />
+      </StyledButtonContainer>
+      <MilestoneList milestones={milestones} setMilestones={setMilestones} />
+    </StyledContainer>
   )
 }
 
