@@ -13,9 +13,22 @@ const CreateIssuePage = () => {
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [assignee, setAssignee] = useState([])
-  const [label, setLabel] = useState([])
+  const [assignee, setAssignee] = useState([1,2,3])
+  const [label, setLabel] = useState([2,3,4])
   const [milestoneId, setMilestoneId] = useState(null)
+
+  const updateLabels = newLabels => {
+    setLabel(newLabels)
+  }
+
+  const updateAssignees = newAssignees => {
+    setAssignee(newAssignees)
+  }
+
+  const updateMilestone = newMilestoneId => {
+    setMilestoneId(newMilestoneId)
+  }
+
   return (
     <StyledWrapper>
       <ProfileWithContent
@@ -26,9 +39,12 @@ const CreateIssuePage = () => {
         page={'createIssue'}
       />
       <Sidebar
-        label={[label, setLabel]}
-        assignee={[assignee, setAssignee]}
-        milestone={[milestoneId, setMilestoneId]}
+        labels={label}
+        assignees={assignee}
+        milestoneId={milestoneId}
+        updateLabel={updateLabels}
+        updateAssignee={updateAssignees}
+        updateMilestone={updateMilestone}
        />
     </StyledWrapper>
   )

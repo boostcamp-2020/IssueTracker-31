@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import SettingIcon from '@Public/js/SettingIcon'
 
-const SidebarItem = ({ title, defaultMessage, children }) => {
+const SidebarItem = ({ title, children }) => {
   return (
     <StyledSidebarItem>
-      <StyledTitle display="flex">
+      <StyledTitle>
         <span>{title}</span>
         <SettingIcon />
       </StyledTitle>
