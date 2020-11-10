@@ -5,8 +5,8 @@ import DateIcon from '@Public/js/DateIcon'
 import { getMilestoneDateFormat } from '@Util/util'
 
 const Milestone = ({ data, handleDeleteBtn }) => {
-  const percent = (data.closeIssue / (data.openIssue + data.closeIssue)) * 100
-
+  let percent = (data.closeIssue / (data.openIssue + data.closeIssue)) * 100
+  if (isNaN(percent)) percent = 0
   return (
     <StyledContainer>
       <StyledFirstSection>
