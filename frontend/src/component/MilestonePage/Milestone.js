@@ -45,7 +45,9 @@ const Milestone = ({ data, handleDeleteBtn }) => {
           <Link to="/milestones/edit">
             <StyledButton color="#0365d6">Edit</StyledButton>
           </Link>
-          <StyledButton color="#0365d6">Close</StyledButton>
+          <StyledButton color="#0365d6">
+            {data.isOpen ? 'Close' : 'Open'}
+          </StyledButton>
           <StyledButton
             color="#cb2431"
             onClick={() => handleDeleteBtn(data.id)}
