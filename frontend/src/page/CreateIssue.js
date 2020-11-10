@@ -5,8 +5,9 @@ import Sidebar from '@Component/common/Sidebar'
 
 const CreateIssuePage = () => {
   // submit action
-
+  const submitAction = () => {}
   // cancel action
+  const cancelAction = () => {}
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -18,10 +19,9 @@ const CreateIssuePage = () => {
       <ProfileWithContent
         title={[title, setTitle]}
         content={[content, setContent]}
-        assignee={[assignee, setAssignee]}
-        label={[label, setLabel]}
-        milestoneId={[milestoneId, setMilestoneId]}
-        b
+        submitAction={submitAction}
+        cancelAction={cancelAction}
+        page={'createIssue'}
       />
       <Sidebar />
     </StyledWrapper>
