@@ -19,16 +19,16 @@ app.use(cors({ origin: true, credentials: true }))
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use('/api', Controller)
+app.use(express.static(path.join(__dirname, 'public')))
 
-if (process.env.NODE_ENV === 'production') {
-  console.log(process.env.NODE_ENV)
-  const publicPath = path.join(__dirname, '../../frontend/build')
-  app.use(express.static(publicPath))
-  app.get('*', (req, res) => {
-    res.sendFile(publicPath + '/index.html')
-  })
-}
+app.use('/api', Controller)
+app.get('*', (req, res) => {
+  let publicPath = ''
+  if (process.env.NODE_ENV === 'production')
+    publicPath = path.join(__dirname, '../../frontend/build')
+  else publicPath = path.join(__dirname, '../../frontend/public')
+  res.sendFile(publicPath + '/index.html')
+})
 
 app.use((err, req, res, next) => {
   if (err.status)

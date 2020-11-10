@@ -18,8 +18,8 @@ const getProps = (targetLocation, buttonName, isGreen, svgName, font) => {
       backgroundColor: isGreen ? '#2ea44f' : '#fafbfc',
       color: isGreen ? '#ffffff' : '#000000',
       hoverColor: isGreen ? '#3eb45f' : '#g5g5g5',
-      fontSize: font.size,
-      fontWeight: font.weight,
+      fontSize: font ? font.size : '14px',
+      fontWeight: font ? font.weight : '550',
     },
   }
 }
