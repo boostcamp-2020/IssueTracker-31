@@ -44,8 +44,8 @@ const WritingArea = ({ props }) => {
       <CountingContainer id="count">0 characters</CountingContainer>
       <ImageInput />
       <SubmitContainer>
-        <EventButton onClick={handleCancel}>Cancel</EventButton>
-        <EventButton onClick={handleSubmit}>Submit new issue</EventButton>
+        {/* <EventButton onClick={handleCancel}>Cancel</EventButton>
+        <EventButton onClick={handleSubmit}>Submit new issue</EventButton> */}
       </SubmitContainer>
     </Wrapper>
   )
