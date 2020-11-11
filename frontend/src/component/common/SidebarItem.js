@@ -3,31 +3,47 @@ import styled from 'styled-components'
 import SettingIcon from '@Public/js/SettingIcon'
 import PopUp from '@Component/common/PopUp'
 
-const SidebarItem = ({ title, children, popupProps, multiSelect }) => {
+const SidebarItem = ({ title, children, multiSelect, popupProps }) => {
   const popup = useRef()
+  const detail = useRef()
+
+  const handleMouseDown = () => {
+    popup.current.focus()
+  }
+
+  const closePopUp = () => {
+    detail.current.open = false
+  }
 
   return (
-    <StyledSidebarItem>
-      <StyledTitle>
-        <span>{title}</span>
-        <SettingIcon />
-      </StyledTitle>
+    <>
+      <StyledSidebarItem
+        ref={detail}
+        onMouseDown={handleMouseDown}
+        onBlur={closePopUp}
+      >
+        <StyledTitle>
+          <span>{title}</span>
+          <SettingIcon />
+        </StyledTitle>
+
+        <StyledDetailsMenu ref={popup}>
+          <PopUp
+            title={popupProps.title}
+            kind={popupProps.kind}
+            data={popupProps.data ? popupProps.data : []}
+            targetCondition={popupProps.targetCondition}
+            updateConditions={popupProps.updateConditions}
+            multiSelect={multiSelect}
+          ></PopUp>
+        </StyledDetailsMenu>
+      </StyledSidebarItem>
       {children}
-      <StyledDetailsMenu ref={popup}>
-        <PopUp
-          title={popupProps.title}
-          kind={popupProps.kind}
-          data={popupProps.data ? popupProps.data : []}
-          targetCondition={popupProps.targetCondition}
-          updateConditions={popupProps.updateConditions}
-          multiSelect={multiSelect}
-        ></PopUp>
-      </StyledDetailsMenu>
-    </StyledSidebarItem>
+    </>
   )
 }
 
-const StyledSidebarItem = styled.div`
+const StyledSidebarItem = styled.details`
   font-size: 12px;
   color: #586069;
   border-bottom: solid 1px #586069;
@@ -36,7 +52,7 @@ const StyledSidebarItem = styled.div`
   padding-top: 10px;
 `
 
-const StyledTitle = styled.div`
+const StyledTitle = styled.summary`
   display: flex;
   font-weight: 600;
   justify-content: space-between;
