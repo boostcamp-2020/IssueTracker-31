@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
 import TabButton from '@Component/common/TabButton'
+import EventButton from '@Component/common/EventButton'
 import LabelList from '@Component/LabelPage/LabelList'
 import LabelForm from '@Component/LabelPage/LabelForm/LabelForm'
 import { getLabels } from '@Api/label'
-import styled from 'styled-components'
-import EventButton from '@Component/common/EventButton'
 import { useFetch } from '@Util/hook'
 
 const LabelPage = () => {
