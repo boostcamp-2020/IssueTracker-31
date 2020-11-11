@@ -19,7 +19,6 @@ const GET = async (path, params = null) => {
     return response.data
   } catch (err) {
     console.error(err)
-    if (err.response.status === 401) window.location.href = '/login'
   }
 }
 
@@ -34,7 +33,6 @@ const POST = async (path, data, contentType = 'application/json') => {
     return response.data
   } catch (err) {
     console.error(err)
-    if (err.response.status === 401) window.location.href = '/login'
   }
 }
 
@@ -47,7 +45,6 @@ const DELETE = async (path, params = null) => {
     return response.data
   } catch (err) {
     console.error(err)
-    if (err.response.status === 401) window.location.href = '/login'
   }
 }
 
@@ -62,7 +59,6 @@ const PATCH = async (path, data, contentType = 'application/json') => {
     return response.data
   } catch (err) {
     console.error(err)
-    if (err.response.status === 401) window.location.href = '/login'
   }
 }
 
@@ -77,7 +73,6 @@ const PUT = async (path, data, contentType = 'application/json') => {
     return response.data
   } catch (err) {
     console.error(err)
-    if (err.response.status === 401) window.location.href = '/login'
   }
 }
 

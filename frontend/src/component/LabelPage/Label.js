@@ -1,22 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import LabelTemplate from '@Component/common/Label'
+import LabelForm from '@Component/LabelPage/LabelForm/LabelForm'
 
-const Label = ({ data, handleDeleteBtn }) => {
+const Label = ({ data, handleDeleteBtn, labels, setLabels }) => {
+  const [isEdit, setIsEdit] = useState(false)
+
+  const toggleComponent = e => setIsEdit(!isEdit)
+
   return (
-    <StyledContainer>
-      <StyledLabelTemplate>
-        <LabelTemplate name={data.name} color={data.color}></LabelTemplate>
-      </StyledLabelTemplate>
+    <>
+      {isEdit ? (
+        <StyledFormContainer>
+          <LabelForm
+            toggleComponent={toggleComponent}
+            labels={labels}
+            setLabels={setLabels}
+            {...data}
+          />
+        </StyledFormContainer>
+      ) : (
+        <StyledContainer>
+          <StyledLabelTemplate>
+            <LabelTemplate name={data.name} color={data.color}></LabelTemplate>
+          </StyledLabelTemplate>
 
-      <StyledDescription>{data.description}</StyledDescription>
-      <StyledButtonContainer>
-        <StyledButton>Edit</StyledButton>
-        <StyledButton onClick={() => handleDeleteBtn(data.id)}>
-          Delete
-        </StyledButton>
-      </StyledButtonContainer>
-    </StyledContainer>
+          <StyledDescription>{data.description}</StyledDescription>
+          <StyledButtonContainer>
+            <StyledButton onClick={toggleComponent}>Edit</StyledButton>
+            <StyledButton onClick={() => handleDeleteBtn(data.id)}>
+              Delete
+            </StyledButton>
+          </StyledButtonContainer>
+        </StyledContainer>
+      )}
+    </>
   )
 }
 
@@ -28,6 +46,12 @@ const StyledContainer = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   border-top: 1px solid #eaecef;
+`
+
+const StyledFormContainer = styled.div`
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 16px;
 `
 const StyledLabelTemplate = styled.div`
   width: 25%;

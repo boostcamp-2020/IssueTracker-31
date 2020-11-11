@@ -20,6 +20,8 @@ const LabelList = ({ labels, setLabels }) => {
           key={label.id}
           data={label}
           handleDeleteBtn={handleDeleteBtn}
+          labels={labels}
+          setLabels={setLabels}
         ></Label>
       ))}
     </StyledContainer>

@@ -70,9 +70,9 @@ const LabelForm = props => {
   }
 
   const handleCreateButton = async () => {
-    const id = await createLabel(label)
-    if (id) {
-      setLabels([...labels, { id, ...label }])
+    const response = await createLabel(label)
+    if (response) {
+      setLabels([...labels, { id: response.id, ...label }])
       props.toggleComponent()
     }
   }
@@ -178,7 +178,7 @@ const LabelForm = props => {
 }
 
 const StyledLabelFormContainer = styled.div`
-  width: fit-content;
+  width: 100%;
 `
 const StyledActionContainer = styled.div`
   display: flex;
@@ -189,12 +189,14 @@ const StyledActionContainer = styled.div`
   justify-content: flex-end;
 `
 const StyledHeader = styled.header`
+  height: 20px;
   display: flex;
   justify-content: space-between;
 `
 const StyledForm = styled.div`
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
 `
 const StyledDeleteButton = styled.button`
   color: #586069;
@@ -232,9 +234,12 @@ const StyledInput = styled.input`
   border: 1px solid rgba(27, 31, 35, 0.15);
   border-radius: 6px;
   outline: none;
+  width: 100%;
+  box-sizing: border-box;
 `
 const StyledDl = styled.dl`
   padding-right: 16px;
+  flex: 1 auto;
 `
 const StyledDdFlex = styled.dd`
   display: flex;
