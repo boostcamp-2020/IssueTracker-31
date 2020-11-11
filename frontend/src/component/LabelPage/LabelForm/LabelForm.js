@@ -5,7 +5,7 @@ import RefreshIcon from '@Public/js/RefreshIcon'
 import { getContrast, verifyTextLength } from '@Util/util'
 import EventButton from '@Component/common/EventButton'
 import { createLabel, updateLabel, deleteLabel } from '@Api/label'
-import { labelContext } from '@Page/Label/Label'
+// import { labelContext } from '@Page/Label/Label'
 
 const generateRandomColor = () => `#${Math.random().toString(16).slice(-6)}`
 
@@ -44,7 +44,9 @@ const labelReducer = (state, action) => {
 }
 
 const LabelForm = props => {
-  const { setLabels, labels } = useContext(labelContext)
+  // const { setLabels, labels } = useContext(labelContext)
+  const labels = props.labels
+  const setLabels = props.setLabels
 
   const [label, dispatchLabel] = useReducer(
     labelReducer,
