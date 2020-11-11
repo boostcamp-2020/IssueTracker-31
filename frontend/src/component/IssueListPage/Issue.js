@@ -43,7 +43,7 @@ const Issue = ({
       </StyledArticle>
       <StyledAssignees>
         {assignee.map(user => (
-          <img src={user.profileUrl}></img>
+          <ProfileImage src={user.profileUrl} />
         ))}
       </StyledAssignees>
     </StyledRow>
@@ -68,7 +68,11 @@ const StyledLabels = styled.div`
   display: inline;
 `
 const StyledAssignees = styled.div`
-  width: 25%;
+  width: 5%;
+`
+const ProfileImage = styled.img`
+  width: 30px;
+  height: 30px;
 `
 const StyledLink = styled(Link)`
   text-decoration: none;
