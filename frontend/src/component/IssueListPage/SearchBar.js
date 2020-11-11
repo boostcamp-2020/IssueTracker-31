@@ -79,8 +79,12 @@ const SearchBar = () => {
         .join('')
   }
   return (
-    <StyledSeacrchBarContainer>
-      <details ref={detail} onMouseDown={handleMouseDown} onBlur={closePopUp}>
+    <StyledSearchBarContainer>
+      <StyledDetails
+        ref={detail}
+        onMouseDown={handleMouseDown}
+        onBlur={closePopUp}
+      >
         <StyledSummary>
           Filters
           <StyledSpan></StyledSpan>
@@ -94,19 +98,24 @@ const SearchBar = () => {
             updateConditions={updateCoditions}
           ></PopUp>
         </StyledDetailsMenu>
-      </details>
-      <input type="text" readOnly value={filteredString} />
-    </StyledSeacrchBarContainer>
+      </StyledDetails>
+      <StyledInput type="text" readOnly value={filteredString} />
+    </StyledSearchBarContainer>
   )
 }
 
-const StyledSeacrchBarContainer = styled.div`
+const StyledSearchBarContainer = styled.div`
   display: flex;
   margin: 0px;
-  flex: auto;
+  flex: 1 0 auto;
   justify-contents: flex-start;
+  flex-wrap: nowrap;
   box-sizing: border-box;
-  z-
+  height: 32px;
+`
+
+const StyledDetails = styled.details`
+  width: 91px;
 `
 
 const StyledSummary = styled.summary`
@@ -149,5 +158,25 @@ const StyledDetailsMenu = styled.div`
   bottom: auto;
   left: 0;
   padding: 0;
+`
+
+const StyledInput = styled.input`
+  width: 50%;
+  margin-left: -3px;
+  margin-right: 8px;
+  border-radius: 6px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-left: 32px;
+  color: #586069;
+  background-color: #fafbfc;
+  padding: 5px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  border: 1px solid #e1e4e8;
+  outline: none;
 `
 export default SearchBar
