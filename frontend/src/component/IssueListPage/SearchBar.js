@@ -103,7 +103,6 @@ const SearchBar = () => {
 const StyledSeacrchBarContainer = styled.div`
   display: flex;
   margin: 0px;
-  width: 100%;
   flex: auto;
   justify-contents: flex-start;
   box-sizing: border-box;
