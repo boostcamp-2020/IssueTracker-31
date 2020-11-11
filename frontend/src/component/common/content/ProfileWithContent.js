@@ -16,21 +16,25 @@ const ProfileWithContent = props => {
         <ProfileImage src="#" alt="" />
       </ProfileContainer>
       <FormWrapper>
-        <TitleInputContainer
-          type="text"
-          name="title"
-          value={title}
-          onChange={handleTitleChange}
-          placeholder="Title"
-          required
-        />
+        {props.page === 'createIssue' ? (
+          <TitleInputContainer
+            type="text"
+            name="title"
+            value={title}
+            onChange={handleTitleChange}
+            placeholder="Title"
+            required
+          />
+        ) : (
+          ''
+        )}
         <WritingArea props={props} />
       </FormWrapper>
     </ContentWrapper>
   )
 }
 
-const FormWrapper = styled.form`
+const FormWrapper = styled.div`
   width: 600px;
   height: 500px;
   border: 1px solid #dcdcdc;

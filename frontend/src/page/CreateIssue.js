@@ -2,18 +2,33 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import ProfileWithContent from '@Component/common/content/ProfileWithContent'
 import Sidebar from '@Component/common/Sidebar'
+import { createIssue } from '@Api/issue'
+import { useHistory } from 'react-router-dom'
 
 const CreateIssuePage = () => {
-  // submit action
-  const submitAction = () => {}
+  const history = useHistory()
+  const submitAction = async e => {
+    const issueId = await createIssue({
+      title,
+      content,
+      assignee,
+      label,
+      milestoneId,
+    })
+    if (issueId) {
+      history.push(`/issues/${issueId}`)
+    }
+  }
   // cancel action
-  const cancelAction = () => {}
+  const cancelAction = () => {
+    history.push('/')
+  }
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [assignee, setAssignee] = useState([])
   const [label, setLabel] = useState([])
-  const [milestoneId, setMilestoneId] = useState(null)
+  const [milestoneId, setMilestoneId] = useState(undefined)
   return (
     <StyledWrapper>
       <ProfileWithContent
@@ -21,7 +36,7 @@ const CreateIssuePage = () => {
         content={[content, setContent]}
         submitAction={submitAction}
         cancelAction={cancelAction}
-        page={'createIssue'}
+        page="createIssue"
       />
       <Sidebar />
     </StyledWrapper>
