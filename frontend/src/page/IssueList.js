@@ -1,8 +1,5 @@
-import React, { createContext, useState, useEffect } from 'react'
-import Request from '../util/request'
-import { useHistory } from 'react-router-dom'
+import React, { createContext, useState } from 'react'
 import SearchBar from '@Component/IssueListPage/SearchBar'
-import IssueFilter from '@Component/IssueListPage/IssueFilter'
 import TabButton from '@Component/common/TabButton'
 import LinkButton from '@Component/common/LinkButton'
 import IssueList from '@Component/IssueListPage/IssueList'
@@ -15,7 +12,6 @@ export const issueListContext = createContext()
 
 const IssueListPage = props => {
   const [users, setUsers] = useState([])
-  const history = useHistory()
   const [labels, setLabels] = useState([])
   const [milestones, setMilestones] = useState([])
   const [conditions, setConditions] = useState({
@@ -25,22 +21,6 @@ const IssueListPage = props => {
     milestone: [],
     isOpen: true,
   })
-
-  const checkUser = async () => {
-    try {
-      const data = await Request.GET('/users/verify')
-      return data.success
-    } catch (error) {
-      console.log(error)
-      return false
-    }
-  }
-
-  useEffect(() => {
-    checkUser().then(res => {
-      if (res === false) history.push('/login')
-    })
-  }, [])
 
   useFetch(getUsers, setUsers)
   useFetch(getLabels, setLabels)

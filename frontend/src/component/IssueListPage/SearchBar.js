@@ -2,6 +2,9 @@ import React, { useContext, useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import PopUp from '../common/PopUp'
 import { issueListContext } from '@Page/IssueList'
+import { getParsedCookie } from '@Util/util'
+import { Cookies } from 'react-cookie'
+const cookie = new Cookies()
 const SearchBar = () => {
   const { users, labels, milestones, conditions, setConditions } = useContext(
     issueListContext,
@@ -32,14 +35,9 @@ const SearchBar = () => {
 
   const updateCoditions = id => {
     const key = popUpData.find(v => v.id === id).concern
-    const nickname = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('nickname'))
-      .split('=')[1]
-
     setConditions({
       ...initializeCondition,
-      ...{ [key]: [nickname] },
+      ...{ [key]: [getParsedCookie('userId')] },
     })
     detail.current.open = false
   }

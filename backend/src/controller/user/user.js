@@ -96,30 +96,17 @@ const getUsers = async (req, res) => {
   }
 }
 
-const verifyToken = (req, res) => {
-  try {
-    jwt.verify(req.cookies.userToken, process.env.JWT_KEY)
-    return res.status(statusCode.OK).json({
-      success: true,
-    })
-  } catch (err) {
-    console.log(err)
-    return res.status(statusCode.OK).json({
-      success: false,
-    })
-  }
-}
-
 const verifyMiddleware = (req, res, next) => {
-  try {
-    const decoded = jwt.verify(req.cookies.userToken, process.env.JWT_KEY)
-    req.userData = decoded
-    next()
-  } catch (err) {
-    console.log(err)
-    return res.status(statusCode.UNAUTHORIZED).json({
-      success: false,
-    })
+  if (req.path === '/login') next()
+  else {
+    try {
+      const decoded = jwt.verify(req.cookies.userToken, process.env.JWT_KEY)
+      req.userData = decoded
+      next()
+    } catch (err) {
+      console.log(err)
+      res.redirect('/login')
+    }
   }
 }
 
@@ -127,6 +114,5 @@ export default {
   githubLogin,
   handleGithubCallback,
   getUsers,
-  verifyToken,
   verifyMiddleware,
 }
