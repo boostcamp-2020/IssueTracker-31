@@ -1,22 +1,66 @@
-import React, { useState } from 'react'
+import React, { useState, createContext } from 'react'
 import styled from 'styled-components'
-import ProfileWithContent from '@Component/common/ProfileWithContent'
-import SpeechBubble from '@Component/common/SpeechBubble'
+import ProfileWithContent from '@Component/common/content/ProfileWithContent'
 import Sidebar from '@Component/common/Sidebar'
+import { createIssue } from '@Api/issue'
+import { useHistory } from 'react-router-dom'
+
+export const createIssueContext = createContext()
 
 const CreateIssuePage = () => {
+  const history = useHistory()
+  const submitAction = async e => {
+    const issueId = await createIssue({
+      title,
+      content,
+      assignee,
+      label,
+      milestoneId: milestone[0],
+    })
+    if (issueId) {
+      history.push(`/issues/${issueId}`)
+    }
+  }
+  // cancel action
+  const cancelAction = () => {
+    history.push('/')
+  }
+
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [userId, setUserId] = useState(document.cookie.userData || null)
   const [assignee, setAssignee] = useState([])
   const [label, setLabel] = useState([])
-  const [milestoneId, setMilestoneId] = useState(null)
+  const [milestone, setMilestone] = useState([])
+
+  const updateLabels = newLabels => {
+    setLabel(newLabels)
+  }
+
+  const updateAssignees = newAssignees => {
+    setAssignee(newAssignees)
+  }
+
+  const updateMilestone = newMilestone => {
+    setMilestone(newMilestone)
+  }
+
   return (
     <StyledWrapper>
-      <ProfileWithContent>
-        <SpeechBubble />
-      </ProfileWithContent>
-      <Sidebar />
+      <ProfileWithContent
+        title={[title, setTitle]}
+        content={[content, setContent]}
+        submitAction={submitAction}
+        cancelAction={cancelAction}
+        page="createIssue"
+      />
+      <Sidebar
+        labels={label}
+        assignees={assignee}
+        milestone={milestone}
+        updateLabel={updateLabels}
+        updateAssignee={updateAssignees}
+        updateMilestone={updateMilestone}
+      />
     </StyledWrapper>
   )
 }

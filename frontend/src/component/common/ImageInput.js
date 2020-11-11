@@ -34,7 +34,6 @@ const ImageInput = () => {
         <StyledSpan>Loading</StyledSpan>
       </StyledText>
       <StyledText status={status === 'error'}>Error</StyledText>
-      <StyledText status={textStatus === 'error'}>Error</StyledText>
     </StyledWrapper>
   )
 }
@@ -49,8 +48,8 @@ const StyledWrapper = styled.div`
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;
   box-sizing: border-box;
+  margin-top: -13px;
 `
-
 const StyledInput = styled.input`
   width: 100%;
   min-height: 0;
@@ -64,7 +63,6 @@ const StyledInput = styled.input`
   cursor: pointer;
   box-sizing: border-box;
 `
-
 const StyledText = styled.span`
   height: 100%;
   width: 100%;
@@ -79,7 +77,6 @@ const StyledText = styled.span`
   padding-right: 8px;
   vertical-align: top;
 `
-
 const StyledSpan = styled.span`
   margin: 0px 5px;
 `

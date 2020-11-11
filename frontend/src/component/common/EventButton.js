@@ -8,6 +8,7 @@ const EventButton = ({
   svgName,
   font,
   overrideStyle,
+  disabled,
 }) => {
   return (
     <Button
@@ -18,12 +19,21 @@ const EventButton = ({
         svgName,
         font,
         overrideStyle,
+        disabled,
       )}
     />
   )
 }
 
-const getProps = (onClick, buttonName, isGreen, svgName, font, overrideStyle) => {
+const getProps = (
+  onClick,
+  buttonName,
+  isGreen,
+  svgName,
+  font,
+  overrideStyle,
+  disabled,
+) => {
   return {
     onClick,
     buttonName,
@@ -36,6 +46,7 @@ const getProps = (onClick, buttonName, isGreen, svgName, font, overrideStyle) =>
       fontWeight: font ? font.weight : null,
       overrideStyle,
     },
+    disabled,
   }
 }
 

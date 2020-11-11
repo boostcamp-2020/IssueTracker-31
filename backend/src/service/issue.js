@@ -55,6 +55,7 @@ const postIssue = async newIssueData => {
     if (content)
       await commentModel.postComment(issueId, userId, content, true, connection)
     await connection.commit()
+    return issueId
   } catch (err) {
     await connection.rollback()
     throw err

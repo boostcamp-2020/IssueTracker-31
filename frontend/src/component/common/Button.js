@@ -11,35 +11,36 @@ const Button = ({ buttonProps }) => {
 const LinkTypeButton = ({ buttonProps }) => {
   const { svg, buttonName, count, targetLocation, style } = buttonProps
   return (
-    <StyledDiv
-      backgroundColor={style.backgroundColor}
+    <StyledLink
+      to={targetLocation}
+      background={style.backgroundColor}
       color={style.color}
-      hoverColor={style.hoverColor}
-      borderRadius={style.borderRadius}
+      hover={style.hoverColor}
+      radius={style.borderRadius}
       fontSize={style.fontSize}
       fontWeight={style.fontWeight}
+      override={style.override}
     >
-      <StyledLink to={targetLocation}>
-        {svg ? svg : ''}
-        <span>{buttonName}</span>
-        {count !== undefined ? <StyledCount>{count}</StyledCount> : ''}
-      </StyledLink>
-    </StyledDiv>
+      {svg ? svg : ''}
+      <span>{buttonName}</span>
+      {count !== undefined ? <StyledCount>{count}</StyledCount> : ''}
+    </StyledLink>
   )
 }
 
 const EventTypeButton = ({ buttonProps }) => {
-  const { svg, buttonName, style, onClick } = buttonProps
+  const { svg, buttonName, style, onClick, disabled = false } = buttonProps
   return (
     <StyledDiv
       onClick={onClick}
-      backgroundColor={style.backgroundColor}
+      background={style.backgroundColor}
       color={style.color}
-      hoverColor={style.hoverColor}
-      borderRadius={style.borderRadius}
+      hover={style.hoverColor}
+      radius={style.borderRadius}
       fontSize={style.fontSize}
       fontWeight={style.fontWeight}
-      overrideStyle={style.overrideStyle}
+      override={style.override}
+      disabled={disabled}
     >
       {svg ? svg : ''}
       <span>{buttonName}</span>
@@ -49,42 +50,67 @@ const EventTypeButton = ({ buttonProps }) => {
 
 const StyledDiv = styled.button`
   ${({
-    backgroundColor = '#2ea44f',
+    background = '#2ea44f',
     color = '#ffffff',
-    hoverColor = '#3ea85f',
-    borderRadius = '6px',
+    hover = '#3ea85f',
+    radius = '6px',
     fontSize = '14px',
     fontWeight = '550',
-    overrideStyle,
+    override,
   }) =>
     `
-    color: ${color};
-    background: ${backgroundColor};
-    text-decoration : none;
-    cursor: pointer;
-    border-radius: ${borderRadius};
-    padding: 5px 12px;
-    border: 1px solid rgba(27,31,35,0.15);
-    font-size: ${fontSize};
-    font-weight: ${fontWeight};
-    width: auto;
-    line-height: 20px;
-    box-sizing: border-box;
-    :focus {
-      box-shadow: none;
-      outline: none;
-    }
-    &:hover {
-      background-color: ${hoverColor};
-    }
-    ${overrideStyle}
-    `}
+  color: ${color};
+  background: ${background};
+  text-decoration : none;
+  cursor: pointer;
+  border-radius: ${radius};
+  padding: 6px 10px;
+  border: 1px solid rgba(27,31,35,0.15);
+  font-size: ${fontSize};
+  font-weight: ${fontWeight};
+  width: auto;
+  box-sizing: border-box;
+  :focus {
+    box-shadow: none;
+    outline: none;
+  }
+  &:hover {
+    background-color: ${hover};
+  }
+  ${override}
+  `}
 `
 const StyledLink = styled(Link)`
-  text-decoration: none;
+  ${({
+    background = '#2ea44f',
+    color = '#ffffff',
+    hover = '#3ea85f',
+    radius = '6px',
+    fontSize = '14px',
+    fontWeight = '550',
+    override,
+  }) =>
+    `
+  color: ${color};
+  background: ${background};
+  text-decoration : none;
   cursor: pointer;
+  border-radius: ${radius};
+  padding: 6px 10px;
+  border: 1px solid rgba(27,31,35,0.15);
+  font-size: ${fontSize};
+  font-weight: ${fontWeight};
+  width: auto;
   box-sizing: border-box;
-  color: inherit;
+  :focus {
+    box-shadow: none;
+    outline: none;
+  }
+  &:hover {
+    background-color: ${hover};
+  }
+  ${override}
+  `}
 `
 
 const StyledCount = styled.span`

@@ -5,6 +5,7 @@ import rs from 'randomstring'
 import jwt from 'jsonwebtoken'
 import axios from 'axios'
 import statusCode from '../../util/statusCode'
+import resMessage from '../../util/resMessage'
 
 const githubLogin = (req, res) => {
   const state = rs.generate()
@@ -53,7 +54,7 @@ const handleGithubCallback = async (req, res) => {
       res.cookie('userToken', createToken(userId, data.login, data.email), {
         httpOnly: true,
       })
-      res.cookie('userData', { nickname, userId })
+      res.cookie('userData', { nickname, userId, profileUrl: data.avatar_url })
     }
     if (user) setToken(user.id, data, nickname)
     else {

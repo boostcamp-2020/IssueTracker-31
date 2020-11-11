@@ -33,8 +33,8 @@ const postIssue = async (req, res) => {
   const newIssueData = req.body
   newIssueData.userId = req.userData.id
   try {
-    await issueService.postIssue(newIssueData)
-    return res.status(statusCode.CREATED).json({ success: true })
+    const issueId = await issueService.postIssue(newIssueData)
+    return res.status(statusCode.CREATED).json({ success: true, data: issueId })
   } catch (err) {
     console.log(err)
     errorResponse(err, res)
