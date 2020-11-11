@@ -7,7 +7,12 @@ const useFetch = (requestFn, setFn, params) => {
 }
 
 const fetchData = async (requestFn, setFn, params) => {
-  setFn(await requestFn(params))
+  try {
+    const response = await requestFn(params)
+    setFn(response)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export { useFetch, fetchData }

@@ -43,7 +43,7 @@ const StyledIssueContainer = styled.div`
   flex-direction: column;
 `
 const StyledIssueListComponent = styled.div`
-  margin: 16px;
+  margin-top: 16px;
   border: 1px solid #ededed;
   border-radius: 6px;
 `

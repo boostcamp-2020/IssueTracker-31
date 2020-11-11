@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react'
+import styled from 'styled-components'
 import SearchBar from '@Component/IssueListPage/SearchBar'
 import TabButton from '@Component/common/TabButton'
 import LinkButton from '@Component/common/LinkButton'
@@ -30,19 +31,46 @@ const IssueListPage = props => {
     <issueListContext.Provider
       value={{ users, labels, milestones, conditions, setConditions }}
     >
-      <SearchBar />
-      <TabButton
-        labelCount={labels.length}
-        milestoneCount={milestones.filter(m => m.isOpen).length}
-      />
-      <LinkButton
-        buttonName={'New Issue'}
-        targetLocation={'/issue/new'}
-        isGreen={true}
-      />
-      <IssueList />
+      <StyledContainer>
+        <StyledHeaderContainer>
+          <SearchBar />
+          <TabButton
+            labelCount={labels.length}
+            milestoneCount={milestones.filter(m => m.isOpen).length}
+          />
+          <StyledEmpty />
+          <LinkButton
+            buttonName={'New Issue'}
+            targetLocation={'/issue/new'}
+            isGreen={true}
+          />
+        </StyledHeaderContainer>
+        <IssueList />
+      </StyledContainer>
     </issueListContext.Provider>
   )
 }
+
+const StyledContainer = styled.div`
+  max-width: 1280px;
+  padding-right: 32px;
+  padding-left: 32px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 32px;
+`
+
+const StyledHeaderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 16px;
+`
+
+const StyledEmpty = styled.div`
+  width: 8px;
+`
 
 export default IssueListPage

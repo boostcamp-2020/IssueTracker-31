@@ -29,4 +29,4 @@ const getSvg = buttonName => {
   // if (buttonName === ) return svgName
 }
 
-export default LinkButton
+export default React.memo(LinkButton)
