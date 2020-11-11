@@ -5,6 +5,7 @@ import rs from 'randomstring'
 import jwt from 'jsonwebtoken'
 import axios from 'axios'
 import statusCode from '../../util/statusCode'
+import resMessage from '../../util/resMessage'
 
 const githubLogin = (req, res) => {
   const state = rs.generate()
@@ -116,7 +117,9 @@ const verifyMiddleware = (req, res, next) => {
     next()
   } catch (err) {
     console.log(err)
-    res.redirect(`${process.env.FRONTEND_HOST}/login`)
+    return res.status(statusCode.UNAUTHORIZED).json({
+      success: false,
+    })
   }
 }
 

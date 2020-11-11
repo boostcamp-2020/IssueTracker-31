@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import DateIcon from '@Public/js/DateIcon'
 import { getMilestoneDateFormat } from '@Util/util'
-import { Link } from 'react-router-dom'
 
 const Milestone = ({ data, handleDeleteBtn }) => {
-  const percent = (data.closeIssue / (data.openIssue + data.closeIssue)) * 100
-
+  let percent = (data.closeIssue / (data.openIssue + data.closeIssue)) * 100
+  if (isNaN(percent)) percent = 0
   return (
     <StyledContainer>
       <StyledFirstSection>
@@ -45,7 +45,9 @@ const Milestone = ({ data, handleDeleteBtn }) => {
           <Link to="/milestones/edit">
             <StyledButton color="#0365d6">Edit</StyledButton>
           </Link>
-          <StyledButton color="#0365d6">Close</StyledButton>
+          <StyledButton color="#0365d6">
+            {data.isOpen ? 'Close' : 'Open'}
+          </StyledButton>
           <StyledButton
             color="#cb2431"
             onClick={() => handleDeleteBtn(data.id)}

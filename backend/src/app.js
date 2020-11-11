@@ -22,22 +22,13 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/api', Controller)
 
 if (process.env.NODE_ENV === 'production') {
-  console.log(process.env.NODE_ENV)
   const publicPath = path.join(__dirname, '../../frontend/build')
   app.use(express.static(publicPath))
   app.get('*', (req, res) => {
     res.sendFile(publicPath + '/index.html')
   })
 }
-
-app.use((err, req, res, next) => {
-  if (err.status)
-    return res.status(err.status).json({ success: false, message: err.message })
-  else
-    return res
-      .status(statusCode.INTERNAL_SERVER_ERROR)
-      .json({ success: false, message: resMessage.INTERNAL_SERVER_ERROR })
-})
+app.use(express.static(path.join(__dirname, '../public')))
 
 app.listen(port, err => {
   if (err) throw err
