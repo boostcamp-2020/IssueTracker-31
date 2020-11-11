@@ -1,11 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 import WritingArea from '@Component/common/content/WritingArea'
+import { useCookies } from 'react-cookie'
 
 const ProfileWithContent = props => {
   const {
     title: [title, setTitle],
   } = props
+
+  const [
+    {
+      userData: { profileUrl },
+    },
+  ] = useCookies(['userData'])
 
   const handleTitleChange = event => {
     setTitle(event.target.value)
@@ -13,7 +20,7 @@ const ProfileWithContent = props => {
   return (
     <ContentWrapper>
       <ProfileContainer>
-        <ProfileImage src="#" alt="" />
+        <ProfileImage src={profileUrl} alt="" />
       </ProfileContainer>
       <FormWrapper>
         {props.page === 'createIssue' ? (
