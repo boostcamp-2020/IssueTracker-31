@@ -1,3 +1,5 @@
+import { useCookies as cookie } from 'react-cookie'
+
 const unitsOfTime = { seconds: 60, minutes: 60, hours: 24 }
 
 const getTimePassedFromNow = time => {
@@ -53,9 +55,15 @@ const verifyTextLength = (text, length) => {
   return false
 }
 
+const getParsedCookie = key => {
+  const [{ userData }] = cookie(['userData'])
+  return userData[key]
+}
+
 export {
   getTimePassedFromNow,
   getMilestoneDateFormat,
   getContrast,
   verifyTextLength,
+  getParsedCookie,
 }

@@ -1,18 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import WritingArea from '@Component/common/content/WritingArea'
-import { useCookies } from 'react-cookie'
+import { getParsedCookie } from '../../../util/util'
 
 const ProfileWithContent = props => {
   const {
     title: [title, setTitle],
   } = props
 
-  const [
-    {
-      userData: { profileUrl },
-    },
-  ] = useCookies(['userData'])
+  const profileUrl = getParsedCookie('profileUrl')
 
   const handleTitleChange = event => {
     setTitle(event.target.value)
