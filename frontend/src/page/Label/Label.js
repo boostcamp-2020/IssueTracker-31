@@ -16,21 +16,20 @@ const LabelPage = () => {
   const toggleComponent = e => setShowForm(!showForm)
 
   return (
-    <>
-      {labels.map(label => (
-        <li key={label.id}>
-          {label.name}, {label.description}
-        </li>
-      ))}
-      <StyledContainer>
-        <StyledButtonContainer>
-          <TabButton clicked="label"></TabButton>
-          <EventButton buttonName="New Label" onClick={toggleComponent} />
-        </StyledButtonContainer>
-        {showForm ? <LabelForm toggleComponent={toggleComponent} /> : null}
-        <LabelList></LabelList>
-      </StyledContainer>
-    </>
+    <StyledContainer>
+      <StyledButtonContainer>
+        <TabButton clicked="label"></TabButton>
+        <EventButton buttonName="New Label" onClick={toggleComponent} />
+      </StyledButtonContainer>
+      {showForm ? (
+        <LabelForm
+          toggleComponent={toggleComponent}
+          labels={labels}
+          setLabels={setLabels}
+        />
+      ) : null}
+      <LabelList labels={labels} setLabels={setLabels}></LabelList>
+    </StyledContainer>
   )
 }
 
