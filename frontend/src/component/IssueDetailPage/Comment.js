@@ -16,7 +16,7 @@ const Comment = props => {
   return (
     <div>
       {isEdit ? (
-        ''
+        <WritingArea ti />
       ) : (
         <>
           <div>
