@@ -18,4 +18,10 @@ const getMilestonesDetail = async () => {
   return data
 }
 
-export { getMilestones, deleteMilestone, getMilestonesDetail }
+const updateMilestone = async (id, data) => {
+  const { success, message } = await request.PATCH(`/milestones/${id}`, data)
+  if (success === false) return console.error(message)
+  return success
+}
+
+export { getMilestones, deleteMilestone, getMilestonesDetail, updateMilestone }
