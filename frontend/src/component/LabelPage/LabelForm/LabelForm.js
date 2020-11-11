@@ -178,7 +178,7 @@ const LabelForm = props => {
 }
 
 const StyledLabelFormContainer = styled.div`
-  width: fit-content;
+  width: 100%;
 `
 const StyledActionContainer = styled.div`
   display: flex;
@@ -195,6 +195,7 @@ const StyledHeader = styled.header`
 const StyledForm = styled.div`
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
 `
 const StyledDeleteButton = styled.button`
   color: #586069;
@@ -232,9 +233,12 @@ const StyledInput = styled.input`
   border: 1px solid rgba(27, 31, 35, 0.15);
   border-radius: 6px;
   outline: none;
+  width: 100%;
+  box-sizing: border-box;
 `
 const StyledDl = styled.dl`
   padding-right: 16px;
+  flex: 1 auto;
 `
 const StyledDdFlex = styled.dd`
   display: flex;
