@@ -13,12 +13,13 @@ const LinkTypeButton = ({ buttonProps }) => {
   return (
     <StyledLink
       to={targetLocation}
-      backgroundColor={style.backgroundColor}
+      background={style.backgroundColor}
       color={style.color}
-      hoverColor={style.hoverColor}
-      borderRadius={style.borderRadius}
+      hover={style.hoverColor}
+      radius={style.borderRadius}
       fontSize={style.fontSize}
       fontWeight={style.fontWeight}
+      override={style.override}
     >
       {svg ? svg : ''}
       <span>{buttonName}</span>
@@ -32,13 +33,13 @@ const EventTypeButton = ({ buttonProps }) => {
   return (
     <StyledDiv
       onClick={onClick}
-      backgroundColor={style.backgroundColor}
+      background={style.backgroundColor}
       color={style.color}
-      hoverColor={style.hoverColor}
-      borderRadius={style.borderRadius}
+      hover={style.hoverColor}
+      radius={style.borderRadius}
       fontSize={style.fontSize}
       fontWeight={style.fontWeight}
-      overrideStyle={style.overrideStyle}
+      override={style.override}
       disabled={disabled}
     >
       {svg ? svg : ''}
@@ -49,20 +50,20 @@ const EventTypeButton = ({ buttonProps }) => {
 
 const StyledDiv = styled.button`
   ${({
-    backgroundColor = '#2ea44f',
+    background = '#2ea44f',
     color = '#ffffff',
-    hoverColor = '#3ea85f',
-    borderRadius = '6px',
+    hover = '#3ea85f',
+    radius = '6px',
     fontSize = '14px',
     fontWeight = '550',
-    overrideStyle,
+    override,
   }) =>
     `
   color: ${color};
-  background: ${backgroundColor};
+  background: ${background};
   text-decoration : none;
   cursor: pointer;
-  border-radius: ${borderRadius};
+  border-radius: ${radius};
   padding: 6px 10px;
   border: 1px solid rgba(27,31,35,0.15);
   font-size: ${fontSize};
@@ -74,27 +75,27 @@ const StyledDiv = styled.button`
     outline: none;
   }
   &:hover {
-    background-color: ${hoverColor};
+    background-color: ${hover};
   }
-  ${overrideStyle}
+  ${override}
   `}
 `
 const StyledLink = styled(Link)`
   ${({
-    backgroundColor = '#2ea44f',
+    background = '#2ea44f',
     color = '#ffffff',
-    hoverColor = '#3ea85f',
-    borderRadius = '6px',
+    hover = '#3ea85f',
+    radius = '6px',
     fontSize = '14px',
     fontWeight = '550',
-    overrideStyle,
+    override,
   }) =>
     `
   color: ${color};
-  background: ${backgroundColor};
+  background: ${background};
   text-decoration : none;
   cursor: pointer;
-  border-radius: ${borderRadius};
+  border-radius: ${radius};
   padding: 6px 10px;
   border: 1px solid rgba(27,31,35,0.15);
   font-size: ${fontSize};
@@ -106,9 +107,9 @@ const StyledLink = styled(Link)`
     outline: none;
   }
   &:hover {
-    background-color: ${hoverColor};
+    background-color: ${hover};
   }
-  ${overrideStyle}
+  ${override}
   `}
 `
 
