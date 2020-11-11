@@ -21,7 +21,7 @@ const updateLabel = async ({ id, params }) => {
 
 const deleteLabel = async id => {
   const { success, message } = await request.DELETE(`/labels/${id}`)
-  if (success === false) return console.error(message)
-  return true
+  if (success === false) console.error(message)
+  return success
 }
 export { getLabels, createLabel, updateLabel, deleteLabel }
