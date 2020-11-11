@@ -1,12 +1,10 @@
-import React, { createContext, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import TabButton from '@Component/common/TabButton'
 import LinkButton from '@Component/common/LinkButton'
 import MilestoneList from '@Component/MilestonePage/MilestoneList'
 import { getMilestonesDetail } from '@Api/milestone'
 import { useFetch } from '@Util/hook'
-
-export const milestoneContext = createContext()
 
 const MilestonePage = () => {
   const [milestones, setMilestones] = useState([])

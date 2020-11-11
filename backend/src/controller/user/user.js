@@ -54,7 +54,7 @@ const handleGithubCallback = async (req, res) => {
       res.cookie('userToken', createToken(userId, data.login, data.email), {
         httpOnly: true,
       })
-      res.cookie('userData', { nickname, userId })
+      res.cookie('userData', { nickname, userId, profileUrl: data.avatar_url })
     }
     if (user) setToken(user.id, data, nickname)
     else {

@@ -28,7 +28,7 @@ const LinkTypeButton = ({ buttonProps }) => {
 }
 
 const EventTypeButton = ({ buttonProps }) => {
-  const { svg, buttonName, style, onClick } = buttonProps
+  const { svg, buttonName, style, onClick, disabled = false } = buttonProps
   return (
     <StyledDiv
       onClick={onClick}
@@ -39,6 +39,7 @@ const EventTypeButton = ({ buttonProps }) => {
       fontSize={style.fontSize}
       fontWeight={style.fontWeight}
       overrideStyle={style.overrideStyle}
+      disabled={disabled}
     >
       {svg ? svg : ''}
       <span>{buttonName}</span>

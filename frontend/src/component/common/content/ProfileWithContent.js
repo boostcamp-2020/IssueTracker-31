@@ -1,11 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import WritingArea from '@Component/common/content/WritingArea'
+import { getParsedCookie } from '../../../util/util'
 
 const ProfileWithContent = props => {
   const {
     title: [title, setTitle],
   } = props
+
+  const profileUrl = getParsedCookie('profileUrl')
 
   const handleTitleChange = event => {
     setTitle(event.target.value)
@@ -13,24 +16,28 @@ const ProfileWithContent = props => {
   return (
     <ContentWrapper>
       <ProfileContainer>
-        <ProfileImage src="#" alt="" />
+        <ProfileImage src={profileUrl} alt="" />
       </ProfileContainer>
       <FormWrapper>
-        <TitleInputContainer
-          type="text"
-          name="title"
-          value={title}
-          onChange={handleTitleChange}
-          placeholder="Title"
-          required
-        />
+        {props.page === 'createIssue' ? (
+          <TitleInputContainer
+            type="text"
+            name="title"
+            value={title}
+            onChange={handleTitleChange}
+            placeholder="Title"
+            required
+          />
+        ) : (
+          ''
+        )}
         <WritingArea props={props} />
       </FormWrapper>
     </ContentWrapper>
   )
 }
 
-const FormWrapper = styled.form`
+const FormWrapper = styled.div`
   width: 600px;
   height: 500px;
   border: 1px solid #dcdcdc;

@@ -7,6 +7,9 @@ import EventButton from '@Component/common/EventButton'
 const WritingArea = ({ props }) => {
   const {
     content: [content, setContent],
+    submitAction,
+    cancelAction,
+    title: [title],
   } = props
 
   const handleDebounce = v => {
@@ -25,10 +28,7 @@ const WritingArea = ({ props }) => {
     debouncedHandleChange(event.target.value)
   }
 
-  // Case에 따라 다른 버튼
-  const handleSubmit = async () => {}
-
-  const handleCancel = event => {}
+  // event 정의 필요
 
   const handleImageUpload = () => {}
 
@@ -44,8 +44,17 @@ const WritingArea = ({ props }) => {
       <CountingContainer id="count">0 characters</CountingContainer>
       <ImageInput />
       <SubmitContainer>
-        {/* <EventButton onClick={handleCancel}>Cancel</EventButton>
-        <EventButton onClick={handleSubmit}>Submit new issue</EventButton> */}
+        <EventButton
+          onClick={cancelAction}
+          buttonName="Cancel"
+          isGreen={false}
+        />
+        <EventButton
+          onClick={submitAction}
+          buttonName="Submit New Issue"
+          isGreen={true}
+          disabled={!title}
+        />
       </SubmitContainer>
     </Wrapper>
   )
@@ -60,6 +69,7 @@ const CommentInputContainer = styled.textarea`
   border: none;
   height: 350px;
   padding: 5px;
+  width: 100%;
 `
 
 const CountingContainer = styled.span`
