@@ -24,10 +24,10 @@ const Sidebar = ({
           update={updateAssignee}
         ></AssigneeContent>
       </SidebarItem>
-      <SidebarItem title="Labels" popupProps={getPopUpProps("Labels")>
+      <SidebarItem title="Labels" popupProps={getPopUpProps("Labels")}>
         <LabelContent labels={labels} update={updateLabel}></LabelContent>
       </SidebarItem>
-      <SidebarItem title="Milestone" popupProps={getPopUpProps("Milestone")>
+      <SidebarItem title="Milestone" popupProps={getPopUpProps("Milestone")}>
         <MilestoneContent
           milestone={milestone}
           update={updateMilestone}
