@@ -16,6 +16,7 @@ const Sidebar = ({
   updateLabel,
   updateAssignee,
   updateMilestone,
+  page,
 }) => {
   const [userList, setUserList] = useState([])
   const [labelList, setLabelList] = useState([])
@@ -24,11 +25,13 @@ const Sidebar = ({
   useFetch(getLabels, setLabelList)
   useFetch(getMilestonesDetail, setMilestoneList)
 
-  const getPopUpProps = (type, multiSelect) => {
-    const updateConditions = (id, kind) => {
+  const getPopUpProps = type => {
+    const updateConditions = async (id, kind) => {
       if (kind === 'label') {
-        if (labels.includes(id)) updateLabel(labels.filter(item => item !== id))
-        else updateLabel([...labels, id])
+        if (labels.includes(id)) {
+          if (await { add: [id] })
+            updateLabel(labels.filter(item => item !== id))
+        } else updateLabel([...labels, id])
       }
       if (kind === 'assignee') {
         if (assignees.includes(id))
@@ -83,17 +86,12 @@ const Sidebar = ({
         ></AssigneeContent>
       </SidebarItem>
       <SidebarItem title="Labels" popupProps={getPopUpProps('Labels')}>
-        <LabelContent
-          labels={labels}
-          list={labelList}
-          update={updateLabel}
-        ></LabelContent>
+        <LabelContent labels={labels} list={labelList}></LabelContent>
       </SidebarItem>
       <SidebarItem title="Milestone" popupProps={getPopUpProps('Milestone')}>
         <MilestoneContent
           milestone={milestone}
           list={milestoneList}
-          update={updateMilestone}
         ></MilestoneContent>
       </SidebarItem>
     </StyledSidebar>
