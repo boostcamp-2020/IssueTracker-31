@@ -13,22 +13,9 @@ const CreateIssuePage = () => {
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [assignee, setAssignee] = useState([
-    {
-      nickname: 'abc',
-      profileUrl: 'https://avatars3.githubusercontent.com/u/53181778?s=60&v=4',
-    },
-    { nickname: 'xyz' },
-  ])
-  const [label, setLabel] = useState([
-    { name: 'ppp', color: '#123123' },
-    { name: 'aaa', color: '#fd12f3' },
-  ])
-  const [milestone, setMilestone] = useState({
-    closeIssue: 3,
-    openIssue: 4,
-    title: 'backend',
-  }) //null
+  const [assignee, setAssignee] = useState([])
+  const [label, setLabel] = useState([])
+  const [milestone, setMilestone] = useState([])
 
   const updateLabels = newLabels => {
     setLabel(newLabels)
