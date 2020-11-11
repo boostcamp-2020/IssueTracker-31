@@ -28,4 +28,26 @@ const patchIssueDetail = async ({ id, body }) => {
   else return success
 }
 
-export { getIssues, createIssue, patchIssues, patchIssueDetail }
+const updateIssueLabels = async ({ id, body }) => {
+  const { success, message } = await request.PATCH(`/issues/${id}/labels`, body)
+  if (success === false) return console.error(message)
+  return success
+}
+
+const updateIssueAssingees = async ({ id, body }) => {
+  const { success, message } = await request.PATCH(
+    `/issues/${id}/assignee`,
+    body,
+  )
+  if (success === false) return console.error(message)
+  return success
+}
+
+export {
+  getIssues,
+  createIssue,
+  patchIssues,
+  patchIssueDetail,
+  updateIssueLabels,
+  updateIssueAssingees,
+}
