@@ -96,20 +96,6 @@ const getUsers = async (req, res) => {
   }
 }
 
-const verifyToken = (req, res) => {
-  try {
-    jwt.verify(req.cookies.userToken, process.env.JWT_KEY)
-    return res.status(statusCode.OK).json({
-      success: true,
-    })
-  } catch (err) {
-    console.log(err)
-    return res.status(statusCode.OK).json({
-      success: false,
-    })
-  }
-}
-
 const verifyMiddleware = (req, res, next) => {
   if (req.path === '/login') next()
   else {
@@ -128,6 +114,5 @@ export default {
   githubLogin,
   handleGithubCallback,
   getUsers,
-  verifyToken,
   verifyMiddleware,
 }
