@@ -9,6 +9,7 @@ import cors from 'cors'
 import Controller from './controller'
 import statusCode from './util/statusCode'
 import resMessage from './util/resMessage'
+import middleware from './controller/user/user'
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -19,17 +20,18 @@ app.use(cors({ origin: true, credentials: true }))
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api', Controller)
-app.get('*', (req, res) => {
-  let publicPath = ''
-  if (process.env.NODE_ENV === 'production')
-    publicPath = path.join(__dirname, '../../frontend/build')
-  else publicPath = path.join(__dirname, '../../frontend/public')
-  res.sendFile(publicPath + '/index.html')
-})
+const publicPath = path.join(__dirname, '../../frontend/build')
+app.use(express.static(publicPath))
 
+if (process.env.NODE_ENV === 'production') {
+  app.get('*', middleware.verifyMiddleware, (req, res) => {
+    res.sendFile(publicPath + '/index.html')
+  })
+}
+
+app.use(express.static(path.join(__dirname, '../public')))
 app.use((err, req, res, next) => {
   if (err.status)
     return res.status(err.status).json({ success: false, message: err.message })

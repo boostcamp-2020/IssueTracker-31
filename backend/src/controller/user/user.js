@@ -110,13 +110,16 @@ const verifyToken = (req, res) => {
 }
 
 const verifyMiddleware = (req, res, next) => {
-  try {
-    const decoded = jwt.verify(req.cookies.userToken, process.env.JWT_KEY)
-    req.userData = decoded
-    next()
-  } catch (err) {
-    console.log(err)
-    res.redirect(`${process.env.FRONTEND_HOST}/login`)
+  if (req.path === '/login') next()
+  else {
+    try {
+      const decoded = jwt.verify(req.cookies.userToken, process.env.JWT_KEY)
+      req.userData = decoded
+      next()
+    } catch (err) {
+      console.log(err)
+      res.redirect('/login')
+    }
   }
 }
 
