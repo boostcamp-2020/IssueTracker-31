@@ -10,4 +10,12 @@ const createImageUrl = async body => {
   return { success, url: data.url }
 }
 
-export { createImageUrl }
+const getComments = async issueId => {
+  const { success, data, message } = await request.GET(
+    `/issues/${issueId}/comments`,
+  )
+  if (success === false) return console.error(message)
+  return data
+}
+
+export { createImageUrl, getComments }

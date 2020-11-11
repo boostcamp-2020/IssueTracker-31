@@ -28,8 +28,6 @@ const WritingArea = ({ props }) => {
     debouncedHandleChange(event.target.value)
   }
 
-  // event 정의 필요
-
   const handleImageUpload = () => {}
 
   return (
