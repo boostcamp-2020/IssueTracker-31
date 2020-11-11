@@ -7,9 +7,9 @@ const getIssues = async filterQuery => {
 }
 
 const createIssue = async body => {
-  const { success, message } = await request.POST('/issues', body)
+  const { success, message, data } = await request.POST('/issues', body)
   if (success === false) console.error(message)
-  return success
+  return data
 }
 
 const patchIssues = async params => {
