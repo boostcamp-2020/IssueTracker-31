@@ -8,6 +8,7 @@ import MilestonePage from '@Page/Milestone/Milestone'
 import Header from './component/common/Header'
 import CreateIssuePage from '@Page/CreateIssue'
 import IssueDetailPage from '@Page/IssueDetail'
+import CreateMilestonePage from '@Page/CreateMilestone'
 
 const root = document.getElementById('root')
 
@@ -19,6 +20,7 @@ const App = () => {
       <Route exact path="/" component={IssueListPage} />
       <Route exact path="/labels" component={LabelPage} />
       <Route exact path="/milestones" component={MilestonePage} />
+      <Route exact path="/milestone/new" component={CreateMilestonePage} />
       <Route exact path="/issue/new" component={CreateIssuePage} />
       <Route exact path="/issues/:id" component={IssueDetailPage} />
     </BrowserRouter>
