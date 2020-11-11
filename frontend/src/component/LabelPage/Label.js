@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import LabelTemplate from '@Component/common/Label'
 
 const Label = ({ data, handleDeleteBtn }) => {
-  console.log(data)
   return (
     <StyledContainer>
       <StyledLabelTemplate>
@@ -13,7 +12,9 @@ const Label = ({ data, handleDeleteBtn }) => {
       <StyledDescription>{data.description}</StyledDescription>
       <StyledButtonContainer>
         <StyledButton>Edit</StyledButton>
-        <StyledButton>Delete</StyledButton>
+        <StyledButton onClick={() => handleDeleteBtn(data.id)}>
+          Delete
+        </StyledButton>
       </StyledButtonContainer>
     </StyledContainer>
   )

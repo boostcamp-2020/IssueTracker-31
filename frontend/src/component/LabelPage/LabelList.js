@@ -9,7 +9,7 @@ const LabelList = ({ labels, setLabels }) => {
     if (success) setLabels(labels.filter(item => item.id !== id))
   }
   return (
-    <div>
+    <StyledContainer>
       <StyledHeader>
         <StyledStatus>
           <StyledStatusButton>{labels.length} labels</StyledStatusButton>
@@ -22,19 +22,25 @@ const LabelList = ({ labels, setLabels }) => {
           handleDeleteBtn={handleDeleteBtn}
         ></Label>
       ))}
-    </div>
+    </StyledContainer>
   )
 }
 
+const StyledContainer = styled.div`
+  margin-top: 20px;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  box-sizing: border-box;
+`
+
 const StyledHeader = styled.header`
   position: relative;
-  margin-top: 20px;
   background-color: #f6f8fa;
   color: #24292e;
-  border: 1px solid #e1e4e8;
   border-radius: 6px 6px 0 0;
   font-size: 14px;
   line-height: 1.5;
+  box-sizing: border-box;
 `
 
 const StyledStatus = styled.div`

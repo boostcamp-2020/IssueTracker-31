@@ -19,7 +19,7 @@ const LabelPage = () => {
     <StyledContainer>
       <StyledButtonContainer>
         <TabButton clicked="label"></TabButton>
-        <EventButton buttonName="New Label" onClick={toggleComponent} />
+        <EventButton buttonName="New Label" onClick={toggleComponent} isGreen />
       </StyledButtonContainer>
       {showForm ? (
         <LabelForm
@@ -34,7 +34,6 @@ const LabelPage = () => {
 }
 
 const StyledContainer = styled.div`
-  width: 500px;
   max-width: 1280px;
   margin: 32px auto;
   padding-right: 32px;
