@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, createContext } from 'react'
 import styled from 'styled-components'
 import ProfileWithContent from '@Component/common/content/ProfileWithContent'
 import Sidebar from '@Component/common/Sidebar'
 import { createIssue } from '@Api/issue'
 import { useHistory } from 'react-router-dom'
+
+export const createIssueContext = createContext()
 
 const CreateIssuePage = () => {
   const history = useHistory()
@@ -13,7 +15,7 @@ const CreateIssuePage = () => {
       content,
       assignee,
       label,
-      milestoneId,
+      milestoneId: milestone[0],
     })
     if (issueId) {
       history.push(`/issues/${issueId}`)
@@ -28,7 +30,20 @@ const CreateIssuePage = () => {
   const [content, setContent] = useState('')
   const [assignee, setAssignee] = useState([])
   const [label, setLabel] = useState([])
-  const [milestoneId, setMilestoneId] = useState(undefined)
+  const [milestone, setMilestone] = useState([])
+
+  const updateLabels = newLabels => {
+    setLabel(newLabels)
+  }
+
+  const updateAssignees = newAssignees => {
+    setAssignee(newAssignees)
+  }
+
+  const updateMilestone = newMilestone => {
+    setMilestone(newMilestone)
+  }
+
   return (
     <StyledWrapper>
       <ProfileWithContent
@@ -38,7 +53,14 @@ const CreateIssuePage = () => {
         cancelAction={cancelAction}
         page="createIssue"
       />
-      <Sidebar />
+      <Sidebar
+        labels={label}
+        assignees={assignee}
+        milestone={milestone}
+        updateLabel={updateLabels}
+        updateAssignee={updateAssignees}
+        updateMilestone={updateMilestone}
+      />
     </StyledWrapper>
   )
 }
