@@ -16,7 +16,6 @@ const Sidebar = ({
   updateLabel,
   updateAssignee,
   updateMilestone,
-  page,
 }) => {
   const [userList, setUserList] = useState([])
   const [labelList, setLabelList] = useState([])
@@ -26,24 +25,6 @@ const Sidebar = ({
   useFetch(getMilestonesDetail, setMilestoneList)
 
   const getPopUpProps = type => {
-    const updateConditions = async (id, kind) => {
-      if (kind === 'label') {
-        if (labels.includes(id)) {
-          if (await { add: [id] })
-            updateLabel(labels.filter(item => item !== id))
-        } else updateLabel([...labels, id])
-      }
-      if (kind === 'assignee') {
-        if (assignees.includes(id))
-          updateAssignee(assignees.filter(item => item !== id))
-        else updateAssignee([...assignees, id])
-      }
-      if (kind === 'milestone') {
-        if (milestone.includes(id)) updateMilestone([])
-        else updateMilestone([id])
-      }
-    }
-
     switch (type) {
       case 'Assignees':
         return {
@@ -51,7 +32,7 @@ const Sidebar = ({
           kind: 'assignee',
           data: userList,
           targetCondition: assignees,
-          updateConditions: updateConditions,
+          updateConditions: updateAssignee,
         }
       case 'Labels':
         return {
@@ -59,7 +40,7 @@ const Sidebar = ({
           kind: 'label',
           data: labelList,
           targetCondition: labels,
-          updateConditions: updateConditions,
+          updateConditions: updateLabel,
         }
       case 'Milestone':
         return {
@@ -69,7 +50,7 @@ const Sidebar = ({
             return { id: item.id, title: item.title }
           }),
           targetCondition: milestone,
-          updateConditions: updateConditions,
+          updateConditions: updateMilestone,
         }
       default:
         return null
@@ -102,7 +83,7 @@ const AssigneeContent = ({ assignees, update, list }) => {
   const filteredList = list.filter(item => assignees.includes(item.id))
 
   const assignYourself = () => {
-    update([getParsedCookie('userId')])
+    update(getParsedCookie('userId'))
   }
 
   const getAssigneeComponent = () => {
