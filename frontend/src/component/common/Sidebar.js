@@ -12,18 +12,22 @@ const Sidebar = ({
   updateAssignee,
   updateMilestone,
 }) => {
+
+  // 유저, 라벨, 마일스톤 목록 요청 함수를 만들어서 아이템으로 각각 전달,
+  // 팝업 클릭하면 데이터를 최신으로 받아와서 그 데이터를 넘겨주고 각각 아이템에서 title 보고 스위치로 넘겨줄 프롭스를 정함
+  // 기존 배열에서 변경사항(+,-) 있는지 체크하는 함수도 여기서 만들어서 넘겨줌
   return (
     <StyledSidebar>
-      <SidebarItem title="Assignees" popup={null}>
+      <SidebarItem title="Assignees" popupProps={getPopUpProps("Assignees")}>
         <AssigneeContent
           assignees={assignees}
           update={updateAssignee}
         ></AssigneeContent>
       </SidebarItem>
-      <SidebarItem title="Labels" popup={null}>
+      <SidebarItem title="Labels" popupProps={getPopUpProps("Labels")>
         <LabelContent labels={labels} update={updateLabel}></LabelContent>
       </SidebarItem>
-      <SidebarItem title="Milestone" popup={null}>
+      <SidebarItem title="Milestone" popupProps={getPopUpProps("Milestone")>
         <MilestoneContent
           milestone={milestone}
           update={updateMilestone}
@@ -81,18 +85,19 @@ const LabelContent = ({ labels, update }) => {
   return <StyledContent>{getLabelComponent()}</StyledContent>
 }
 
-const MilestoneContent = ({ milestone, update }) => {
-  const percent = parseInt(
-    (milestone.closeIssue / (milestone.openIssue + milestone.closeIssue)) * 100,
-  )
+const MilestoneContent = ({
+  milestone: { openIssue, closeIssue, title },
+  update,
+}) => {
+  const percent = parseInt((closeIssue / (openIssue + closeIssue)) * 100 || 0)
   const getMilestoneComponent = () => {
-    if (!milestone) return <React.Fragment>No milestone</React.Fragment>
+    if (!title) return <React.Fragment>No milestone</React.Fragment>
     return (
       <StyledDiv>
         <StyledProgressBar>
           <StyledProgressItem percent={percent} />
         </StyledProgressBar>
-        <StyledSpan>{milestone.title}</StyledSpan>
+        <StyledSpan>{title}</StyledSpan>
       </StyledDiv>
     )
   }
