@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import Label from './Label'
+import { deleteLabel } from '@Api/label'
 
 const LabelList = ({ labels, setLabels }) => {
   const handleDeleteBtn = async id => {
-    // const success = await deleteMilestone(id)
-    // if (success) setLabels(labels.filter(item => item.id !== id))
+    const success = await deleteLabel(id)
+    if (success) setLabels(labels.filter(item => item.id !== id))
   }
   return (
     <div>
