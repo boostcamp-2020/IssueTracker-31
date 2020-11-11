@@ -7,6 +7,7 @@ import userIcon from '@Public/images/defaultUserIcon.png'
 import { getUsers } from '@Api/user'
 import { getLabels } from '@Api/label'
 import { getMilestonesDetail } from '@Api/milestone'
+import { getParsedCookie } from '@Util/util'
 
 const Sidebar = ({
   labels,
@@ -101,11 +102,17 @@ const Sidebar = ({
 
 const AssigneeContent = ({ assignees, update, list }) => {
   const filteredList = list.filter(item => assignees.includes(item.id))
+
+  const assignYourself = () => {
+    update([getParsedCookie('userId')])
+  }
+
   const getAssigneeComponent = () => {
     if (!assignees.length)
       return (
         <React.Fragment>
-          No one—<StyledButton>assign yourself</StyledButton>
+          No one—
+          <StyledButton onClick={assignYourself}>assign yourself</StyledButton>
         </React.Fragment>
       )
     return (
@@ -133,7 +140,7 @@ const AssigneeContent = ({ assignees, update, list }) => {
   return <StyledContent display="block">{getAssigneeComponent()}</StyledContent>
 }
 
-const LabelContent = ({ labels, update, list }) => {
+const LabelContent = ({ labels, list }) => {
   const filteredList = list.filter(item => labels.includes(item.id))
   const getLabelComponent = () => {
     if (!labels.length) return <React.Fragment>None yet</React.Fragment>
@@ -149,7 +156,7 @@ const LabelContent = ({ labels, update, list }) => {
   return <StyledContent>{getLabelComponent()}</StyledContent>
 }
 
-const MilestoneContent = ({ milestone, update, list }) => {
+const MilestoneContent = ({ milestone, list }) => {
   const filteredMilestone = list.filter(item => milestone.includes(item.id))
   if (!filteredMilestone.length)
     return <React.Fragment>No Milestone</React.Fragment>
