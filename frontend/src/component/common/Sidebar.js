@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import SidebarItem from './SidebarItem'
 import Label from './Label'
+import { useFetch } from '@Util/hook'
 import userIcon from '@Public/images/defaultUserIcon.png'
+import { getUsers } from '@Api/user'
+import { getLabels } from '@Api/label'
+import { getMilestonesDetail } from '@Api/milestone'
 
 const Sidebar = ({
   labels,
@@ -12,24 +16,82 @@ const Sidebar = ({
   updateAssignee,
   updateMilestone,
 }) => {
+  const [userList, setUserList] = useState([])
+  const [labelList, setLabelList] = useState([])
+  const [milestoneList, setMilestoneList] = useState([])
+  useFetch(getUsers, setUserList)
+  useFetch(getLabels, setLabelList)
+  useFetch(getMilestonesDetail, setMilestoneList)
 
-  // 유저, 라벨, 마일스톤 목록 요청 함수를 만들어서 아이템으로 각각 전달,
-  // 팝업 클릭하면 데이터를 최신으로 받아와서 그 데이터를 넘겨주고 각각 아이템에서 title 보고 스위치로 넘겨줄 프롭스를 정함
-  // 기존 배열에서 변경사항(+,-) 있는지 체크하는 함수도 여기서 만들어서 넘겨줌
+  const getPopUpProps = (type, multiSelect) => {
+    const updateConditions = (id, kind) => {
+      if (kind === 'label') {
+        if (labels.includes(id)) updateLabel(labels.filter(item => item !== id))
+        else updateLabel([...labels, id])
+      }
+      if (kind === 'assignee') {
+        if (assignees.includes(id))
+          updateAssignee(assignees.filter(item => item !== id))
+        else updateAssignee([...assignees, id])
+      }
+      if (kind === 'milestone') {
+        if (milestone.includes(id)) updateMilestone([])
+        else updateMilestone([id])
+      }
+    }
+
+    switch (type) {
+      case 'Assignees':
+        return {
+          title: 'Assign up to 10 people to this issue',
+          kind: 'assignee',
+          data: userList,
+          targetCondition: assignees,
+          updateConditions: updateConditions,
+        }
+      case 'Labels':
+        return {
+          title: 'Apply labels to this issue',
+          kind: 'label',
+          data: labelList,
+          targetCondition: labels,
+          updateConditions: updateConditions,
+        }
+      case 'Milestone':
+        return {
+          title: 'Set milestone',
+          kind: 'milestone',
+          data: milestoneList.map(item => {
+            return { id: item.id, title: item.title }
+          }),
+          targetCondition: milestone,
+          updateConditions: updateConditions,
+        }
+      default:
+        return null
+    }
+  }
+
   return (
     <StyledSidebar>
-      <SidebarItem title="Assignees" popupProps={getPopUpProps("Assignees")}>
+      <SidebarItem title="Assignees" popupProps={getPopUpProps('Assignees')}>
         <AssigneeContent
           assignees={assignees}
+          list={userList}
           update={updateAssignee}
         ></AssigneeContent>
       </SidebarItem>
-      <SidebarItem title="Labels" popupProps={getPopUpProps("Labels")}>
-        <LabelContent labels={labels} update={updateLabel}></LabelContent>
+      <SidebarItem title="Labels" popupProps={getPopUpProps('Labels')}>
+        <LabelContent
+          labels={labels}
+          list={labelList}
+          update={updateLabel}
+        ></LabelContent>
       </SidebarItem>
-      <SidebarItem title="Milestone" popupProps={getPopUpProps("Milestone")}>
+      <SidebarItem title="Milestone" popupProps={getPopUpProps('Milestone')}>
         <MilestoneContent
           milestone={milestone}
+          list={milestoneList}
           update={updateMilestone}
         ></MilestoneContent>
       </SidebarItem>
@@ -37,7 +99,8 @@ const Sidebar = ({
   )
 }
 
-const AssigneeContent = ({ assignees, update }) => {
+const AssigneeContent = ({ assignees, update, list }) => {
+  const filteredList = list.filter(item => assignees.includes(item.id))
   const getAssigneeComponent = () => {
     if (!assignees.length)
       return (
@@ -47,8 +110,8 @@ const AssigneeContent = ({ assignees, update }) => {
       )
     return (
       <React.Fragment>
-        {assignees.map((assignee, idx) => (
-          <StyledDiv key={assignee.nickname + idx}>
+        {filteredList.map((assignee, i) => (
+          <StyledDiv key={i}>
             <StyledImg
               src={assignee.profileUrl || userIcon}
               alt="user profile"
@@ -70,13 +133,14 @@ const AssigneeContent = ({ assignees, update }) => {
   return <StyledContent display="block">{getAssigneeComponent()}</StyledContent>
 }
 
-const LabelContent = ({ labels, update }) => {
+const LabelContent = ({ labels, update, list }) => {
+  const filteredList = list.filter(item => labels.includes(item.id))
   const getLabelComponent = () => {
     if (!labels.length) return <React.Fragment>None yet</React.Fragment>
     return (
       <React.Fragment>
-        {labels.map((label, i) => (
-          <Label key={label.name + i} {...label} />
+        {filteredList.map((label, i) => (
+          <Label key={i} {...label} />
         ))}
       </React.Fragment>
     )
@@ -85,19 +149,23 @@ const LabelContent = ({ labels, update }) => {
   return <StyledContent>{getLabelComponent()}</StyledContent>
 }
 
-const MilestoneContent = ({
-  milestone: { openIssue, closeIssue, title },
-  update,
-}) => {
-  const percent = parseInt((closeIssue / (openIssue + closeIssue)) * 100 || 0)
+const MilestoneContent = ({ milestone, update, list }) => {
+  const filteredMilestone = list.filter(item => milestone.includes(item.id))
+  if (!filteredMilestone.length)
+    return <React.Fragment>No Milestone</React.Fragment>
+  const selectedMilestone = filteredMilestone[0]
+  const percent = parseInt(
+    (selectedMilestone.closeIssue /
+      (selectedMilestone.openIssue + selectedMilestone.closeIssue)) *
+      100 || 0,
+  )
   const getMilestoneComponent = () => {
-    if (!title) return <React.Fragment>No milestone</React.Fragment>
     return (
       <StyledDiv>
         <StyledProgressBar>
           <StyledProgressItem percent={percent} />
         </StyledProgressBar>
-        <StyledSpan>{title}</StyledSpan>
+        <StyledSpan>{selectedMilestone.title}</StyledSpan>
       </StyledDiv>
     )
   }
