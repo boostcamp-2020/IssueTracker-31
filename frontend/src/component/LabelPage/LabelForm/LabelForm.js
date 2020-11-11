@@ -70,9 +70,9 @@ const LabelForm = props => {
   }
 
   const handleCreateButton = async () => {
-    const id = await createLabel(label)
-    if (id) {
-      setLabels([...labels, { id, ...label }])
+    const response = await createLabel(label)
+    if (response) {
+      setLabels([...labels, { id: response.id, ...label }])
       props.toggleComponent()
     }
   }
@@ -189,6 +189,7 @@ const StyledActionContainer = styled.div`
   justify-content: flex-end;
 `
 const StyledHeader = styled.header`
+  height: 20px;
   display: flex;
   justify-content: space-between;
 `
