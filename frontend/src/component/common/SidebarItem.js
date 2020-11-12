@@ -16,7 +16,7 @@ const SidebarItem = ({ title, children, multiSelect, popupProps }) => {
   }
 
   return (
-    <>
+    <StyledDiv>
       <StyledSidebarItem
         ref={detail}
         onMouseDown={handleMouseDown}
@@ -39,17 +39,27 @@ const SidebarItem = ({ title, children, multiSelect, popupProps }) => {
         </StyledDetailsMenu>
       </StyledSidebarItem>
       {children}
-    </>
+    </StyledDiv>
   )
 }
 
-const StyledSidebarItem = styled.details`
+const StyledDiv = styled.div`
   font-size: 12px;
   color: #586069;
   border-bottom: solid 1px #586069;
   box-sizing: border-box;
   flex-shrink: 1;
   padding-top: 10px;
+  min-height: 80px;
+`
+
+const StyledSidebarItem = styled.details`
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary:focus {
+    outline: none;
+  }
 `
 
 const StyledTitle = styled.summary`
@@ -66,7 +76,7 @@ const StyledTitle = styled.summary`
 const StyledDetailsMenu = styled.div`
   position: absolute;
   top: auto;
-  right: 0;
+  right: auto;
   bottom: auto;
   left: auto;
   padding: 0;

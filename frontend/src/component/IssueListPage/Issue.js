@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import Label from '../common/Label'
 import styled from 'styled-components'
 
@@ -21,7 +21,6 @@ const Issue = ({
     else setCheckedIssues([...checkedIssues, id])
   }
   const handleChange = () => selectIssue(id)
-
   return (
     <StyledRow>
       <input
@@ -33,7 +32,7 @@ const Issue = ({
         <StyledLink to={`/issues/${id}`}>{title}</StyledLink>
         <StyledLabels>
           {label.map((item, i) => (
-            <Label key={item.name + i} {...item} />
+            <Label key={i} {...item} />
           ))}
         </StyledLabels>
         <StyledIssueInfo>
@@ -43,7 +42,7 @@ const Issue = ({
       </StyledArticle>
       <StyledAssignees>
         {assignee.map(user => (
-          <ProfileImage src={user.profileUrl} />
+          <ProfileImage key={user.id} src={user.profileUrl} />
         ))}
       </StyledAssignees>
     </StyledRow>
