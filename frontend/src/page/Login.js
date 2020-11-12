@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Request from '../util/request'
+import GithubIcon from '../../public/js/GithubIcon'
 
 function LoginForm() {
   const [value, setValue] = React.useState({
@@ -48,7 +49,10 @@ function LoginForm() {
           <SignInButton>회원가입</SignInButton>
         </SubmitContainer>
         <BtnGithub>
-          <Button onClick={handleGithubLogin}>Sign in with GitHub</Button>
+          <Button onClick={handleGithubLogin}>
+            Sign in with GitHub
+            <GithubIcon />
+          </Button>
         </BtnGithub>
       </LoginWrapper>
     </Wrapper>
@@ -62,7 +66,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 500px;
+  height: 600px;
   border-radius: 0.3rem !important;
 `
 const TextHeader = styled.h1`
@@ -70,7 +74,7 @@ const TextHeader = styled.h1`
   color: black;
 `
 const LoginWrapper = styled.form`
-  height: 200px;
+  height: 250px;
   width: 400px;
   display: flex;
   background-color: #f8f8ff;
@@ -114,7 +118,7 @@ const BtnGithub = styled.div`
   text-align: center;
   color: #fff;
   background-color: #a9a9a9;
-  height: 20px;
+  height: 30px;
   padding: 5px;
   font-weight: bold;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
