@@ -1,13 +1,13 @@
 import express from 'express'
 import commentController from './comment'
 import multer from 'multer'
-
+import { v4 as uuidv4 } from 'uuid'
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/images/')
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname)
+    cb(null, `${uuidv4()}.${file.originalname.split('.').pop()}`)
   },
 })
 const fileFilter = (req, file, cb) => {
