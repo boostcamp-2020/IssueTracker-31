@@ -95,6 +95,7 @@ const LabelForm = props => {
       props.toggleComponent()
     }
   }
+
   return (
     <StyledLabelFormContainer>
       <StyledHeader>
@@ -179,6 +180,9 @@ const LabelForm = props => {
 
 const StyledLabelFormContainer = styled.div`
   width: 100%;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 16px;
 `
 const StyledActionContainer = styled.div`
   display: flex;

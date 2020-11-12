@@ -11,14 +11,12 @@ const Label = ({ data, handleDeleteBtn, labels, setLabels }) => {
   return (
     <>
       {isEdit ? (
-        <StyledFormContainer>
-          <LabelForm
-            toggleComponent={toggleComponent}
-            labels={labels}
-            setLabels={setLabels}
-            {...data}
-          />
-        </StyledFormContainer>
+        <LabelForm
+          toggleComponent={toggleComponent}
+          labels={labels}
+          setLabels={setLabels}
+          {...data}
+        />
       ) : (
         <StyledContainer>
           <StyledLabelTemplate>
@@ -46,12 +44,6 @@ const StyledContainer = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   border-top: 1px solid #eaecef;
-`
-
-const StyledFormContainer = styled.div`
-  border: 1px solid #e1e4e8;
-  border-radius: 6px;
-  padding: 16px;
 `
 const StyledLabelTemplate = styled.div`
   width: 25%;
