@@ -49,6 +49,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+      filename: 'root.html',
       hash: true,
       minify:
         process.env.NODE_ENV === 'production'
