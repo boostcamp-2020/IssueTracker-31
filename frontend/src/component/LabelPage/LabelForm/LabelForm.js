@@ -154,6 +154,7 @@ const LabelForm = props => {
             onClick={props.toggleComponent}
             overrideStyle={buttonStyle}
           />
+          <StyledEmpty />
           {props.id ? (
             <EventButton
               buttonName="Save changes"
@@ -261,5 +262,9 @@ const deleteButtonStyle = `
   background:none;
   border:none;
   color:#586069;
+`
+
+const StyledEmpty = styled.div`
+  width: 8px;
 `
 export default LabelForm
