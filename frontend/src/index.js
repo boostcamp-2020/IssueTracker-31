@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDom from 'react-dom'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Login from '@Page/Login'
 import IssueListPage from '@Page/IssueList'
 import LabelPage from '@Page/Label/Label'
@@ -17,6 +19,17 @@ const root = document.getElementById('root')
 const App = () => {
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+      />
       <GlobalStyle />
       <BrowserRouter>
         <Header />
