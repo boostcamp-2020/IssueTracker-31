@@ -46,7 +46,7 @@ const SidebarItem = ({ title, children, multiSelect, popupProps }) => {
 const StyledDiv = styled.div`
   font-size: 12px;
   color: #586069;
-  border-bottom: solid 1px #586069;
+  border-bottom: solid 1px #eaecef;
   box-sizing: border-box;
   flex-shrink: 1;
   padding-top: 10px;

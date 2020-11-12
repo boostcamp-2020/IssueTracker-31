@@ -197,9 +197,8 @@ const StyledProgressItem = styled.span`
 `
 
 const StyledSidebar = styled.div`
-  width: 25%;
-  min-width: 150px;
-  max-width: 250px;
+  width: 100%;
+  max-width: 280px;
 `
 
 const StyledContent = styled.div`

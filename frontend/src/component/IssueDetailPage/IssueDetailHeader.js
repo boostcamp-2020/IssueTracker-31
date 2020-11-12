@@ -37,7 +37,9 @@ const IssueDetailHeader = ({
   return (
     <StyledWrapper>
       <StyledTitleSection show={mode === 'default'}>
-        <StyledTitle>{title || 'Issue TitleIssue Title'}</StyledTitle>
+        <StyledTitle>
+          {title || 'Issue TitleIssue Title'} <StyledId>#{issueId}</StyledId>
+        </StyledTitle>
         <StyledButtonWrapper>
           <EventButton
             buttonName="Edit"
@@ -161,6 +163,13 @@ const StyledTitle = styled.h1`
   word-break: break-word;
   overflow-wrap: break-word;
 `
+
+const StyledId = styled.span`
+  color: #6a737d;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1.25;
+`
 const StyledInput = styled.input`
   margin-right: 16px;
   flex: auto;
@@ -177,7 +186,7 @@ const StyledInput = styled.input`
   background-color #fafbfc;
   box-sizing: border-box;
   overflow: visible;
-  font: inherit;    
+  font: inherit;
 `
 const StyledButton = styled.div`
   display: inline-block;
