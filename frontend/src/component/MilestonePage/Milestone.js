@@ -42,7 +42,12 @@ const Milestone = ({ data, handleDeleteBtn }) => {
           </StyledLink>
         </div>
         <StyledButtons>
-          <Link to="/milestones/edit">
+          <Link
+            to={{
+              pathname: `/milestone/edit/${data.id}`,
+              state: data,
+            }}
+          >
             <StyledButton color="#0365d6">Edit</StyledButton>
           </Link>
           <StyledButton color="#0365d6">
