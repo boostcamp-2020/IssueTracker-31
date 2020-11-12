@@ -29,4 +29,13 @@ const createComment = async (issueId, params) => {
   return data
 }
 
-export { createImageUrl, getComments, createComment }
+const updateComment = async (issueId, content) => {
+  const { success, message } = await request.PATCH(
+    `comments/${issueId}`,
+    content,
+  )
+  if (success === false) return console.error(message)
+  return success
+}
+
+export { createImageUrl, getComments, createComment, updateComment }

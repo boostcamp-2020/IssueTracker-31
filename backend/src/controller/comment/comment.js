@@ -19,12 +19,12 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { code, success, data, message } = await commentService.updateComment(
+    const { code, success, message } = await commentService.updateComment(
       req.params.id,
       req.userData.id,
       req.body.content,
     )
-    return res.status(code).json({ success, data, message })
+    return res.status(code).json({ success, message })
   } catch (error) {
     return res
       .status(statusCode.INTERNAL_SERVER_ERROR)
@@ -33,10 +33,12 @@ const update = async (req, res) => {
 }
 
 const uploadImage = (req, res) => {
+  console.log(req.file.path)
   try {
     const url = req.file.path
     return res.status(201).json({ success: true, data: url })
   } catch (error) {
+    console.log(error)
     return res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .json({ success: false, message: resMessage.INTERNAL_SERVER_ERROR })

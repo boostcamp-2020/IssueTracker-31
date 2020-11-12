@@ -1,36 +1,61 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import WritingArea from '@Component/common/content/WritingArea'
-import { getTimePassedFromNow } from '@Util/util'
+import EventButton from '@Component/common/EventButton'
+import { updateComment } from '@Api/comment'
 
-const Comment = props => {
+const Comment = ({
+  id,
+  nickname,
+  timePassed,
+  contentText,
+  owner,
+  editable,
+}) => {
   const [isEdit, setIsEdit] = useState(false)
-
+  const [content, setContent] = useState(contentText)
   const handleEdit = () => {
     setIsEdit(!isEdit)
   }
 
-  const CancelAction = () => {}
-
-  const UpdateAction = () => {}
+  const updateAction = async () => {
+    if (await updateComment(id, { content })) setIsEdit(!isEdit)
+  }
 
   return (
     <CommentWrapper>
       {isEdit ? (
-        ''
+        <WritingArea
+          content={[content, setContent]}
+          buttons={
+            <>
+              <EventButton
+                onClick={handleEdit}
+                buttonName="Cancel"
+                isGreen={false}
+              />
+              <EventButton
+                onClick={updateAction}
+                buttonName="Update component"
+                isGreen={true}
+                disabled={!content}
+              />
+            </>
+          }
+        />
       ) : (
         <>
           <CommentHeader>
             <HeaderFirst>
-              <AuthorNameContainer>zzunopark</AuthorNameContainer>
-              <TimePassedContainer>commented 3 days ago</TimePassedContainer>
+              <AuthorNameContainer>{nickname}</AuthorNameContainer>
+              <TimePassedContainer>commented {timePassed}</TimePassedContainer>
             </HeaderFirst>
             <HeaderLast>
-              <OwnerContainer>Owner</OwnerContainer>
-              <EditButton onClick={handleEdit}>Edit</EditButton>
+              {owner && <OwnerContainer>Owner</OwnerContainer>}
+              {editable && <EditButton onClick={handleEdit}>Edit</EditButton>}
             </HeaderLast>
           </CommentHeader>
-          <CommentBody>테스트 테스트 테스트 테스트 테스트</CommentBody>
+          <CommentBody>{content}</CommentBody>
         </>
       )}
     </CommentWrapper>
@@ -76,6 +101,7 @@ const EditButton = styled.button`
   background-color: #f0f8ff;
   color: #a9a9a9;
   font-weight: bold;
+  cursor: pointer;
 `
 
 const CommentBody = styled.div`
