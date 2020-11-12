@@ -32,13 +32,13 @@ const patchIssueDetail = async ({ id, body }) => {
 }
 
 const updateIssueLabels = async ({ id, body }) => {
-  const { success, message } = await request.PATCH(`/issues/${id}/labels`, body)
+  const { success, message } = await request.POST(`/issues/${id}/labels`, body)
   if (success === false) return console.error(message)
   return success
 }
 
-const updateIssueAssingees = async ({ id, body }) => {
-  const { success, message } = await request.PATCH(
+const updateIssueAssignees = async ({ id, body }) => {
+  const { success, message } = await request.POST(
     `/issues/${id}/assignee`,
     body,
   )
@@ -53,5 +53,5 @@ export {
   patchIssues,
   patchIssueDetail,
   updateIssueLabels,
-  updateIssueAssingees,
+  updateIssueAssignees,
 }

@@ -104,10 +104,13 @@ const isValidUpdateIssueData = ({
   ...notAllowed
 }) => {
   if (Object.keys(notAllowed).length !== 0) return false
-  if (!title && !milestoneId && isOpen === undefined) return false
+  if (!title && milestoneId === undefined && isOpen === undefined) return false
   if (title !== undefined && (typeof title !== 'string' || title.trim() === ''))
     return false
-  if (milestoneId !== undefined && (isNaN(milestoneId) || milestoneId < 1))
+  if (
+    milestoneId !== undefined &&
+    (isNaN(milestoneId) || (milestoneId < 1 && milestoneId !== null))
+  )
     return false
   if (isOpen !== undefined && isOpen !== 0 && isOpen !== 1) return false
   return true

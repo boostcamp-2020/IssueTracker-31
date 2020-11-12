@@ -9,7 +9,7 @@ import { getTimePassedFromNow } from '@Util/util'
 
 const IssueDetailHeader = ({
   issueId,
-  isOpen,
+  isOpen = true,
   createdAt,
   nickname,
   commentCnt,
@@ -37,7 +37,9 @@ const IssueDetailHeader = ({
   return (
     <StyledWrapper>
       <StyledTitleSection show={mode === 'default'}>
-        <StyledTitle>{title || 'Issue TitleIssue Title'}</StyledTitle>
+        <StyledTitle>
+          {title} <StyledId>#{issueId}</StyledId>
+        </StyledTitle>
         <StyledButtonWrapper>
           <EventButton
             buttonName="Edit"
@@ -54,23 +56,19 @@ const IssueDetailHeader = ({
         </StyledButtonWrapper>
       </StyledTitleSection>
       <StyledTitleSection show={mode === 'edit'}>
-        <StyledInput
-          defaultValue={title || 'Issue temp title'}
-          ref={editInput}
-        />
+        <StyledInput defaultValue={title} ref={editInput} />
         <StyledButtonWrapper>
           <EventButton buttonName="Save" onClick={onClickSaveButton} />
           <StyledButton onClick={onClickEditButton}>Cancel</StyledButton>
         </StyledButtonWrapper>
       </StyledTitleSection>
       <StyledMetaSection>
-        {isOpen && (
+        {isOpen ? (
           <StyledState isOpen={isOpen}>
             <OpenIssueIcon color={'#ffffff'} />
             Open
           </StyledState>
-        )}
-        {!isOpen && (
+        ) : (
           <StyledState isOpen={isOpen}>
             <ClosedIssueIcon color={'#ffffff'} />
             Closed
@@ -161,6 +159,13 @@ const StyledTitle = styled.h1`
   word-break: break-word;
   overflow-wrap: break-word;
 `
+
+const StyledId = styled.span`
+  color: #6a737d;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1.25;
+`
 const StyledInput = styled.input`
   margin-right: 16px;
   flex: auto;
@@ -177,7 +182,7 @@ const StyledInput = styled.input`
   background-color #fafbfc;
   box-sizing: border-box;
   overflow: visible;
-  font: inherit;    
+  font: inherit;
 `
 const StyledButton = styled.div`
   display: inline-block;
@@ -197,4 +202,4 @@ const StyledEmptyDiv = styled.div`
   width: 8px;
 `
 
-export default IssueDetailHeader
+export default React.memo(IssueDetailHeader)

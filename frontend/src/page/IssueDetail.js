@@ -1,6 +1,8 @@
 import React, { useState, createContext, useEffect } from 'react'
+import styled from 'styled-components'
 import IssueDetailHeader from '@Component/IssueDetailPage/IssueDetailHeader'
 import ProfileWithContent from '@Component/common/content/ProfileWithContent'
+import WritingArea from '@Component/common/content/WritingArea'
 import Comment from '@Component/IssueDetailPage/Comment'
 import Sidebar from '@Component/common/Sidebar'
 import EventButton from '@Component/common/EventButton'
@@ -10,7 +12,7 @@ import { useFetch } from '@Util/hook'
 import {
   getIssueDetail,
   updateIssueLabels,
-  updateIssueAssignee,
+  updateIssueAssignees,
   patchIssueDetail,
   patchIssues,
 } from '@Api/issue'
@@ -19,6 +21,7 @@ export const IssueDetailPageContext = createContext()
 
 const getAllIssueInfo = async (
   issueInfo,
+  setIssueInfo,
   setTitle,
   setIsOpen,
   setAssignee,
@@ -27,34 +30,46 @@ const getAllIssueInfo = async (
 ) => {
   const data = await getIssueDetail(issueInfo.issueId)
   if (data) {
-    issueInfo = {
+    setIssueInfo({
       ...issueInfo,
       ...data,
-    }
+    })
     setTitle(data.title)
     setIsOpen(data.isOpen)
-    setAssignee(data.assignee)
-    setLabel(data.label)
-    setMilestone(data.milestone)
+    setAssignee(data.assignee.map(item => item.id))
+    setLabel(data.label.map(item => item.id))
+    setMilestone(data.milestone.map(item => item.id))
   }
-  //   issueId: <issue_id>,
-  // title: <issue_title>,
-  // isOpen: <issue_isOpen>,
-  // author: <user_nickname>,
-  // profileUrl: <user_profileUrl>,
-  // createdAt: <issue_createdAt>,
-  // commentCount: <count(comment)>,
 }
 
 const IssueDetailPage = ({ match }) => {
-  const issueInfo = { issueId: match.params.id }
+  const [issueInfo, setIssueInfo] = useState({
+    issueId: match.params.id,
+    author: '',
+    profileUrl: '',
+    createdAt: '',
+    commentCount: 0,
+  })
   const [title, setTitle] = useState('')
-  const [isOpen, setIsOpen] = useState('')
+  const [isOpen, setIsOpen] = useState(true)
   const [comments, setComments] = useState([])
   const [content, setContent] = useState('')
   const [assignee, setAssignee] = useState([])
   const [label, setLabel] = useState([])
   const [milestone, setMilestone] = useState([])
+
+  useEffect(() => {
+    getAllIssueInfo(
+      issueInfo,
+      setIssueInfo,
+      setTitle,
+      setIsOpen,
+      setAssignee,
+      setLabel,
+      setMilestone,
+    )
+  }, [])
+  useFetch(getComments, setComments, issueInfo.issueId)
 
   const addComment = async () => {
     await createComment(match.params.id, {
@@ -75,11 +90,16 @@ const IssueDetailPage = ({ match }) => {
 
   const updateLabels = async id => {
     if (label.includes(id)) {
-      if (await updateIssueLabels({ id: match.params.id, body: { add: [id] } }))
+      if (
+        await updateIssueLabels({ id: issueInfo.issueId, body: { add: [id] } })
+      )
         setLabel(label.filter(item => item !== id))
     } else {
       if (
-        await updateIssueLabels({ id: match.params.id, body: { delete: [id] } })
+        await updateIssueLabels({
+          id: issueInfo.issueId,
+          body: { delete: [id] },
+        })
       )
         setLabel([...label, id])
     }
@@ -88,13 +108,16 @@ const IssueDetailPage = ({ match }) => {
   const updateAssignees = async id => {
     if (assignee.includes(id)) {
       if (
-        await updateIssueAssignee({ id: match.params.id, body: { add: [id] } })
+        await updateIssueAssignees({
+          id: issueInfo.issueId,
+          body: { add: [id] },
+        })
       )
         setAssignee(assignee.filter(item => item !== id))
     } else {
       if (
-        await updateIssueAssignee({
-          id: match.params.id,
+        await updateIssueAssignees({
+          id: issueInfo.issueId,
           body: { delete: [id] },
         })
       )
@@ -106,7 +129,7 @@ const IssueDetailPage = ({ match }) => {
     if (milestone.includes(id)) {
       if (
         await patchIssueDetail({
-          id: match.params.id,
+          id: issueInfo.issueId,
           body: { milestoneId: null },
         })
       )
@@ -114,79 +137,110 @@ const IssueDetailPage = ({ match }) => {
     } else {
       if (
         await patchIssueDetail({
-          id: match.params.id,
+          id: issueInfo.issueId,
           body: { milestoneId: id },
         })
       )
         setMilestone([id])
     }
   }
-
-  useEffect(() => {
-    getAllIssueInfo(
-      issueInfo,
-      setTitle,
-      setIsOpen,
-      setAssignee,
-      setLabel,
-      setMilestone,
-    )
-  }, [])
-  useFetch(getComments, setComments, match.params.id)
-
   return (
-    <div>
+    <StyledContainer>
       <IssueDetailHeader
-        issueId={1}
+        issueId={issueInfo.issueId}
         isOpen={isOpen}
-        createdAt={'2020-11-09 00:00:00'}
-        nickname={'hyex'}
-        commentCnt={3}
+        createdAt={issueInfo.createdAt}
+        nickname={issueInfo.author}
+        commentCnt={comments.length}
         title={title}
         setTitle={setTitle}
       />
-      <Comment />
-      {comments.map(comment => {
-        console.log(comment)
-        // return (
-        //   <Comment
-        //     title={`${issueInfo.nickname} commentd ${getTimePassedFromNow(
-        //       issueInfo.createdAt,
-        //     )}`}
-        //     content={issueInfo.content}
-        //   />
-        // )
-      })}
-      <ProfileWithContent
-        title={[title, setTitle]}
-        content={[content, setContent]}
-        buttons={
-          <>
-            <EventButton
-              onClick={handleOpen}
-              buttonName={isOpen ? 'Reopen issue' : 'Close issue'}
-              isGreen={false}
-            />
-            <EventButton
-              onClick={addComment}
-              buttonName="Comment"
-              isGreen={true}
-              disabled={!content}
-            />
-          </>
-        }
-        page="detailIssue"
-      />
-      <Sidebar
-        labels={label}
-        assignees={assignee}
-        milestone={milestone}
-        updateLabels={updateLabels}
-        updateAssignees={updateAssignees}
-        updateMilestone={updateMilestone}
-      />
-    </div>
+      <StyledContentWrapper>
+        <StyledCommentWrapper>
+          {comments.map(comment => {
+            console.log(comment)
+            console.log(issueInfo)
+            return (
+              <ProfileWithContent
+                key={comment.id}
+                profileUrl={comment.profileUrl}
+                formContent={
+                  <Comment
+                    id={comment.id}
+                    owner={comment.nickname === issueInfo.author}
+                    editable={comment.userId === getParsedCookie('userId')}
+                    nickname={comment.nickname}
+                    timePassed={getTimePassedFromNow(comment.createdAt)}
+                    contentText={comment.content}
+                  />
+                }
+              />
+            )
+          })}
+          <ProfileWithContent
+            formContent={
+              <WritingArea
+                content={[content, setContent]}
+                buttons={
+                  <>
+                    <EventButton
+                      onClick={handleOpen}
+                      buttonName={isOpen ? 'Close issue' : 'Reopen issue'}
+                      isGreen={false}
+                    />
+                    <EventButton
+                      onClick={addComment}
+                      buttonName="Comment"
+                      isGreen={true}
+                      disabled={!content}
+                    />
+                  </>
+                }
+              />
+            }
+          />
+        </StyledCommentWrapper>
+        <StyledSidebarWrapper>
+          <Sidebar
+            labels={label}
+            assignees={assignee}
+            milestone={milestone}
+            updateLabel={updateLabels}
+            updateAssignee={updateAssignees}
+            updateMilestone={updateMilestone}
+          />
+        </StyledSidebarWrapper>
+      </StyledContentWrapper>
+    </StyledContainer>
   )
 }
+
+const StyledContainer = styled.div`
+  padding-right: 32px;
+  padding-left: 32px;
+  max-width: 1280px;
+  margin: 32px auto;
+`
+const StyledContentWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-right: -16px;
+  margin-left: -16px;
+`
+const StyledCommentWrapper = styled.div`
+  padding-right: 16px;
+  padding-left: 16px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+  width: 75%;
+`
+
+const StyledSidebarWrapper = styled.div`
+  padding-right: 16px;
+  padding-left: 16px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+  width: 25%;
+`
 
 export default IssueDetailPage
