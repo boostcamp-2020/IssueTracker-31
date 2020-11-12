@@ -47,7 +47,12 @@ const createComment = async (issueId, userId, content) => {
       data: commentId,
     }
   } catch (error) {
-    console.log(error)
+    if (error.message === 'DB')
+      return {
+        code: statusCode.DB_ERROR,
+        success: false,
+        message: resMessage.DB_ERROR,
+      }
   }
 }
 
