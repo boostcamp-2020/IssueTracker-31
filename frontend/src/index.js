@@ -10,6 +10,7 @@ import Header from './component/common/Header'
 import CreateIssuePage from '@Page/CreateIssue'
 import IssueDetailPage from '@Page/IssueDetail'
 import CreateMilestonePage from '@Page/CreateMilestone'
+import EditMilestonePage from '@Page/EditMilestonePage'
 
 const root = document.getElementById('root')
 
@@ -24,6 +25,7 @@ const App = () => {
         <Route exact path="/labels" component={LabelPage} />
         <Route exact path="/milestones" component={MilestonePage} />
         <Route exact path="/milestone/new" component={CreateMilestonePage} />
+        <Route exact path="/milestone/edit/:id" component={EditMilestonePage} />
         <Route exact path="/issue/new" component={CreateIssuePage} />
         <Route exact path="/issues/:id" component={IssueDetailPage} />
       </BrowserRouter>

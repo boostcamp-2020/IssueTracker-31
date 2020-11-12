@@ -33,6 +33,7 @@ const update = async (req, res) => {
 }
 
 const uploadImage = (req, res) => {
+  console.log(req.file.path)
   try {
     return res.status(201).json({
       success: true,
