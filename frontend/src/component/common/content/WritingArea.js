@@ -30,7 +30,7 @@ const WritingArea = ({ content: [content, setContent], buttons }) => {
         required
       />
       <CountingContainer id="count">0 characters</CountingContainer>
-      <ImageInput />
+      <ImageInput content={[content, setContent]} />
       <SubmitContainer>{buttons}</SubmitContainer>
     </Wrapper>
   )

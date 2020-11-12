@@ -2,17 +2,16 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { createImageUrl } from '@Api/comment'
 
-const ImageInput = () => {
+const ImageInput = ({ content: [content, setContent] }) => {
   const [status, setStatus] = useState('default')
-
   const getImageUrl = async e => {
     setStatus('loading')
     const formData = new FormData()
     formData.append('commentImage', e.target.files[0])
     const url = await createImageUrl(formData)
-    if (!url) return setStatus('error')
     console.log(url)
-    // TODO: 상위 컴포넌트로 넘겨서 마크다운 문법 텍스트로 변환하기
+    if (!url) return setStatus('error')
+    setContent(`${content} ![](${url})`)
     setStatus('default')
   }
   return (
