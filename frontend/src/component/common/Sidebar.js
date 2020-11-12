@@ -97,25 +97,18 @@ const AssigneeContent = ({ assignees, update, list }) => {
     return (
       <React.Fragment>
         {filteredList.map((assignee, i) => (
-          <StyledDiv key={i}>
+          <StyledAssigneeDiv key={i}>
             <StyledImg
               src={assignee.profileUrl || userIcon}
               alt="user profile"
             />
             <StyledSpan>{assignee.nickname}</StyledSpan>
-          </StyledDiv>
+          </StyledAssigneeDiv>
         ))}
       </React.Fragment>
     )
   }
 
-  const StyledDiv = styled.div`
-    height: 27px;
-    font-weight: 600;
-    display: table;
-    height: 100%;
-    text-align: center;
-  `
   return <StyledContent display="block">{getAssigneeComponent()}</StyledContent>
 }
 
@@ -147,25 +140,31 @@ const MilestoneContent = ({ milestone, list }) => {
   )
   const getMilestoneComponent = () => {
     return (
-      <StyledDiv>
+      <StyledMilestoneDiv>
         <StyledProgressBar>
           <StyledProgressItem percent={percent} />
         </StyledProgressBar>
         <StyledSpan>{selectedMilestone.title}</StyledSpan>
-      </StyledDiv>
+      </StyledMilestoneDiv>
     )
   }
-
-  const StyledDiv = styled.div`
-    height: 27px;
-    font-weight: 600;
-    display: block;
-    height: 100%;
-    width: 100%;
-    text-align: center;
-  `
   return <StyledContent>{getMilestoneComponent()}</StyledContent>
 }
+
+const StyledAssigneeDiv = styled.div`
+  font-weight: 600;
+  display: table;
+  height: 100%;
+  text-align: center;
+`
+
+const StyledMilestoneDiv = styled.div`
+  font-weight: 600;
+  display: block;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+`
 
 const StyledProgressBar = styled.span`
   height: 10px;

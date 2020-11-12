@@ -8,7 +8,6 @@ const getIssues = async filterQuery => {
 
 const getIssueDetail = async id => {
   const { success, data, message } = await request.GET(`/issues/${id}`)
-  console.log(success, data, message)
   if (success === false) return console.error(message)
   return data
 }

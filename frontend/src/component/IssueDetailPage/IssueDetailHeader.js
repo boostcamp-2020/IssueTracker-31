@@ -38,7 +38,7 @@ const IssueDetailHeader = ({
     <StyledWrapper>
       <StyledTitleSection show={mode === 'default'}>
         <StyledTitle>
-          {title || 'Issue TitleIssue Title'} <StyledId>#{issueId}</StyledId>
+          {title} <StyledId>#{issueId}</StyledId>
         </StyledTitle>
         <StyledButtonWrapper>
           <EventButton
@@ -56,10 +56,7 @@ const IssueDetailHeader = ({
         </StyledButtonWrapper>
       </StyledTitleSection>
       <StyledTitleSection show={mode === 'edit'}>
-        <StyledInput
-          defaultValue={title || 'Issue temp title'}
-          ref={editInput}
-        />
+        <StyledInput defaultValue={title} ref={editInput} />
         <StyledButtonWrapper>
           <EventButton buttonName="Save" onClick={onClickSaveButton} />
           <StyledButton onClick={onClickEditButton}>Cancel</StyledButton>
@@ -205,4 +202,4 @@ const StyledEmptyDiv = styled.div`
   width: 8px;
 `
 
-export default IssueDetailHeader
+export default React.memo(IssueDetailHeader)

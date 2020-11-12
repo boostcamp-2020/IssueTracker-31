@@ -31,14 +31,12 @@ const getAllIssueInfo = async (
       ...issueInfo,
       ...data,
     })
-    console.log(data.assignee)
     setTitle(data.title)
     setIsOpen(data.isOpen)
     setAssignee(data.assignee.map(item => item.id))
     setLabel(data.label.map(item => item.id))
     setMilestone(data.milestone.map(item => item.id))
   }
-  console.log(data)
 }
 
 const IssueDetailPage = ({ match }) => {
@@ -56,16 +54,7 @@ const IssueDetailPage = ({ match }) => {
   const [assignee, setAssignee] = useState([])
   const [label, setLabel] = useState([])
   const [milestone, setMilestone] = useState([])
-  console.log(
-    issueInfo,
-    title,
-    isOpen,
-    comments,
-    content,
-    assignee,
-    label,
-    milestone,
-  )
+
   useEffect(() => {
     getAllIssueInfo(
       issueInfo,
@@ -156,16 +145,21 @@ const IssueDetailPage = ({ match }) => {
       />
       <StyledContentWrapper>
         <StyledCommentWrapper>
-          {comments.map(comment => {
-            return (
-              <Comment
-                title={`${issueInfo.nickname} commentd ${getTimePassedFromNow(
-                  issueInfo.createdAt,
-                )}`}
-                content={issueInfo.content}
-              />
-            )
-          })}
+          {
+            // comments.map(comment => {
+            // console.log('!@#!#@!#!@#@!#@!#')
+            // console.log(comment)
+            // return (
+            //   <Comment
+            //     key={comment.id}
+            //     title={`${issueInfo.nickname} commentd ${getTimePassedFromNow(
+            //       issueInfo.createdAt,
+            //     )}`}
+            //     content={issueInfo.content}
+            //   />
+            // )
+            //})
+          }
           <ProfileWithContent
             title={[title, setTitle]}
             content={[content, setContent]}
