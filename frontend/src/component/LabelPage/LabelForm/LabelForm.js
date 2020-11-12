@@ -89,10 +89,8 @@ const LabelForm = props => {
   }
 
   const handleDelete = async () => {
-    if (await deleteLabel(props.id)) {
+    if (await deleteLabel(props.id))
       setLabels(labels.filter(origin => origin.id !== props.id))
-      props.toggleComponent()
-    }
   }
 
   return (
