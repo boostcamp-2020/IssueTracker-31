@@ -53,4 +53,4 @@ const StyledTabButtonContainer = styled.nav`
   line - height: 1.5;
   `
 
-export default TabButton
+export default React.memo(TabButton)

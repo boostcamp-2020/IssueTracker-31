@@ -55,4 +55,4 @@ const getSvg = buttonName => {
   // if (buttonName === ) return svgName
 }
 
-export default EventButton
+export default React.memo(EventButton)

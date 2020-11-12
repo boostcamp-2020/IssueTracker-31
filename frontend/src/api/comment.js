@@ -1,13 +1,15 @@
 import request from '@Util/request'
 
-const createImageUrl = async body => {
-  const { success, data, message } = await request.POST(
-    '/comment-image-urls',
-    body,
-    'multipart/form-data',
+const createImageUrl = async FormData => {
+  const { success, data } = await request.POST(
+    'comments/comment-image-urls',
+    FormData,
   )
-  if (success === false) console.error(message)
-  return { success, url: data.url }
+  if (success === false || undefined) {
+    console.error('이미지 업로드 에러 발생')
+    return false
+  }
+  return data
 }
 
 const getComments = async issueId => {
