@@ -8,15 +8,18 @@ const ProfileWithContent = props => {
     title: [title, setTitle],
   } = props
 
-  const profileUrl = getParsedCookie('profileUrl')
-
   const handleTitleChange = event => {
     setTitle(event.target.value)
   }
   return (
     <ContentWrapper>
       <ProfileContainer>
-        <ProfileImage src={profileUrl} alt="" />
+        <ProfileImage
+          src={
+            props.profileUrl ? props.profileUrl : getParsedCookie('profileUrl')
+          }
+          alt=""
+        />
       </ProfileContainer>
       <FormWrapper>
         {props.page === 'createIssue' ? (

@@ -28,10 +28,6 @@ const WritingArea = ({ props }) => {
     debouncedHandleChange(event.target.value)
   }
 
-  // event 정의 필요
-
-  const handleImageUpload = () => {}
-
   return (
     <Wrapper>
       <CommentInputContainer
@@ -61,7 +57,7 @@ const WritingArea = ({ props }) => {
 }
 
 const Wrapper = styled.div`
-  border: 1px solid red;
+  box-sizing: border-box;
 `
 
 const CommentInputContainer = styled.textarea`

@@ -32,16 +32,20 @@ const CreateIssuePage = () => {
   const [label, setLabel] = useState([])
   const [milestone, setMilestone] = useState([])
 
-  const updateLabels = newLabels => {
-    setLabel(newLabels)
+  const updateLabels = id => {
+    if (label.includes(id)) setLabel(label.filter(item => item !== id))
+    else setLabel([...label, id])
   }
 
-  const updateAssignees = newAssignees => {
-    setAssignee(newAssignees)
+  const updateAssignees = id => {
+    if (assignee.includes(id)) setAssignee(assignee.filter(item => item !== id))
+    if (assignee.length >= 10) alert('Assignees is up to 10')
+    else setAssignee([...assignee, id])
   }
 
-  const updateMilestone = newMilestone => {
-    setMilestone(newMilestone)
+  const updateMilestone = id => {
+    if (milestone.includes(id)) setMilestone([])
+    else setMilestone([id])
   }
 
   return (

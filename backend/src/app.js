@@ -25,13 +25,9 @@ app.use('/api', Controller)
 const publicPath = path.join(__dirname, '../../frontend/build')
 app.use(express.static(publicPath))
 
-const publicPath = path.join(__dirname, '../../frontend/build')
-app.use(express.static(publicPath))
-if (process.env.NODE_ENV === 'production') {
-  app.get('*', middleware.verifyMiddleware, (req, res) => {
-    res.sendFile(publicPath + '/root.html')
-  })
-}
+app.get('*', middleware.verifyMiddleware, (req, res) => {
+  res.sendFile(publicPath + '/root.html')
+})
 
 app.use(express.static(path.join(__dirname, '../public')))
 app.use((err, req, res, next) => {

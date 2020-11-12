@@ -24,23 +24,7 @@ const Sidebar = ({
   useFetch(getLabels, setLabelList)
   useFetch(getMilestonesDetail, setMilestoneList)
 
-  const getPopUpProps = (type, multiSelect) => {
-    const updateConditions = (id, kind) => {
-      if (kind === 'label') {
-        if (labels.includes(id)) updateLabel(labels.filter(item => item !== id))
-        else updateLabel([...labels, id])
-      }
-      if (kind === 'assignee') {
-        if (assignees.includes(id))
-          updateAssignee(assignees.filter(item => item !== id))
-        else updateAssignee([...assignees, id])
-      }
-      if (kind === 'milestone') {
-        if (milestone.includes(id)) updateMilestone([])
-        else updateMilestone([id])
-      }
-    }
-
+  const getPopUpProps = type => {
     switch (type) {
       case 'Assignees':
         return {
@@ -48,7 +32,7 @@ const Sidebar = ({
           kind: 'assignee',
           data: userList,
           targetCondition: assignees,
-          updateConditions: updateConditions,
+          updateConditions: updateAssignee,
         }
       case 'Labels':
         return {
@@ -56,7 +40,7 @@ const Sidebar = ({
           kind: 'label',
           data: labelList,
           targetCondition: labels,
-          updateConditions: updateConditions,
+          updateConditions: updateLabel,
         }
       case 'Milestone':
         return {
@@ -66,7 +50,7 @@ const Sidebar = ({
             return { id: item.id, title: item.title }
           }),
           targetCondition: milestone,
-          updateConditions: updateConditions,
+          updateConditions: updateMilestone,
         }
       default:
         return null
@@ -83,17 +67,12 @@ const Sidebar = ({
         ></AssigneeContent>
       </SidebarItem>
       <SidebarItem title="Labels" popupProps={getPopUpProps('Labels')}>
-        <LabelContent
-          labels={labels}
-          list={labelList}
-          update={updateLabel}
-        ></LabelContent>
+        <LabelContent labels={labels} list={labelList}></LabelContent>
       </SidebarItem>
       <SidebarItem title="Milestone" popupProps={getPopUpProps('Milestone')}>
         <MilestoneContent
           milestone={milestone}
           list={milestoneList}
-          update={updateMilestone}
         ></MilestoneContent>
       </SidebarItem>
     </StyledSidebar>
@@ -104,7 +83,7 @@ const AssigneeContent = ({ assignees, update, list }) => {
   const filteredList = list.filter(item => assignees.includes(item.id))
 
   const assignYourself = () => {
-    update([getParsedCookie('userId')])
+    update(getParsedCookie('userId'))
   }
 
   const getAssigneeComponent = () => {
