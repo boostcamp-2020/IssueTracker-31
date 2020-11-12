@@ -17,6 +17,7 @@
     "cross-env": "^7.0.2",
     "file-loader": "^6.2.0",
     "lodash": "^4.17.20",
+    "marked": "^1.2.3",
     "react": "^17.0.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^17.0.1",

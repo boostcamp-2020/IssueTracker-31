@@ -158,8 +158,6 @@ const IssueDetailPage = ({ match }) => {
       <StyledContentWrapper>
         <StyledCommentWrapper>
           {comments.map(comment => {
-            console.log(comment)
-            console.log(issueInfo)
             return (
               <ProfileWithContent
                 key={comment.id}
