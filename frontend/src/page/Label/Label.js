@@ -22,11 +22,13 @@ const LabelPage = () => {
         <EventButton buttonName="New Label" onClick={toggleComponent} isGreen />
       </StyledButtonContainer>
       {showForm ? (
-        <LabelForm
-          toggleComponent={toggleComponent}
-          labels={labels}
-          setLabels={setLabels}
-        />
+        <StyledFormContainer>
+          <LabelForm
+            toggleComponent={toggleComponent}
+            labels={labels}
+            setLabels={setLabels}
+          />
+        </StyledFormContainer>
       ) : null}
       <LabelList labels={labels} setLabels={setLabels}></LabelList>
     </StyledContainer>
@@ -48,6 +50,11 @@ const StyledButtonContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 20px;
   box-sizing: border-box;
+`
+const StyledFormContainer = styled.div`
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 16px;
 `
 
 export default LabelPage

@@ -22,6 +22,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use('/api', Controller)
+const publicPath = path.join(__dirname, '../../frontend/build')
+app.use(express.static(publicPath))
 
 const publicPath = path.join(__dirname, '../../frontend/build')
 app.use(express.static(publicPath))

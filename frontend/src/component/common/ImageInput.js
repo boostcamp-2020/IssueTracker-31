@@ -8,16 +8,18 @@ const ImageInput = () => {
   const getImageUrl = async e => {
     setStatus('loading')
     const formData = new FormData()
-    formData.append('image', e.target.files[0])
-    const { success, url } = await createImageUrl(formData)
-    if (!success) return setStatus('error')
-    console.log(url) // TODO: 상위 컴포넌트로 넘겨서 마크다운 문법 텍스트로 변환하기
+    formData.append('commentImage', e.target.files[0])
+    const url = await createImageUrl(formData)
+    if (!url) return setStatus('error')
+    console.log(url)
+    // TODO: 상위 컴포넌트로 넘겨서 마크다운 문법 텍스트로 변환하기
     setStatus('default')
   }
   return (
-    <StyledWrapper>
+    <StyledWrapper encType="multipart/form-data">
       <StyledInput
         type="file"
+        name="commentImage"
         accept=".jpeg,.png,.jpg"
         onChange={getImageUrl}
       ></StyledInput>
@@ -38,7 +40,7 @@ const ImageInput = () => {
   )
 }
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.form`
   width: 100%;
   position: relative;
   margin: 0;
