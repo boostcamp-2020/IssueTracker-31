@@ -35,14 +35,14 @@ const update = async (req, res) => {
 const uploadImage = (req, res) => {
   console.log(req.file.path)
   try {
-    let url = ''
-    if (process.env.NODE_ENV === 'development') url += process.env.BACKEND_HOST
-    else url += process.env.PRODUCTION_HOST
-    const removePublicPath = req.file.path.split('\\')
-    removePublicPath.shift()
-    url += '\\'
-    url += removePublicPath.join('\\')
-    return res.status(201).json({ success: true, data: url })
+    return res.status(201).json({
+      success: true,
+      data: `${
+        process.env.NODE_ENV === 'development'
+          ? process.env.BACKEND_HOST
+          : process.env.PRODUCTION_HOST
+      }/images/${req.file.filename}`,
+    })
   } catch (error) {
     console.log(error)
     return res

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import WritingArea from '@Component/common/content/WritingArea'
 import EventButton from '@Component/common/EventButton'
@@ -35,6 +35,7 @@ const Comment = ({
     if (await updateComment(id, { content })) setIsEdit(!isEdit)
   }
 
+  const validateMarkdown = () => marked(content).replaceAll('<script', '')
   return (
     <CommentWrapper>
       {isEdit ? (
@@ -68,7 +69,9 @@ const Comment = ({
               {editable && <EditButton onClick={handleEdit}>Edit</EditButton>}
             </HeaderLast>
           </CommentHeader>
-          <CommentBody>{marked(content)}</CommentBody>
+          <CommentBody
+            dangerouslySetInnerHTML={{ __html: validateMarkdown() }}
+          ></CommentBody>
         </>
       )}
     </CommentWrapper>
