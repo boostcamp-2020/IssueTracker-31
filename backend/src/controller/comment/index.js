@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
     cb(null, 'public/images/')
   },
   filename: function (req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname)
+    cb(null, file.originalname)
   },
 })
 const fileFilter = (req, file, cb) => {
@@ -19,7 +19,7 @@ const fileFilter = (req, file, cb) => {
     cb(null, true)
   else cb(null, false)
 }
-const upload = multer({ storage: storage, fileFilter: fileFilter })
+const upload = multer({ storage, fileFilter: fileFilter })
 
 const router = express.Router()
 

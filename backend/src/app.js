@@ -23,13 +23,13 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use('/api', Controller)
 const publicPath = path.join(__dirname, '../../frontend/build')
-app.use(express.static(publicPath))
 
+app.use(express.static(publicPath))
+app.use(express.static(path.join(__dirname, '../public')))
 app.get('*', middleware.verifyMiddleware, (req, res) => {
   res.sendFile(publicPath + '/root.html')
 })
 
-app.use(express.static(path.join(__dirname, '../public')))
 app.use((err, req, res, next) => {
   if (err.status)
     return res.status(err.status).json({ success: false, message: err.message })
