@@ -50,7 +50,7 @@ const IssueDetailPage = ({ match }) => {
     commentCount: 0,
   })
   const [title, setTitle] = useState('')
-  const [isOpen, setIsOpen] = useState('')
+  const [isOpen, setIsOpen] = useState(true)
   const [comments, setComments] = useState([])
   const [content, setContent] = useState('')
   const [assignee, setAssignee] = useState([])

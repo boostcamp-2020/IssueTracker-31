@@ -9,7 +9,7 @@ import { getTimePassedFromNow } from '@Util/util'
 
 const IssueDetailHeader = ({
   issueId,
-  isOpen,
+  isOpen = true,
   createdAt,
   nickname,
   commentCnt,
@@ -66,13 +66,12 @@ const IssueDetailHeader = ({
         </StyledButtonWrapper>
       </StyledTitleSection>
       <StyledMetaSection>
-        {isOpen && (
+        {isOpen ? (
           <StyledState isOpen={isOpen}>
             <OpenIssueIcon color={'#ffffff'} />
             Open
           </StyledState>
-        )}
-        {!isOpen && (
+        ) : (
           <StyledState isOpen={isOpen}>
             <ClosedIssueIcon color={'#ffffff'} />
             Closed
