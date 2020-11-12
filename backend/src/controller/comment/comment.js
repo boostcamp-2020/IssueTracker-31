@@ -35,7 +35,13 @@ const update = async (req, res) => {
 const uploadImage = (req, res) => {
   console.log(req.file.path)
   try {
-    const url = req.file.path
+    let url = ''
+    if (process.env.NODE_ENV === 'development') url += process.env.BACKEND_HOST
+    else url += process.env.PRODUCTION_HOST
+    const removePublicPath = req.file.path.split('\\')
+    removePublicPath.shift()
+    url += '\\'
+    url += removePublicPath.join('\\')
     return res.status(201).json({ success: true, data: url })
   } catch (error) {
     console.log(error)

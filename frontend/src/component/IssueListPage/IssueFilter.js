@@ -4,11 +4,18 @@ import FilterSelector from './FilterSelector'
 import { issueListContext } from '@Page/IssueList'
 
 const IssueFilter = ({ checkedIssues, setCheckedIssues, issues }) => {
-  const { conditions } = useContext(issueListContext)
+  const { conditions, setConditions } = useContext(issueListContext)
 
   const clickInput = e => {
     if (e.target.checked) setCheckedIssues(issues.map(issue => issue.id))
     else setCheckedIssues([])
+  }
+
+  const showOpenIssues = () => {
+    setConditions({ ...conditions, isOpen: 1 })
+  }
+  const showCloseIssues = () => {
+    setConditions({ ...conditions, isOpen: 0 })
   }
 
   return (
@@ -19,11 +26,11 @@ const IssueFilter = ({ checkedIssues, setCheckedIssues, issues }) => {
         checked={checkedIssues.length === issues.length && issues.length !== 0}
       ></StyledCheckBox>
       <StyledDefaultModeContainer checkedInput={checkedIssues.length}>
-        <StyledSpan isOpen={conditions.isOpen}>
+        <StyledSpan isOpen={conditions.isOpen} onClick={showOpenIssues}>
           {' '}
           {issues.filter(value => value.isOpen).length} Open
         </StyledSpan>
-        <StyledSpan isOpen={!conditions.isOpen}>
+        <StyledSpan isOpen={!conditions.isOpen} onClick={showCloseIssues}>
           {' '}
           {issues.filter(value => !value.isOpen).length} Closed
         </StyledSpan>

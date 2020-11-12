@@ -3,6 +3,19 @@ import styled from 'styled-components'
 import WritingArea from '@Component/common/content/WritingArea'
 import EventButton from '@Component/common/EventButton'
 import { updateComment } from '@Api/comment'
+import marked from 'marked'
+
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: true,
+  pedantic: false,
+  sanitize: true,
+  smartLists: true,
+  smartypants: false,
+  xhtml: false,
+})
 
 const Comment = ({
   id,
@@ -55,7 +68,7 @@ const Comment = ({
               {editable && <EditButton onClick={handleEdit}>Edit</EditButton>}
             </HeaderLast>
           </CommentHeader>
-          <CommentBody>{content}</CommentBody>
+          <CommentBody>{marked(content)}</CommentBody>
         </>
       )}
     </CommentWrapper>
