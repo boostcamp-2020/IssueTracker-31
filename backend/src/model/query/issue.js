@@ -40,7 +40,6 @@ const getIssuesQueryString = filterValues => {
 }
 
 const filtering = {
-  isOpen: isOpen => `I.isOpen=${isOpen}`,
   author: author => `I.userId=${author}`,
   label: label =>
     label[0] === '0'

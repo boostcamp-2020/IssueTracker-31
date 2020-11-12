@@ -13,7 +13,7 @@ const IssueList = () => {
   useEffect(() => {
     fetchData(getIssues, setIssues, {
       ...conditions,
-      isOpen: conditions.isOpen ? 1 : 0,
+      isOpen: undefined,
     })
   }, [conditions])
   return (
@@ -24,15 +24,18 @@ const IssueList = () => {
         issues={issues}
       />
       <StyledIssueContainer>
-        {issues.length
-          ? issues.map(issue => (
-              <Issue
-                {...issue}
-                checkedIssues={checkedIssues}
-                setCheckedIssues={setCheckedIssues}
-                key={issue.id}
-              />
-            ))
+        {issues.filter(issue => issue.isOpen === (conditions.isOpen ? 1 : 0))
+          .length
+          ? issues
+              .filter(issue => issue.isOpen === (conditions.isOpen ? 1 : 0))
+              .map(issue => (
+                <Issue
+                  {...issue}
+                  checkedIssues={checkedIssues}
+                  setCheckedIssues={setCheckedIssues}
+                  key={issue.id}
+                />
+              ))
           : 'No Results matched'}
       </StyledIssueContainer>
     </StyledIssueListComponent>
