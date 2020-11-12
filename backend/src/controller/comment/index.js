@@ -23,6 +23,7 @@ const upload = multer({ storage: storage, fileFilter: fileFilter })
 
 const router = express.Router()
 
+router.post('/issues/:id/comments', commentController.create)
 router.patch('/:id', commentController.update)
 router.post(
   '/comment-image-urls',
