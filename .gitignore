@@ -2,6 +2,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,windows,node,react,vscode
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,node,react,vscode
 
+/backend/public
+
 ## front
 /frontend/build
 

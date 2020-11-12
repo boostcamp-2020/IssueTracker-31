@@ -32,4 +32,15 @@ const update = async (req, res) => {
   }
 }
 
-export default { update, create }
+const uploadImage = (req, res) => {
+  try {
+    const url = req.file.path
+    return res.status(201).json({ success: true, data: url })
+  } catch (error) {
+    return res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .json({ success: false, message: resMessage.INTERNAL_SERVER_ERROR })
+  }
+}
+
+export default { update, create, uploadImage }
