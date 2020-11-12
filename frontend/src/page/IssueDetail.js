@@ -91,14 +91,17 @@ const IssueDetailPage = ({ match }) => {
   const updateLabels = async id => {
     if (label.includes(id)) {
       if (
-        await updateIssueLabels({ id: issueInfo.issueId, body: { add: [id] } })
+        await updateIssueLabels({
+          id: issueInfo.issueId,
+          body: { delete: [id] },
+        })
       )
         setLabel(label.filter(item => item !== id))
     } else {
       if (
         await updateIssueLabels({
           id: issueInfo.issueId,
-          body: { delete: [id] },
+          body: { add: [id] },
         })
       )
         setLabel([...label, id])
@@ -110,7 +113,7 @@ const IssueDetailPage = ({ match }) => {
       if (
         await updateIssueAssignees({
           id: issueInfo.issueId,
-          body: { add: [id] },
+          body: { delete: [id] },
         })
       )
         setAssignee(assignee.filter(item => item !== id))
@@ -118,7 +121,7 @@ const IssueDetailPage = ({ match }) => {
       if (
         await updateIssueAssignees({
           id: issueInfo.issueId,
-          body: { delete: [id] },
+          body: { add: [id] },
         })
       )
         setAssignee([...assignee, id])
