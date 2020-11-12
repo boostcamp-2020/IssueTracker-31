@@ -33,7 +33,9 @@ const IssueDetailPage = ({ match }) => {
         title={title}
         setTitle={setTitle}
       />
-      {comments.map(comment => {})}
+      {comments.map(comment => {
+        console.log(comment)
+      })}
       <ProfileWithContent
         title={[title, setTitle]}
         content={[content, setContent]}
