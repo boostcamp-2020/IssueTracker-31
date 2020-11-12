@@ -22,7 +22,7 @@ const ProfileWithContent = props => {
         />
       </ProfileContainer>
       <FormWrapper>
-        {props.page === 'createIssue' ? (
+        {props.page === 'createIssue' && (
           <TitleInputContainer
             type="text"
             name="title"
@@ -31,10 +31,8 @@ const ProfileWithContent = props => {
             placeholder="Title"
             required
           />
-        ) : (
-          ''
         )}
-        <WritingArea props={props} />
+        <WritingArea {...props} />
       </FormWrapper>
     </ContentWrapper>
   )

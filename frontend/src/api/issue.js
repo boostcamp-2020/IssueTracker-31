@@ -8,7 +8,6 @@ const getIssues = async filterQuery => {
 
 const getIssueDetail = async id => {
   const { success, data, message } = await request.GET(`/issues/${id}`)
-  console.log(success, data, message)
   if (success === false) return console.error(message)
   return data
 }
@@ -20,12 +19,9 @@ const createIssue = async body => {
 }
 
 const patchIssues = async params => {
-  const { success, data, message } = await request.PATCH(
-    '/issues/open-close',
-    params,
-  )
+  const { success, message } = await request.PATCH('/issues/open-close', params)
   if (success === false) return console.error(message)
-  return data
+  return success
 }
 
 const patchIssueDetail = async ({ id, body }) => {

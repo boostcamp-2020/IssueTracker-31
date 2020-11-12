@@ -3,14 +3,16 @@ import IssueDetailHeader from '@Component/IssueDetailPage/IssueDetailHeader'
 import ProfileWithContent from '@Component/common/content/ProfileWithContent'
 import Comment from '@Component/IssueDetailPage/Comment'
 import Sidebar from '@Component/common/Sidebar'
-import { getTimePassedFromNow } from '@Util/util'
-import { getComments } from '@Api/comment'
+import EventButton from '@Component/common/EventButton'
+import { getTimePassedFromNow, getParsedCookie } from '@Util/util'
+import { getComments, createComment } from '@Api/comment'
 import { useFetch } from '@Util/hook'
 import {
   getIssueDetail,
   updateIssueLabels,
   updateIssueAssignee,
   patchIssueDetail,
+  patchIssues,
 } from '@Api/issue'
 
 export const IssueDetailPageContext = createContext()
@@ -35,7 +37,6 @@ const getAllIssueInfo = async (
     setLabel(data.label)
     setMilestone(data.milestone)
   }
-  console.log(data)
   //   issueId: <issue_id>,
   // title: <issue_title>,
   // isOpen: <issue_isOpen>,
@@ -55,13 +56,22 @@ const IssueDetailPage = ({ match }) => {
   const [label, setLabel] = useState([])
   const [milestone, setMilestone] = useState([])
 
-  const closeIssueAction = () => {}
+  const addComment = async () => {
+    await createComment(match.params.id, {
+      userId: getParsedCookie('userId'),
+      content,
+    })
+  }
 
-  const CommentAction = () => {}
-
-  const CancelAction = () => {}
-
-  const UpdateAction = () => {}
+  const handleOpen = async () => {
+    if (
+      await patchIssues({
+        issueId: [match.params.id],
+        isOpen: isOpen ? 0 : 1,
+      })
+    )
+      setIsOpen(isOpen ? 0 : 1)
+  }
 
   const updateLabels = async id => {
     if (label.includes(id)) {
@@ -128,26 +138,43 @@ const IssueDetailPage = ({ match }) => {
     <div>
       <IssueDetailHeader
         issueId={1}
-        isOpen={false}
+        isOpen={isOpen}
         createdAt={'2020-11-09 00:00:00'}
         nickname={'hyex'}
         commentCnt={3}
         title={title}
         setTitle={setTitle}
       />
+      <Comment />
       {comments.map(comment => {
-        return (
-          <Comment
-            title={`${issueInfo.nickname} commentd ${getTimePassedFromNow(
-              issueInfo.createdAt,
-            )}`}
-            content={issueInfo.content}
-          />
-        )
+        console.log(comment)
+        // return (
+        //   <Comment
+        //     title={`${issueInfo.nickname} commentd ${getTimePassedFromNow(
+        //       issueInfo.createdAt,
+        //     )}`}
+        //     content={issueInfo.content}
+        //   />
+        // )
       })}
       <ProfileWithContent
         title={[title, setTitle]}
         content={[content, setContent]}
+        buttons={
+          <>
+            <EventButton
+              onClick={handleOpen}
+              buttonName={isOpen ? 'Reopen issue' : 'Close issue'}
+              isGreen={false}
+            />
+            <EventButton
+              onClick={addComment}
+              buttonName="Comment"
+              isGreen={true}
+              disabled={!content}
+            />
+          </>
+        }
         page="detailIssue"
       />
       <Sidebar

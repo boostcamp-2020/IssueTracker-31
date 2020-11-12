@@ -2,6 +2,8 @@ import React, { useState, createContext } from 'react'
 import styled from 'styled-components'
 import ProfileWithContent from '@Component/common/content/ProfileWithContent'
 import Sidebar from '@Component/common/Sidebar'
+import EventButton from '@Component/common/EventButton'
+
 import { createIssue } from '@Api/issue'
 import { useHistory } from 'react-router-dom'
 
@@ -53,9 +55,22 @@ const CreateIssuePage = () => {
       <ProfileWithContent
         title={[title, setTitle]}
         content={[content, setContent]}
-        submitAction={submitAction}
-        cancelAction={cancelAction}
         page="createIssue"
+        buttons={
+          <>
+            <EventButton
+              onClick={cancelAction}
+              buttonName="Cancel"
+              isGreen={false}
+            />
+            <EventButton
+              onClick={submitAction}
+              buttonName="Submit New Issue"
+              isGreen={true}
+              disabled={!title}
+            />
+          </>
+        }
       />
       <Sidebar
         labels={label}
