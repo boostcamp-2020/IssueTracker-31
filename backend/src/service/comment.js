@@ -32,6 +32,31 @@ const updateComment = async (id, userId, content) => {
   }
 }
 
+const createComment = async (issueId, userId, content) => {
+  if (isNaN(issueId) || issueId < 1 || !content)
+    return {
+      code: statusCode.BAD_REQUEST,
+      success: false,
+      message: resMessage.OUT_OF_VALUE,
+    }
+  try {
+    const commentId = await db.postComment(issueId, userId, content, false)
+    return {
+      code: statusCode.OK,
+      success: true,
+      data: commentId,
+    }
+  } catch (error) {
+    if (error.message === 'DB')
+      return {
+        code: statusCode.DB_ERROR,
+        success: false,
+        message: resMessage.DB_ERROR,
+      }
+  }
+}
+
 export default {
   updateComment,
+  createComment,
 }
