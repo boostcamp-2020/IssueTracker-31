@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import WritingArea from '@Component/common/content/WritingArea'
 import EventButton from '@Component/common/EventButton'
