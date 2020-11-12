@@ -72,4 +72,4 @@ const StyledStatusButton = styled.div`
   appearance: none;
 `
 
-export default LabelList
+export default React.memo(LabelList)
