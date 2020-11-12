@@ -77,6 +77,9 @@ const StyledDiv = styled.button`
   &:hover {
     background-color: ${hover};
   }
+  display: flex;
+  align-items: center;
+  justify-content: center;
   ${override}
   `}
 `

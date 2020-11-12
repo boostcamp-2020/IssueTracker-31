@@ -17,7 +17,9 @@ const StyledLabel = styled.div`
   line-height: 18px;
   border: 1px solid transparent;
   border-radius: 2em;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 `
 
 export default Label
