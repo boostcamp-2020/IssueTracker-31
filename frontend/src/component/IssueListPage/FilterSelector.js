@@ -88,7 +88,7 @@ const getPopUpProps = (
   const clickMarkAsPopUp = (id, kind) => {
     patchIssues({
       issueId: checkedIssues,
-      isOpen: id === 1 ? true : false,
+      isOpen: id === 1 ? 1 : 0,
     })
     setCheckedIssues([])
     context.setConditions({

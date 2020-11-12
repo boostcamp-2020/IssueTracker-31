@@ -2,16 +2,19 @@ import React, { useState, createContext, useEffect } from 'react'
 import styled from 'styled-components'
 import IssueDetailHeader from '@Component/IssueDetailPage/IssueDetailHeader'
 import ProfileWithContent from '@Component/common/content/ProfileWithContent'
+import WritingArea from '@Component/common/content/WritingArea'
 import Comment from '@Component/IssueDetailPage/Comment'
 import Sidebar from '@Component/common/Sidebar'
-import { getTimePassedFromNow } from '@Util/util'
-import { getComments } from '@Api/comment'
+import EventButton from '@Component/common/EventButton'
+import { getTimePassedFromNow, getParsedCookie } from '@Util/util'
+import { getComments, createComment } from '@Api/comment'
 import { useFetch } from '@Util/hook'
 import {
   getIssueDetail,
   updateIssueLabels,
   updateIssueAssignees,
   patchIssueDetail,
+  patchIssues,
 } from '@Api/issue'
 
 export const IssueDetailPageContext = createContext()
@@ -68,13 +71,22 @@ const IssueDetailPage = ({ match }) => {
   }, [])
   useFetch(getComments, setComments, issueInfo.issueId)
 
-  const closeIssueAction = () => {}
+  const addComment = async () => {
+    await createComment(match.params.id, {
+      userId: getParsedCookie('userId'),
+      content,
+    })
+  }
 
-  const CommentAction = () => {}
-
-  const CancelAction = () => {}
-
-  const UpdateAction = () => {}
+  const handleOpen = async () => {
+    if (
+      await patchIssues({
+        issueId: [match.params.id],
+        isOpen: isOpen ? 0 : 1,
+      })
+    )
+      setIsOpen(isOpen ? 0 : 1)
+  }
 
   const updateLabels = async id => {
     if (label.includes(id)) {
@@ -145,25 +157,47 @@ const IssueDetailPage = ({ match }) => {
       />
       <StyledContentWrapper>
         <StyledCommentWrapper>
-          {
-            // comments.map(comment => {
-            // console.log('!@#!#@!#!@#@!#@!#')
-            // console.log(comment)
-            // return (
-            //   <Comment
-            //     key={comment.id}
-            //     title={`${issueInfo.nickname} commentd ${getTimePassedFromNow(
-            //       issueInfo.createdAt,
-            //     )}`}
-            //     content={issueInfo.content}
-            //   />
-            // )
-            //})
-          }
+          {comments.map(comment => {
+            console.log(comment)
+            console.log(issueInfo)
+            return (
+              <ProfileWithContent
+                key={comment.id}
+                profileUrl={comment.profileUrl}
+                formContent={
+                  <Comment
+                    id={comment.id}
+                    owner={comment.nickname === issueInfo.author}
+                    editable={comment.userId === getParsedCookie('userId')}
+                    nickname={comment.nickname}
+                    timePassed={getTimePassedFromNow(comment.createdAt)}
+                    contentText={comment.content}
+                  />
+                }
+              />
+            )
+          })}
           <ProfileWithContent
-            title={[title, setTitle]}
-            content={[content, setContent]}
-            page="detailIssue"
+            formContent={
+              <WritingArea
+                content={[content, setContent]}
+                buttons={
+                  <>
+                    <EventButton
+                      onClick={handleOpen}
+                      buttonName={isOpen ? 'Close issue' : 'Reopen issue'}
+                      isGreen={false}
+                    />
+                    <EventButton
+                      onClick={addComment}
+                      buttonName="Comment"
+                      isGreen={true}
+                      disabled={!content}
+                    />
+                  </>
+                }
+              />
+            }
           />
         </StyledCommentWrapper>
         <StyledSidebarWrapper>

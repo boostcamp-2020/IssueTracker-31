@@ -2,6 +2,8 @@ import React, { useState, createContext } from 'react'
 import styled from 'styled-components'
 import ProfileWithContent from '@Component/common/content/ProfileWithContent'
 import Sidebar from '@Component/common/Sidebar'
+import EventButton from '@Component/common/EventButton'
+import WritingArea from '@Component/common/content/WritingArea'
 import { createIssue } from '@Api/issue'
 import { useHistory } from 'react-router-dom'
 
@@ -48,14 +50,43 @@ const CreateIssuePage = () => {
     else setMilestone([id])
   }
 
+  const handleTitleChange = event => {
+    setTitle(event.target.value)
+  }
+
   return (
     <StyledWrapper>
       <ProfileWithContent
-        title={[title, setTitle]}
-        content={[content, setContent]}
-        submitAction={submitAction}
-        cancelAction={cancelAction}
-        page="createIssue"
+        formContent={
+          <>
+            <TitleInputContainer
+              type="text"
+              name="title"
+              value={title}
+              onChange={handleTitleChange}
+              placeholder="Title"
+              required
+            />
+            <WritingArea
+              content={[content, setContent]}
+              buttons={
+                <>
+                  <EventButton
+                    onClick={cancelAction}
+                    buttonName="Cancel"
+                    isGreen={false}
+                  />
+                  <EventButton
+                    onClick={submitAction}
+                    buttonName="Submit New Issue"
+                    isGreen={true}
+                    disabled={!title}
+                  />
+                </>
+              }
+            />
+          </>
+        }
       />
       <Sidebar
         labels={label}
@@ -68,6 +99,13 @@ const CreateIssuePage = () => {
     </StyledWrapper>
   )
 }
+
+const TitleInputContainer = styled.input`
+  box-shadow: 0 1px 3px rgba(0.2, 0.2, 0.2, 0.2), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border: none;
+  height: 30px;
+  padding: 5px;
+`
 
 const StyledWrapper = styled.div`
   max-width: 1280px;

@@ -83,6 +83,7 @@ const updateIssueState = async data => {
     await issueModel.updateIssueState(connection, data)
     await connection.commit()
   } catch (err) {
+    console.log(err)
     await connection.rollback()
     throw err
   } finally {
@@ -161,9 +162,9 @@ const isValidIds = idList => {
 }
 
 const isValidUpdateStateData = ({ isOpen, issueId }) => {
-  if (!isOpen || !issueId) return false
-  if (typeof JSON.parse(isOpen) !== 'boolean') return false
-  if (!Array.isArray(JSON.parse(issueId))) return false
+  if (!issueId) return false
+  if (isOpen !== 1 && isOpen !== 0) return false
+  if (!Array.isArray(issueId)) return false
   return true
 }
 

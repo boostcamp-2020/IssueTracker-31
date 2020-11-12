@@ -2,19 +2,11 @@ import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { debounce } from 'lodash'
 import ImageInput from '@Component/common/ImageInput'
-import EventButton from '@Component/common/EventButton'
 
-const WritingArea = ({ props }) => {
-  const {
-    content: [content, setContent],
-    submitAction,
-    cancelAction,
-    title: [title],
-  } = props
-
+const WritingArea = ({ content: [content, setContent], buttons }) => {
   const handleDebounce = v => {
     document.getElementById('count').innerText = `${v.length} characters`
-    setTimeout(v => {
+    setTimeout(() => {
       document.getElementById('count').style.opacity = 0
     }, 2000)
   }
@@ -39,19 +31,7 @@ const WritingArea = ({ props }) => {
       />
       <CountingContainer id="count">0 characters</CountingContainer>
       <ImageInput />
-      <SubmitContainer>
-        <EventButton
-          onClick={cancelAction}
-          buttonName="Cancel"
-          isGreen={false}
-        />
-        <EventButton
-          onClick={submitAction}
-          buttonName="Submit New Issue"
-          isGreen={true}
-          disabled={!title}
-        />
-      </SubmitContainer>
+      <SubmitContainer>{buttons}</SubmitContainer>
     </Wrapper>
   )
 }
@@ -82,28 +62,6 @@ const CountingContainer = styled.span`
 const SubmitContainer = styled.div`
   display: flex;
   justify-content: space-between;
-`
-
-const CancelButton = styled.div`
-  width: 60px;
-  padding: 10px;
-  height: 20px;
-  cursor: pointer;
-  background-color: #ffffff;
-  color: #808080;
-  font-weight: 500;
-  text-align: center;
-`
-
-const SubmitButton = styled.div`
-  width: 120px;
-  padding: 10px;
-  height: 20px;
-  cursor: pointer;
-  background-color: #2ea44f;
-  color: #ffffff;
-  font-weight: 550;
-  text-align: center;
 `
 
 export default WritingArea

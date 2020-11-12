@@ -55,9 +55,8 @@ const setIssueRelations = async (
 }
 
 const updateIssueState = async (connection, { issueId, isOpen }) => {
-  const sql = query.updateIssueState(issueId, isOpen)
   try {
-    await connection.query(sql)
+    await connection.query(query.updateIssueState, [isOpen, issueId])
   } catch (err) {
     throw new Error('DB')
   }
