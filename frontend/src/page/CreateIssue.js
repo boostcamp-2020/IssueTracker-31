@@ -56,46 +56,50 @@ const CreateIssuePage = () => {
 
   return (
     <StyledWrapper>
-      <ProfileWithContent
-        formContent={
-          <>
-            <TitleInputContainer
-              type="text"
-              name="title"
-              value={title}
-              onChange={handleTitleChange}
-              placeholder="Title"
-              required
-            />
-            <WritingArea
-              content={[content, setContent]}
-              buttons={
-                <>
-                  <EventButton
-                    onClick={cancelAction}
-                    buttonName="Cancel"
-                    isGreen={false}
-                  />
-                  <EventButton
-                    onClick={submitAction}
-                    buttonName="Submit New Issue"
-                    isGreen={true}
-                    disabled={!title}
-                  />
-                </>
-              }
-            />
-          </>
-        }
-      />
-      <Sidebar
-        labels={label}
-        assignees={assignee}
-        milestone={milestone}
-        updateLabel={updateLabels}
-        updateAssignee={updateAssignees}
-        updateMilestone={updateMilestone}
-      />
+      <WrapperFirst>
+        <ProfileWithContent
+          formContent={
+            <>
+              <TitleInputContainer
+                type="text"
+                name="title"
+                value={title}
+                onChange={handleTitleChange}
+                placeholder="Title"
+                required
+              />
+              <WritingArea
+                content={[content, setContent]}
+                buttons={
+                  <>
+                    <EventButton
+                      onClick={cancelAction}
+                      buttonName="Cancel"
+                      isGreen={false}
+                    />
+                    <EventButton
+                      onClick={submitAction}
+                      buttonName="Submit New Issue"
+                      isGreen={true}
+                      disabled={!title}
+                    />
+                  </>
+                }
+              />
+            </>
+          }
+        />
+      </WrapperFirst>
+      <WrapperSecond>
+        <Sidebar
+          labels={label}
+          assignees={assignee}
+          milestone={milestone}
+          updateLabel={updateLabels}
+          updateAssignee={updateAssignees}
+          updateMilestone={updateMilestone}
+        />
+      </WrapperSecond>
     </StyledWrapper>
   )
 }
@@ -108,12 +112,21 @@ const TitleInputContainer = styled.input`
 `
 
 const StyledWrapper = styled.div`
-  max-width: 1280px;
   display: flex;
   margin-right: auto;
   margin-left: auto;
   padding: 0px 32px;
   box-sizing: border-box;
+`
+
+const WrapperFirst = styled.div`
+  width: 800px;
+  margin-left: 200px;
+`
+const WrapperSecond = styled.div`
+  width: 200px;
+  padding: 10px;
+  margin-top: 20px;
 `
 
 export default CreateIssuePage
