@@ -17,8 +17,8 @@ const ProfileWithContent = ({ formContent, profileUrl }) => {
 }
 
 const FormWrapper = styled.div`
-  width: 600px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   border: 1px solid #dcdcdc;
   margin-left: 20px;
   display: flex;
@@ -30,8 +30,6 @@ const FormWrapper = styled.div`
 `
 
 const ContentWrapper = styled.div`
-  width: 650px;
-  height: 600px;
   padding: 20px;
   margin: 20px;
   display: flex;
