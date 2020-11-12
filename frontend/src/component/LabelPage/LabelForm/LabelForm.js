@@ -37,13 +37,12 @@ const labelReducer = (state, action) => {
       return { ...state, description: action.description }
 
     default: {
-      throw new Error(`unexprected action type: ${action.type}`)
+      throw new Error(`unexpected action type: ${action.type}`)
     }
   }
 }
 
 const LabelForm = props => {
-  // const { setLabels, labels } = useContext(labelContext)
   const labels = props.labels
   const setLabels = props.setLabels
 
