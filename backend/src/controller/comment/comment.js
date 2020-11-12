@@ -33,6 +33,7 @@ const update = async (req, res) => {
 }
 
 const uploadImage = (req, res) => {
+  console.log(req.file.path)
   try {
     let url = ''
     if (process.env.NODE_ENV === 'development') url += process.env.BACKEND_HOST

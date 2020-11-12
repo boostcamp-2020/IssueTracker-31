@@ -5,6 +5,9 @@ import { deleteLabel } from '@Api/label'
 
 const LabelList = ({ labels, setLabels }) => {
   const handleDeleteBtn = async id => {
+    const msg = '정말 이 레이블을 삭제하시겠습니까?'
+    const flag = window.confirm(msg)
+    if (!flag) return
     const success = await deleteLabel(id)
     if (success) setLabels(labels.filter(item => item.id !== id))
   }
