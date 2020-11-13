@@ -81,6 +81,7 @@ const StyledLink = styled(Link)`
   color: #000000;
   font-size: 16px;
   font-weight: 600;
+  margin-right: 8px;
 `
 
 export default Issue
