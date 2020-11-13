@@ -26,29 +26,6 @@ const FormWrapper = styled.div`
   justify-content: space-between;
   position: relative;
   border-radius: 6px;
-
-  &:before {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    left: 40px;
-    border-width: 20px 20px 0;
-    border-style: solid;
-    border-color: #e1e4e8 transparent;
-    display: block;
-    width: 0;
-  }
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -13px;
-    left: 47px;
-    border-width: 13px 13px 0;
-    border-style: solid;
-    border-color: #ffffff transparent;
-    display: block;
-    width: 0;
-  }
 `
 
 const ContentWrapper = styled.div`
