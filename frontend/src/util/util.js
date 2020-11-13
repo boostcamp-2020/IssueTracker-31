@@ -55,7 +55,7 @@ const verifyTextLength = (text, length) => {
   return false
 }
 
-const getParsedCookie = key => cookie.get('userData')[key]
+const getParsedCookie = key => cookie.get('userData')?.[key]
 
 export {
   getTimePassedFromNow,

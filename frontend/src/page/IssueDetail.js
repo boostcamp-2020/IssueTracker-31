@@ -41,7 +41,6 @@ const getAllIssueInfo = async (
     setMilestone(data.milestone.map(item => item.id))
   }
 }
-
 const IssueDetailPage = ({ match }) => {
   const [issueInfo, setIssueInfo] = useState({
     issueId: match.params.id,
@@ -72,10 +71,23 @@ const IssueDetailPage = ({ match }) => {
   useFetch(getComments, setComments, issueInfo.issueId)
 
   const addComment = async () => {
-    await createComment(match.params.id, {
-      userId: getParsedCookie('userId'),
+    const userId = getParsedCookie('userId')
+    const id = await createComment(match.params.id, {
+      userId,
       content,
     })
+    setComments([
+      ...comments,
+      {
+        id,
+        nickname: getParsedCookie('nickname'),
+        userId,
+        content,
+        profileUrl: getParsedCookie('profileUrl'),
+        createdAt: Date.now(),
+      },
+    ])
+    setContent('')
   }
 
   const handleOpen = async () => {
