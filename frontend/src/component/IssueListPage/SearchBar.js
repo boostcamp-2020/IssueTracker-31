@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import PopUp from '../common/PopUp'
 import { issueListContext } from '@Page/IssueList'
 import { getParsedCookie } from '@Util/util'
-import { Cookies } from 'react-cookie'
-const cookie = new Cookies()
+
 const SearchBar = () => {
   const { users, labels, milestones, conditions, setConditions } = useContext(
     issueListContext,
