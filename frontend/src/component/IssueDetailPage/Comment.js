@@ -11,7 +11,6 @@ marked.setOptions({
   tables: true,
   breaks: true,
   pedantic: false,
-  sanitize: true,
   smartLists: true,
   smartypants: false,
   xhtml: false,
