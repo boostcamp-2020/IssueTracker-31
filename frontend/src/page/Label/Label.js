@@ -14,7 +14,6 @@ const LabelPage = () => {
   useFetch(getLabels, setLabels)
 
   const toggleComponent = e => setShowForm(!showForm)
-
   return (
     <StyledContainer>
       <StyledButtonContainer>
@@ -22,13 +21,11 @@ const LabelPage = () => {
         <EventButton buttonName="New Label" onClick={toggleComponent} isGreen />
       </StyledButtonContainer>
       {showForm ? (
-        <StyledFormContainer>
-          <LabelForm
-            toggleComponent={toggleComponent}
-            labels={labels}
-            setLabels={setLabels}
-          />
-        </StyledFormContainer>
+        <LabelForm
+          toggleComponent={toggleComponent}
+          labels={labels}
+          setLabels={setLabels}
+        />
       ) : null}
       <LabelList labels={labels} setLabels={setLabels}></LabelList>
     </StyledContainer>
@@ -42,7 +39,6 @@ const StyledContainer = styled.div`
   padding-left: 32px;
   box-sizing: border-box;
 `
-
 const StyledButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -50,11 +46,6 @@ const StyledButtonContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 20px;
   box-sizing: border-box;
-`
-const StyledFormContainer = styled.div`
-  border: 1px solid #e1e4e8;
-  border-radius: 6px;
-  padding: 16px;
 `
 
 export default LabelPage

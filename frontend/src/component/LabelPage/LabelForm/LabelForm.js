@@ -37,13 +37,12 @@ const labelReducer = (state, action) => {
       return { ...state, description: action.description }
 
     default: {
-      throw new Error(`unexprected action type: ${action.type}`)
+      throw new Error(`unexpected action type: ${action.type}`)
     }
   }
 }
 
 const LabelForm = props => {
-  // const { setLabels, labels } = useContext(labelContext)
   const labels = props.labels
   const setLabels = props.setLabels
 
@@ -90,11 +89,10 @@ const LabelForm = props => {
   }
 
   const handleDelete = async () => {
-    if (await deleteLabel(props.id)) {
+    if (await deleteLabel(props.id))
       setLabels(labels.filter(origin => origin.id !== props.id))
-      props.toggleComponent()
-    }
   }
+
   return (
     <StyledLabelFormContainer>
       <StyledHeader>
@@ -156,6 +154,7 @@ const LabelForm = props => {
             onClick={props.toggleComponent}
             overrideStyle={buttonStyle}
           />
+          <StyledEmpty />
           {props.id ? (
             <EventButton
               buttonName="Save changes"
@@ -179,6 +178,9 @@ const LabelForm = props => {
 
 const StyledLabelFormContainer = styled.div`
   width: 100%;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 16px;
 `
 const StyledActionContainer = styled.div`
   display: flex;
@@ -260,5 +262,9 @@ const deleteButtonStyle = `
   background:none;
   border:none;
   color:#586069;
+`
+
+const StyledEmpty = styled.div`
+  width: 8px;
 `
 export default LabelForm
