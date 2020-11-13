@@ -41,6 +41,7 @@ const ImageInput = ({ content: [content, setContent] }) => {
 
 const StyledWrapper = styled.form`
   width: 100%;
+  min-width: 30px;
   position: relative;
   margin: 0;
   padding: 5px;

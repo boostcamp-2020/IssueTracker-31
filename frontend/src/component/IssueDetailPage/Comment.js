@@ -79,16 +79,15 @@ const Comment = ({
 }
 
 const CommentWrapper = styled.div`
+  border: none;
   display: flex;
-  border: 1px solid #dcdcdc;
   flex-direction: column;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `
 
 const CommentHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: #f0f8ff;
+  background-color: #f6f8fa;
   padding: 10px;
 `
 const AuthorNameContainer = styled.span`
@@ -106,22 +105,33 @@ const HeaderLast = styled.div`
   color: #dcdcdc;
 `
 const OwnerContainer = styled.button`
-  background-color: #f0f8ff;
-  color: #a9a9a9;
+  background-color: transparent;
+  color: #586069;
   border: 1px solid #d3d3d3;
-  font-weight: bold;
+  font-weight: 500;
   margin-right: 10px;
+  font-size: 12px;
 `
 const EditButton = styled.button`
   border: none;
-  background-color: #f0f8ff;
-  color: #a9a9a9;
-  font-weight: bold;
+  background-color: transparent;
+  color: #586069;
+  font-weight: 500;
   cursor: pointer;
+  font-size: 12px;
 `
 
 const CommentBody = styled.div`
   padding: 10px;
+  overflow-wrap: anywhere;
+  img {
+    max-width: 100%;
+  }
+  h1,
+  h2,
+  h3 {
+    font-size: revert;
+  }
 `
 
 export default Comment

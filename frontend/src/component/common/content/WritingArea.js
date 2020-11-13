@@ -22,7 +22,9 @@ const WritingArea = ({ content: [content, setContent], buttons }) => {
 
   return (
     <Wrapper>
-      <WriteHeader>Write</WriteHeader>
+      <WriteHeader>
+        <WriteText>Write</WriteText>
+      </WriteHeader>
       <CommentInputContainer
         name="comment"
         value={content}
@@ -39,25 +41,36 @@ const WritingArea = ({ content: [content, setContent], buttons }) => {
 
 const Wrapper = styled.div`
   box-sizing: border-box;
+  margin: 16px;
 `
 
 const WriteHeader = styled.div`
-  text-align: center;
-  width: 50px;
+  width: 100%
   height: 30px;
-  box-shadow: 0 1px 3px rgba(0.2, 0.2, 0.2, 0.2),
-    0 1px 2px rgba(0.2, 0.2, 0.2, 0);
+  border-bottom: 2px solid #e1e4e8;
+  margin-top: 13px;
+  margin-bottom: 10px;
+`
+const WriteText = styled.div`
+  border-top: 2px solid #e1e4e8;
+  border-left: 2px solid #e1e4e8;
+  border-right: 2px solid #e1e4e8;
+  width: 60px;
+  height: 25px;
   color: #000000;
   font-weight: bold;
-  margin-top: 10px;
+  text-align: center;
+  margin-left: 10px;
 `
 
 const CommentInputContainer = styled.textarea`
   box-shadow: 0 1px 3px rgba(0.2, 0.2, 0.2, 0.2), 0 1px 2px rgba(0, 0, 0, 0.24);
-  border: none;
+  background-color: #f6f8fa;
+  border: #e1e4e8;
   height: 350px;
   padding: 5px;
   width: 100%;
+  border-radius: 5px;
 `
 
 const CountingContainer = styled.span`

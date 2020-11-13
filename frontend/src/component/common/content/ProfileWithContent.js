@@ -19,19 +19,40 @@ const ProfileWithContent = ({ formContent, profileUrl }) => {
 const FormWrapper = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px solid #dcdcdc;
+  border: 1px solid #d1d5da;
   margin-left: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 10px;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 6px;
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 40px;
+    border-width: 20px 20px 0;
+    border-style: solid;
+    border-color: #e1e4e8 transparent;
+    display: block;
+    width: 0;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -13px;
+    left: 47px;
+    border-width: 13px 13px 0;
+    border-style: solid;
+    border-color: #ffffff transparent;
+    display: block;
+    width: 0;
+  }
 `
 
 const ContentWrapper = styled.div`
-  padding: 20px;
-  margin: 20px;
+  margin-bottom: 32px;
   display: flex;
   flex-direction: row;
 `
@@ -41,6 +62,7 @@ const ProfileContainer = styled.div`
 `
 
 const ProfileImage = styled.img`
+  border-radius: 5px;
   width: 40px;
   height: 40px;
 `

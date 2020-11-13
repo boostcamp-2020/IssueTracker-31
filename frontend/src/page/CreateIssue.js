@@ -106,13 +106,19 @@ const CreateIssuePage = () => {
 
 const TitleInputContainer = styled.input`
   box-shadow: 0 1px 3px rgba(0.2, 0.2, 0.2, 0.2), 0 1px 2px rgba(0, 0, 0, 0.24);
-  border: none;
-  height: 30px;
+  background-color: #f6f8fa;
+  border: #e1e4e8;
+  height: 40px;
   padding: 5px;
+  margin: 16px;
+  margin-bottom: 0px;
+  border-radius: 5px;
 `
 
 const StyledWrapper = styled.div`
   display: flex;
+  flex-direction: row;
+  margin-top: 32px;
   margin-right: auto;
   margin-left: auto;
   padding: 0px 32px;
@@ -120,13 +126,16 @@ const StyledWrapper = styled.div`
 `
 
 const WrapperFirst = styled.div`
-  width: 800px;
-  margin-left: 200px;
+  padding: 0px 16px;
+  flex-shrink: 0;
+  width: 75%;
 `
 const WrapperSecond = styled.div`
   width: 200px;
   padding: 10px;
-  margin-top: 20px;
+  margin-top: 18px;
+  flex-shrink: 0;
+  width: 25%;
 `
 
 export default CreateIssuePage
