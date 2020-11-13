@@ -19,19 +19,17 @@ const ProfileWithContent = ({ formContent, profileUrl }) => {
 const FormWrapper = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px solid #dcdcdc;
+  border: 1px solid #d1d5da;
   margin-left: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 10px;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 6px;
 `
 
 const ContentWrapper = styled.div`
-  padding: 20px;
-  margin: 20px;
+  margin-bottom: 32px;
   display: flex;
   flex-direction: row;
 `
@@ -41,6 +39,7 @@ const ProfileContainer = styled.div`
 `
 
 const ProfileImage = styled.img`
+  border-radius: 5px;
   width: 40px;
   height: 40px;
 `
