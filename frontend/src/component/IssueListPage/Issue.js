@@ -72,6 +72,9 @@ const StyledAssignees = styled.div`
 const ProfileImage = styled.img`
   width: 30px;
   height: 30px;
+  margin-right: 0px;
+  margin-left: -15px;
+  border-radius: 100%;
 `
 const StyledLink = styled(Link)`
   text-decoration: none;
