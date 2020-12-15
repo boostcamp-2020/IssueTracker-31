@@ -12,7 +12,7 @@
 
 ## Issue Tracker
 
-### http://115.85.181.174:3000/
+### http://49.50.167.222:3000/
 
 ## Teammate 👨‍👩‍👦‍👦
 
@@ -73,3 +73,8 @@ cd IssueTracker-31
 ## Project
 
 [project](https://github.com/boostcamp-2020/IssueTracker-31/projects)에서 개발 과정을 확인할 수 있습니다 💻📈⏰
+
+## 실제 화면
+![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/26921508/102215647-5950c880-3f1d-11eb-9904-957d5d2e2c8c.gif)
+![image](https://user-images.githubusercontent.com/26921508/102215696-6f5e8900-3f1d-11eb-8b20-38c26cef65fd.png)
+![image](https://user-images.githubusercontent.com/26921508/102215826-99b04680-3f1d-11eb-8b1c-aeb975da1626.png)
